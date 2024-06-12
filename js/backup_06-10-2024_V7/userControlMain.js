@@ -3424,7 +3424,7 @@ addColumnAgentGroup(
           },
           {
           x: -17 - i * 5.0,
-          z: 12 - j * 6.82,
+          z: 12 - j * 6.6,
           },
           0.8,
           "X"
@@ -3523,75 +3523,6 @@ addColumnAgentGroup(
 //--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
 
 
-
-//------------- Start -- Rectangle Scenario------------------------------------------------------------------------
-
-function rectangle_Scenario() {
-
-  parameters.scenario = 'rectangle';
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: 14,
-    },
-    {
-      x: -13,
-      z: -14.0,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1,
-  {
-    x: -14,
-    z: -14,
-  },
-  {
-    x: 14,
-    z: 15,
-  },
-  0.8,
-  "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: -14,
-    },
-    {
-      x: -13,
-      z: 14,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: -14,
-      z: 14,
-    },
-    {
-      x: 15,
-      z: -14.0,
-    },
-    0.8,
-    "X"); 
-
-}
-//------------- End -- Rectangle Scenario------------------------------------------------------------------------
 
 
 
@@ -6179,6 +6110,7 @@ function bottleneck_with_wall_scenario_x3() {
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.12; for suddenStop() scenario.   const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03; restrict velocity to rotate more than 90 degree.
 function suddenStop_Scenario() {
 
   parameters.scenario = 'suddenStop';
@@ -6215,9 +6147,136 @@ function suddenStop_Scenario() {
     "X"
   );
 
-} 
+}  
 
 
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.3; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection(). const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03;
+// Option 2 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.03;
+// Option 3 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.024;  if (bestPointDiff <= 4.0 &&  (facingDiff < 0.015 || facingDiff - Math.PI) <0.015 ){
+function rectangle_Scenario() {
+/*
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -14,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1.5,
+  {
+    x: -14,
+    z: -14.0,
+  },
+  {
+    x: 14,
+    z: 14,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -14,
+      z: 14.0,
+    },
+    0.8,
+    "X");
+
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.0,
+      {
+        x: -14,
+        z: 14,
+      },
+      {
+        x: 14,
+        z: -14.0,
+      },
+      0.8,
+      "X");  
+*/  
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -13,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1,
+  {
+    x: -14,
+    z: -14,
+  },
+  {
+    x: 14,
+    z: 15,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -13,
+      z: 14,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: -14,
+      z: 14,
+    },
+    {
+      x: 15,
+      z: -14.0,
+    },
+    0.8,
+    "X"); 
+
+}
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -6459,15 +6518,37 @@ function suddenStop_Scenario() {
 
 
 //----------------------------------------------------------
-//uncomment any of the scenarios below to test in different scenarios.
+//uncomment any of the 3 scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
-  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
-  // rectangle_Scenario();
-  suddenStop_Scenario();
 
+  // dense_Scenario_As_Torso_Crowd_Paper_V3();
+  // dense_Scenario_As_Torso_Crowd_Paper_V4();
+  // dense_Scenario_As_Torso_Crowd_Paper_V5();
+  // dense_Scenario_As_Torso_Crowd_Paper_V6(); // slight less dense scenario than v7 - working
+  // dense_Scenario_As_Torso_Crowd_Paper_V7();  // very dense scenario - working
+  // dense_Scenario_As_Torso_Crowd_Paper_V8();  // slightly sparse scenario
+  // dense_Scenario_As_Torso_Crowd_Paper_V9();
+  // dense_Scenario_As_Torso_Crowd_Paper_V10();
+  // dense_Scenario_As_Torso_Crowd_Paper_V11();
 
+  // dense_Scenario_As_Torso_Crowd_Paper_V12();
+
+  // dense_Scenario_As_Torso_Crowd_Paper_V13();
+
+  dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10
+
+  // tryingScenario_Bilas_1_4_agents_V2();
+  // oneAgentCrossingGroup();
+  // bidirectionalScenario();
+
+  // oneAgentCrossingAGroupInAngle();
+  // crossing_Two_Groups();
+
+  // suddenStop_Scenario();
+
+  // debug_passive_agent_oscillations();
   //----------------------------------------------------------
 
 
@@ -6763,7 +6844,7 @@ scene.add(trajectoryLine);
 
     if(member.index == 0)
     {
-      // member.agent.material = blueAgentMaterial;
+      member.agent.material = blueAgentMaterial;
     }
 
     if (member.colliding) {

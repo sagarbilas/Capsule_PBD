@@ -48,9 +48,9 @@ let parameters = {
     wallData: [],
     tempcount : 0,
     // scenario: 'bottleneck',
-    scenario: '',
-    orientation: 'front',   // 'front', 'side_Step'
-    loop_counter: 0,
+  scenario: '',
+
+  orientation: 'front',   // 'front', 'side_Step'
 }
 
 const WORLDUNIT = 1
@@ -65,7 +65,7 @@ let wallData = [];
 const anglesOverTime = [];          // to save rotation history
 let global_frame_pointer = 0;
 let csvContent = '';
-
+ 
 
 class Tile {
 
@@ -715,75 +715,6 @@ function circleScenario(){
 
 
 
-  
-
-  function crossing_Two_Groups() {
-
-  //   addColumnAgentGroup(
-  //     agentData,
-  //     1,
-  //     RADIUS * 1.5,
-  //     {
-  //         x: 7,
-  //         z: 10.60,
-  //     },
-  //     {
-  //         x: 18,
-  //         z: -20.60,
-  //     },
-  //     0.8,
-  //     "X"
-  // );
-
-    for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < 3; j++) {
-        addColumnAgentGroup(
-            agentData,
-            1,
-            RADIUS * 1.5,
-            {
-              x: 38 - i * 6,
-              //x: 30,
-              z: -10 + j * 6,
-            },
-            {
-              x: -30,
-              //x: -20,
-              z: -10 + j * 6,
-            },
-            0.8,
-            "X"
-        );
-      }
-    }
-
-
-
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        addColumnAgentGroup(
-            agentData,
-            1,
-            RADIUS * 1.5,
-            {
-              x: 5 - i * 6,
-              z: 10 + j * 6,
-            },
-            {
-              x: 30,
-              z: -20 + j * 6,
-            },
-            0.8,
-            "X"
-        );
-      }
-    }
-  
-  
-  }
-
-
-
 
   function bidirectionalScenario() {
   
@@ -1243,48 +1174,9 @@ addColumnAgentGroup(
 );
 
 
+
 }
 //--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-function debug_passive_agent_oscillations()
-{
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: 8,
-        z: -7.00,
-    },
-    {
-        x: 8,
-        z: -6.0,
-    },
-    0.8,
-    "X" );
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: 4,
-        z: -3.00,
-    },
-    {
-        x: 8.5,
-        z: -3.8,
-    },
-    0.8,
-    "X" );
-
-
-}
 
 
 
@@ -1293,6 +1185,22 @@ function debug_passive_agent_oscillations()
 function dense_Scenario_As_Torso_Crowd_Paper_V3() {
 
   parameters.scenario = 'dense_torso_like';
+
+  // addColumnAgentGroup(
+  //     agentData,
+  //     1,
+  //     RADIUS * 1.5,
+  //     {
+  //         x: -20,
+  //         z: 2.00,
+  //     },
+  //     {
+  //         x: 20,
+  //         z: 2.0,
+  //     },
+  //     0.8,
+  //     "X"
+  // );
 
   addColumnAgentGroup(
     agentData,
@@ -1303,133 +1211,19 @@ function dense_Scenario_As_Torso_Crowd_Paper_V3() {
         z: 2.00,
     },
     {
-        x: 12,
+        x: 14,
         z: 2.0,
     },
     0.8,
     "X"
 );
 
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 8,
-      z: -7.00,
-  },
-  {
-      x: 8,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 6,
-      z: 6.00,
-  },
-  {
-      x: 9,
-      z: 6.0,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -6,
-      z: -7.00,
-  },
-  {
-      x: -6,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
   addColumnAgentGroup(
     agentData,
     1,
     RADIUS * 1.5,
     {
-        x: -12,
-        z: -7.00,
-    },
-    {
-        x: -12,
-        z: -6.0,
-    },
-    0.8,
-    "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -7,
-      z: -7.00,
-  },
-  {
-      x: -7,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -10,
-      z: -6.00,
-  },
-  {
-      x: -9,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-//-------------------------
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -13,
-//         z: 2.00,
-//     },
-//     {
-//         x: 14,
-//         z: 2.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: -9,
+        x: -10,
         z: -2.00,
     },
     {
@@ -1446,7 +1240,7 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: -9,
+      x: -10,
       z: 5.00,
   },
   {
@@ -1464,7 +1258,7 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       x: -4,
-      z: 3.00,
+      z: 0.00,
   },
   {
       x: -3,
@@ -1499,7 +1293,7 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       x: -1,
-      z: -1.0,
+      z: -5.0,
   },
   {
       x: 2,
@@ -1515,7 +1309,7 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: 1,
+      x: -1,
       z: -5.0,
   },
   {
@@ -1532,8 +1326,8 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: 5,
-      z: -2.0,
+      x: 3,
+      z: -5.0,
   },
   {
       x: 6,
@@ -1550,8 +1344,8 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: 9,
-      z: -3.0,
+      x: 7,
+      z: -5.0,
   },
   {
       x: 10,
@@ -1568,7 +1362,7 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       x: 4,
-      z: 4.0,
+      z: -2.0,
   },
   {
       x: 4  ,
@@ -1588,7 +1382,7 @@ addColumnAgentGroup(
       z: 0.0,
   },
   {
-      x: 4  ,
+      x: 7  ,
       z: 2,
   },
   0.8,
@@ -1602,7 +1396,7 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       x: 5,
-      z: 4.0,
+      z: 0.0,
   },
   {
       x: 7  ,
@@ -1617,8 +1411,8 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: 9,
-      z: 3.0,
+      x: 8,
+      z: 0.0,
   },
   {
       x: 10  ,
@@ -1669,7 +1463,7 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       x: -1,
-      z: 1-.0,
+      z: 0.0,
   },
   {
       x: 1  ,
@@ -1810,2956 +1604,24 @@ addColumnAgentGroup(
         });
         scene.add(bottom2);
 */
-    
-        parameters.wallData = wallData;
+
+
 
       
-
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V4() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: -12,
-        z: 6.00,
-    },
-    {
-        x: 11,
-        z: -6.0,
-    },
-    0.8,
-    "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 5; j++) {
-
-    let x_goal = 0.0;
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      // x: 15 - i * 5.3,
-      // z: 42 - j * 5.3,
-
-      x: 11 - i * 4.3,
-      z: 10 - j * 4.3,
-
-      },
-      {
-      // x: x_goal,
-      // z: 4,
-
-      x: 10 - i * 4.3,
-      z: 10 - j * 4.3,
-      },
-      0.8,
-      "X"
-      );
-
-      // member.agent.rotation.z = 1.0;
-
-      }
-    }
-
-
-
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -10);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -10),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -10),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -10),
-      });
-       scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 12);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 12),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 12),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 12),
-      });
-       scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V5() {
-
-  parameters.scenario = 'dense_torso_like';
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -13,
-//         z: 2.00,
-//     },
-//     {
-//         x: -12,
-//         z: 2.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 13,
-      z: -8.00,
-  },
-  {
-      x: -12,
-      z: 9.0,
-  },
-  0.8,
-  "X"
-);
-
-
-// addColumnAgentGroup(
-//   agentData,
-//   1,
-//   RADIUS * 1.5,
-//   {
-//       x: 13,
-//       z: 8.00,
-//   },
-//   {
-//       x: -12,
-//       z: -9.0,
-//   },
-//   0.8,
-//   "X"
-// );
-
-//left most column ------------------------------------------------------------------
-
-//----------------
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -12,
-      z: -8,
-  },
-  {
-      x: -12,
-      z: -6,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -9,
-      z: -8,
-  },
-  {
-      x: -8,
-      z: -6,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -5,
-      z: -8,
-  },
-  {
-      x: -4,
-      z: -7,
-  },
-  0.8,
-  "X"
-);
-///---------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -1,
-      z: -7.00,
-  },
-  {
-      x: -0,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 2,
-      z: -6.00,
-  },
-  {
-      x: 2,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-  );
-
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: 4,
-        z: -8.00,
-    },
-    {
-        x: 2,
-        z: -6.0,
-    },
-    0.8,
-    "X"
-    );
-
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-          x: 6,
-          z: -8.00,
-      },
-      {
-          x: 6,
-          z: -6.0,
-      },
-      0.8,
-      "X"
-      );
-
-
-      addColumnAgentGroup(
-        agentData,
-        1,
-        RADIUS * 1.5,
-        {
-            x: 10,
-            z: -7.00,
-        },
-        {
-            x: 10,
-            z: -6.0,
-        },
-        0.8,
-        "X"
-        );
-// 2nd leftmost column ------------------------------------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -11,
-      z: -2.00,
-  },
-  {
-      x: -11,
-      z: -1.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -8.0,
-      z: -2.00,
-  },
-  {
-      x: -8.0,
-      z: -1.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -5,
-      z: -2.00,
-  },
-  {
-      x: -3,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -2,
-      z: -2.00,
-  },
-  {
-      x: 0.5,
-      z: -1.0,
-  },
-  0.8,
-  "X"
-);
-     
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 2,
-      z: -2.00,
-  },
-  {
-      x: 4,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 5,
-      z: -2.00,
-  },
-  {
-      x: 7.5,
-      z: -1.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 9,
-      z: -2.00,
-  },
-  {
-      x: 11.5,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-
-// 3rd leftmost column ------------------------------------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -11,
-      z: 3.5,
-  },
-  {
-      x: -11,
-      z: 4.0,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -9,
-      z: 3.5,
-  },
-  {
-      x: -7,
-      z: 3.5,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -6,
-      z: 3.5,
-  },
-  {
-      x: -3,
-      z: 2.5,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -3,
-      z: 3.5,
-  },
-  {
-      x: 1,
-      z: 3,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 2,
-      z: 3.5,
-  },
-  {
-      x: 4,
-      z: 2.5,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 6,
-      z: 4,
-  },
-  {
-      x: 8.5,
-      z: 4,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 10,
-      z: 4,
-  },
-  {
-      x: 12,
-      z: 2,
-  },
-  0.8,
-  "X"
-);
-
-
-// 4th left-most column-----------------------------------------------------------------
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -12,
-      z: 8,
-  },
-  {
-      x: -10,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -8,
-      z: 8,
-  },
-  {
-      x: -6,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -5,
-      z: 8,
-  },
-  {
-      x: -2,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: 8,
-  },
-  {
-      x: 2,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 2,
-      z: 8,
-  },
-  {
-      x: 6,
-      z: 6,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 7,
-      z: 8,
-  },
-  {
-      x: 10,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-
-//-------- wall code start -------------
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -10);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -10),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -10),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -10),
-      });
-       scene.add(left);
-
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 12);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 12),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 12),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 12),
-      });
-       scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-    
-        parameters.wallData = wallData;
-
-    
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V6() {
-
-  parameters.scenario = 'dense_torso_like';
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 9.50,
-  },
-  {
-      x: 12,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 7; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 4.2,
-      z: 10 - j * 4.2,
-
-      },
-      {
-      x: 10 - i * 4.2,
-      z: 10 - j * 4.2,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -11);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -11),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -11),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -11),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 14);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 14),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 14),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 14),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-19, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-19, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-19, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-19, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V7() {
-
-  parameters.scenario = 'dense_torso_like';
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 9.50,
-  },
-  {
-      x: 12,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-
-  //working latest - 3
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 3.2,
-      z: 10 - j * 4.2,
-
-      },
-      {
-      x: 10 - i * 3.2,
-      z: 10 - j * 4.2,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -11);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -11),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -11),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -11),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 14);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 14),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 14),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 14),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-17, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-17, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V9() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 9.50,
-  },
-  {
-      x: 12,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 3.0,
-      z: 10 - j * 4.2,
-
-      },
-      {
-      x: 10 - i * 3.0,
-      z: 10 - j * 4.2,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -11);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -11),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -11),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -11),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 14);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 14),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 14),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 14),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-17, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-17, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V10() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 11,
-  },
-  {
-      x: 12,
-      z: -9.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 4.0,
-      z: 12 - j * 6.0,
-
-      },
-      {
-      x: 10 - i * 4.0,
-      z: 11 - j * 6.6,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -16);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -16),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -16),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -16),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 16);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 16),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 16),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 16),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-17, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-17, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V14_v2() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 11,
-  },
-  {
-      x: 12,
-      z: -12.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 4.0,
-      z: 12 - j * 6.0,
-
-      },
-      {
-      x: 10 - i * 4.0,
-      z: 11 - j * 6.6,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 5; j++) {
-    
-      addColumnAgentGroup(
-        agentData,
-        1,
-        RADIUS * 1.5,
-        {
-        x: 0 - i * 5.0,
-        z: 12 - j * 6.0,
-  
-        },
-        {
-        x: -7 - i * 5.0,
-        z: 11 - j * 6.6,
-        },
-        0.8,
-        "X"
-        );
-  
-        }
-      }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -16);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -16),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -16),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -16),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 16);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 16),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 16),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 16),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-17, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-17, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V14() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: -6.00,
-//     },
-//     {
-//         x: -15,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -20.5,
-      z: 12.0,
-  },
-  {
-      x: 12,
-      z: -13.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 1; i++) {
-    for (let j = 0; j < 3; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 4.0,
-      z: 12 - j * 7.0,
-
-      },
-      {
-      x: 10 - i * 4.0,
-      z: 11 - j * 6.6,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-
-
-    for (let i = 0; i < 1; i++) {
-      for (let j = 0; j < 4; j++) {
-    
-      addColumnAgentGroup(
-        agentData,
-        1,
-        RADIUS * 1.5,
-        {
-        x: 6 - i * 4.0,
-        z: 9 - j * 7.0,
-  
-        },
-        {
-        x: 6 - i * 4.0,
-        z: 8 - j * 6.6,
-        },
-        0.8,
-        "X"
-        );
-  
-        }
-      }
-
-
-      for (let i = 0; i < 1; i++) {
-        for (let j = 0; j < 4; j++) {
-      
-        addColumnAgentGroup(
-          agentData,
-          1,
-          RADIUS * 1.5,
-          {
-          x: 1 - i * 4.0,
-          z: 12 - j * 7.0,
-    
-          },
-          {
-          x: -3 - i * 4.0,
-          z: 11.5 - j * 6.6,
-          },
-          0.8,
-          "X"
-          );
-    
-          }
-        }
-
-        for (let i = 0; i < 1; i++) {
-          for (let j = 0; j < 4; j++) {
         
-          addColumnAgentGroup(
-            agentData,
-            1,
-            RADIUS * 1.5,
-            {
-            x: -5 - i * 5.0,
-            z: 12 - j * 7.2,
-      
-            },
-            {
-            x: -7 - i * 5.0,
-            z: 13 - j * 7.8,
-            },
-            0.8,
-            "X"
-            );
-      
-            }
-          }   
-          
-    for (let i = 0; i < 1; i++) {
-      for (let j = 0; j < 5; j++) {
-    
-      addColumnAgentGroup(
-        agentData,
-        1,
-        RADIUS * 1.5,
-        {
-        x: -11 - i * 5.0,
-        z: 12 - j * 6.0,
-  
-        },
-        {
-        x: -12 - i * 5.0,
-        z: 12 - j * 6.6,
-        },
-        0.8,
-        "X"
-        );
-  
-        }
-      }
-
-      for (let i = 0; i < 1; i++) {
-        for (let j = 0; j < 5; j++) {
-      
-        addColumnAgentGroup(
-          agentData,
-          1,
-          RADIUS * 1.5,
-          {
-          x: -15 - i * 5.0,
-          z: 12 - j * 6.0,
-    
-          },
-          {
-          x: -17 - i * 5.0,
-          z: 12 - j * 6.82,
-          },
-          0.8,
-          "X"
-          );
-    
-          }
-        }
-
-    // for (let i = 0; i < 3; i++) {
-    //   for (let j = 0; j < 5; j++) {
-    
-    //   addColumnAgentGroup(
-    //     agentData,
-    //     1,
-    //     RADIUS * 1.5,
-    //     {
-    //     x: 0 - i * 5.0,
-    //     z: 12 - j * 6.0,
-  
-    //     },
-    //     {
-    //     x: -7 - i * 5.0,
-    //     z: 12 - j * 6.6,
-    //     },
-    //     0.8,
-    //     "X"
-    //     );
-  
-    //     }
-    //   }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -17);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -17),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -17),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -17),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 16);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 16),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 16),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 16),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        bottom.position.set(-23, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-23, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-23, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-23, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
+        
+       
 
         parameters.wallData = wallData;
 
-//----- wall code    end-----
+      
 
-}
-//--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
-
-
-
-//------------- Start -- Rectangle Scenario------------------------------------------------------------------------
-
-function rectangle_Scenario() {
-
-  parameters.scenario = 'rectangle';
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: 14,
-    },
-    {
-      x: -13,
-      z: -14.0,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1,
-  {
-    x: -14,
-    z: -14,
-  },
-  {
-    x: 14,
-    z: 15,
-  },
-  0.8,
-  "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: -14,
-    },
-    {
-      x: -13,
-      z: 14,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: -14,
-      z: 14,
-    },
-    {
-      x: 15,
-      z: -14.0,
-    },
-    0.8,
-    "X"); 
-
-}
-//------------- End -- Rectangle Scenario------------------------------------------------------------------------
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V11() {
-
-
-  parameters.scenario = 'dense_torso_like';
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -13,
-//         z: 2.00,
-//     },
-//     {
-//         x: -12,
-//         z: 2.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-
-// addColumnAgentGroup(
-//   agentData,
-//   1,
-//   RADIUS * 1.5,
-//   {
-//       x: 16,
-//       z: -8.00,
-//   },
-//   {
-//       x: -12,
-//       z: 9.0,
-//   },
-//   0.8,
-//   "X"
-// );
-
-
-// addColumnAgentGroup(
-//   agentData,
-//   1,
-//   RADIUS * 1.5,
-//   {
-//       x: 13,
-//       z: 8.00,
-//   },
-//   {
-//       x: -12,
-//       z: -9.0,
-//   },
-//   0.8,
-//   "X"
-// );
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 14,
-      z: -10.00,
-  },
-  {
-      x: -14,
-      z: 8.0,
-  },
-  0.8,
-  "X"
-  );
-
-//left most column ------------------------------------------------------------------
-
-//----------------
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -13,
-      z: -10,
-  },
-  {
-      x: -13,
-      z: -8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -8,
-      z: -10,
-  },
-  {
-      x: -8,
-      z: -8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -4,
-      z: -10,
-  },
-  {
-      x: -3,
-      z: -10,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 1,
-      z: -9.00,
-  },
-  {
-      x: 1,
-      z: -10.0,
-  },
-  0.8,
-  "X"
-);
-
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: 5,
-        z: -10.00,
-    },
-    {
-        x: 5,
-        z: -8.0,
-    },
-    0.8,
-    "X"
-    );
-
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-          x: 10,
-          z: -10.00,
-      },
-      {
-          x: 10,
-          z: -9.0,
-      },
-      0.8,
-      "X"
-      );
-
-
-      // addColumnAgentGroup(
-      //   agentData,
-      //   1,
-      //   RADIUS * 1.5,
-      //   {
-      //       x: 14,
-      //       z: -10.00,
-      //   },
-      //   {
-      //       x: 14,
-      //       z: -8.0,
-      //   },
-      //   0.8,
-      //   "X"
-      //   );
-
-// 2nd leftmost column ------------------------------------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -11,
-      z: -3.00,
-  },
-  {
-      x: -12,
-      z: -5.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -8.0,
-      z: -2.00,
-  },
-  {
-      x: -6.0,
-      z: -4.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -5,
-      z: -2.00,
-  },
-  {
-      x: -1,
-      z: -5.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -2,
-      z: -2.00,
-  },
-  {
-      x: 4,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 6,
-      z: -2.00,
-  },
-  {
-      x: 8,
-      z: -5.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 10,
-      z: -2.00,
-  },
-  {
-      x:13,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 14,
-      z: -2.00,
-  },
-  {
-      x: 17,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-
-// 3rd leftmost column ------------------------------------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -11,
-      z: 3.5,
-  },
-  {
-      x: -13,
-      z: 2.0,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -9,
-      z: 3.5,
-  },
-  {
-      x: -7,
-      z: 3.5,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -6,
-      z: 3.5,
-  },
-  {
-      x: -3,
-      z: 2.5,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -3,
-      z: 3.5,
-  },
-  {
-      x: 1,
-      z: 3,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 3,
-      z: 3.5,
-  },
-  {
-      x: 5.5,
-      z: 1.5,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 9,
-      z: 3,
-  },
-  {
-      x: 9,
-      z: 2 ,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 12,
-      z: 4,
-  },
-  {
-      x: 13,
-      z: 3,
-  },
-  0.8,
-  "X"
-);
-
-
-// 4th left-most column-----------------------------------------------------------------
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -12,
-      z: 9,
-  },
-  {
-      x: -9,
-      z: 9,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -5,
-      z: 8,
-  },
-  {
-      x: -4,
-      z: 8,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: 9,
-  },
-  {
-      x: 1,
-      z: 9,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 4,
-      z: 10,
-  },
-  {
-      x: 5,
-      z: 10,
-  },
-  0.8,
-  "X"
-);
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 9,
-      z: 9,
-  },
-  {
-      x: 9,
-      z: 11,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 13,
-      z: 10,
-  },
-  {
-      x: 14,
-      z: 9,
-  },
-  0.8,
-  "X"
-);
-
-/*
-//-------- wall code start -------------
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -11);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -11),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -11),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -11),
-      });
-       scene.add(left);
-
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 12);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 12),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 12),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 12),
-      });
-       scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-    
-        parameters.wallData = wallData;
-*/
-    
 //----- wall code    end-----
 
 
 }
 //--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
 
-
-function dense_Scenario_As_Torso_Crowd_Paper_V12() 
-{
-
-  parameters.scenario = 'dense_torso_like';
-
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-          x: -20,
-          z: 2.00,
-      },
-      {
-          x: 20,
-          z: 2.0,
-      },
-      0.8,
-      "X"
-  );
-
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: -10,
-        z: -2.00,
-    },
-    {
-        x: -8,
-        z: -2.0,
-    },
-    0.8,
-    "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -10,
-      z: 5.00,
-  },
-  {
-      x: -8,
-      z: 5.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -4,
-      z: 3.00,
-  },
-  {
-      x: -3,
-      z: 5.0,
-  },
-  0.8,
-  "X"
-);
-
-//-----------
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -4,
-      z: -4.0,
-  },
-  {
-      x: -3,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-//-----------
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: 0.0,
-  },
-  {
-      x: 2,
-      z: 1.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: -5.0,
-  },
-  {
-      x: 2,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 4,
-      z: -3.0,
-  },
-  {
-      x: 6,
-      z: -1.5,
-  },
-  0.8,
-  "X"
-);
-
-//-----------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 4,
-      z: -3.0,
-  },
-  {
-      x: 6,
-      z: -1.5,
-  },
-  0.8,
-  "X"
-);
-  
-
-
-
-//-------- wall code start -------------
-/*
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -10);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -10),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -10),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -10),
-      });
-       scene.add(left);
-
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 12);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 12),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 12),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 12),
-      });
-       scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-*/
-//----- wall code    end-----
-
-}
-
-
-
-
-function dense_Scenario_As_Torso_Crowd_Paper_V13() 
-{
-
-  parameters.scenario = 'dense_torso_like';
-
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-          x: -20,
-          z: 2.00,
-      },
-      {
-          x: 21,
-          z: 2.0,
-      },
-      0.8,
-      "X"
-  );
-
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: -10,
-        z: -2.00,
-    },
-    {
-        x: -8,
-        z: -1.0,
-    },
-    0.8,
-    "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -10,
-      z: 5.00,
-  },
-  {
-      x: -8,
-      z: 4.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -4,
-      z: 2.00,
-  },
-  {
-      x: -5,
-      z: 4.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -4,
-      z: -4.0,
-  },
-  {
-      x: -3,
-      z: -1.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: 2.0,
-  },
-  {
-      x: 2,
-      z: 3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 0,
-      z: -5.0,
-  },
-  {
-      x: 2,
-      z: -3.0,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 4,
-      z: -3.0,
-  },
-  {
-      x: 6,
-      z: -1.5,
-  },
-  0.8,
-  "X"
-);
-
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 4,
-      z: -3.0,
-  },
-  {
-      x: 6,
-      z: -1.5,
-  },
-  0.8,
-  "X"
-);
-
-//-----------------------------------------
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 6,
-      z: -3.0,
-  },
-  {
-      x: 7,
-      z: -1.5,
-  },
-  0.8,
-  "X"
-);
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// --------- start ------- For Torso Crowd-like Dense Scenario  -------------------------------------------------------------
-function dense_Scenario_As_Torso_Crowd_Paper_V8() {
-
-  parameters.scenario = 'dense_torso_like';
-
-
-//   addColumnAgentGroup(
-//     agentData,
-//     1,
-//     RADIUS * 1.5,
-//     {
-//         x: -15.0,
-//         z: 6.00,
-//     },
-//     {
-//         x: 12,
-//         z: -6.0,
-//     },
-//     0.8,
-//     "X"
-// );
-
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -15.0,
-      z: 9.50,
-  },
-  {
-      x: 12,
-      z: -6.0,
-  },
-  0.8,
-  "X"
-);
-
-  //working latest - 3
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 5; j++) {
-  
-    addColumnAgentGroup(
-      agentData,
-      1,
-      RADIUS * 1.5,
-      {
-      x: 11 - i * 4.4,
-      z: 10 - j * 4.4,
-
-      },
-      {
-      x: 10 - i * 4.4,
-      z: 10 - j * 4.4,
-      },
-      0.8,
-      "X"
-      );
-
-      }
-    }
-
-//-------- wall code start -------------
-
-      const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -11);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -11),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -11),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -11),
-      });
-      scene.add(left);
-
-      const boxGeometry4 = new THREE.BoxGeometry(28, 5, 1);
-      const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-      const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
-      right.position.set(-0, 2.5, 14);
-      wallData.push({
-          center: new THREE.Vector3(-0, 2.5, 14),
-          depth: 1, // along z-axis
-          width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, 14),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, 14),
-      });
-      scene.add(right);
-
-
-        const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        //bottom.position.set(-15, -12.5, 0);
-        bottom.position.set(-17, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(-17, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
-        });
-        scene.add(bottom);
-
-
-        const boxGeometry6 = new THREE.BoxGeometry(1, 5, 28);
-        const boxMaterial6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-        const top = new THREE.Mesh(boxGeometry6, boxMaterial6);
-        //bottom.position.set(-15, -12.5, 0);
-        top.position.set(15, 2.5, -0);
-
-        wallData.push({
-            center: new THREE.Vector3(15, 2.5, -0),
-            depth: 28, // along z-axis
-            width: 1, // along x-axis
-            base: new THREE.Vector3(15, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(15, 2.5, -0 + 28 / 2),
-        });
-        scene.add(top);
-
-        parameters.wallData = wallData;
-
-//----- wall code    end-----
-
-}
 
 
 
@@ -6179,6 +3041,7 @@ function bottleneck_with_wall_scenario_x3() {
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.12; for suddenStop() scenario.   const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03; restrict velocity to rotate more than 90 degree.
 function suddenStop_Scenario() {
 
   parameters.scenario = 'suddenStop';
@@ -6215,9 +3078,136 @@ function suddenStop_Scenario() {
     "X"
   );
 
-} 
+}  
 
 
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.3; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection(). const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03;
+// Option 2 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.03;
+// Option 3 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.024;  if (bestPointDiff <= 4.0 &&  (facingDiff < 0.015 || facingDiff - Math.PI) <0.015 ){
+function rectangle_Scenario() {
+/*
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -14,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1.5,
+  {
+    x: -14,
+    z: -14.0,
+  },
+  {
+    x: 14,
+    z: 14,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -14,
+      z: 14.0,
+    },
+    0.8,
+    "X");
+
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.0,
+      {
+        x: -14,
+        z: 14,
+      },
+      {
+        x: 14,
+        z: -14.0,
+      },
+      0.8,
+      "X");  
+*/  
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -13,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1,
+  {
+    x: -14,
+    z: -14,
+  },
+  {
+    x: 14,
+    z: 15,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -13,
+      z: 14,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: -14,
+      z: 14,
+    },
+    {
+      x: 15,
+      z: -14.0,
+    },
+    0.8,
+    "X"); 
+
+}
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -6341,7 +3331,6 @@ function suddenStop_Scenario() {
     goalPos,
     velocityMagnitude,
     direction
-    
   ) {
     let i = 0;
     let initalIdx = agentData.length;
@@ -6459,15 +3448,19 @@ function suddenStop_Scenario() {
 
 
 //----------------------------------------------------------
-//uncomment any of the scenarios below to test in different scenarios.
+//uncomment any of the 3 scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
-  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
-  // rectangle_Scenario();
-  suddenStop_Scenario();
+  dense_Scenario_As_Torso_Crowd_Paper_V3();
 
+  // tryingScenario_Bilas_1_4_agents_V2();
+  // oneAgentCrossingGroup();
+  // bidirectionalScenario();
 
+  // oneAgentCrossingAGroupInAngle();
+
+  // suddenStop_Scenario();
   //----------------------------------------------------------
 
 
@@ -6699,6 +3692,8 @@ function animate() {
     // }
 
 
+
+
     member.agent.position.x = member.x;
     member.agent.position.y = member.y;
     member.agent.position.z = member.z;
@@ -6759,12 +3754,9 @@ scene.add(trajectoryLine);
 //=============================== draw lines from trajectories - end==========================================
 */
 
-    member.agent.material = redAgentMaterial;
 
-    if(member.index == 0)
-    {
-      // member.agent.material = blueAgentMaterial;
-    }
+
+    member.agent.material = redAgentMaterial;
 
     if (member.colliding) {
       member.agent.material = greenAgentMaterial;
@@ -6793,6 +3785,7 @@ scene.add(trajectoryLine);
         if (include){
             member.agent.material = blueAgentMaterial;
         }
+
 
     }
     /* TODO finish this part as 

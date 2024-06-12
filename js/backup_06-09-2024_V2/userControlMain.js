@@ -3280,8 +3280,8 @@ addColumnAgentGroup(
   1,
   RADIUS * 1.5,
   {
-      x: -20.5,
-      z: 12.0,
+      x: -15.0,
+      z: 12.5,
   },
   {
       x: 12,
@@ -3354,8 +3354,8 @@ addColumnAgentGroup(
     
           },
           {
-          x: -3 - i * 4.0,
-          z: 11.5 - j * 6.6,
+          x: 1 - i * 4.0,
+          z: 11 - j * 5.6,
           },
           0.8,
           "X"
@@ -3364,30 +3364,8 @@ addColumnAgentGroup(
           }
         }
 
-        for (let i = 0; i < 1; i++) {
-          for (let j = 0; j < 4; j++) {
-        
-          addColumnAgentGroup(
-            agentData,
-            1,
-            RADIUS * 1.5,
-            {
-            x: -5 - i * 5.0,
-            z: 12 - j * 7.2,
-      
-            },
-            {
-            x: -7 - i * 5.0,
-            z: 13 - j * 7.8,
-            },
-            0.8,
-            "X"
-            );
-      
-            }
-          }   
-          
-    for (let i = 0; i < 1; i++) {
+
+    for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 5; j++) {
     
       addColumnAgentGroup(
@@ -3395,12 +3373,12 @@ addColumnAgentGroup(
         1,
         RADIUS * 1.5,
         {
-        x: -11 - i * 5.0,
+        x: 0 - i * 5.0,
         z: 12 - j * 6.0,
   
         },
         {
-        x: -12 - i * 5.0,
+        x: -7 - i * 5.0,
         z: 12 - j * 6.6,
         },
         0.8,
@@ -3410,64 +3388,18 @@ addColumnAgentGroup(
         }
       }
 
-      for (let i = 0; i < 1; i++) {
-        for (let j = 0; j < 5; j++) {
-      
-        addColumnAgentGroup(
-          agentData,
-          1,
-          RADIUS * 1.5,
-          {
-          x: -15 - i * 5.0,
-          z: 12 - j * 6.0,
-    
-          },
-          {
-          x: -17 - i * 5.0,
-          z: 12 - j * 6.82,
-          },
-          0.8,
-          "X"
-          );
-    
-          }
-        }
-
-    // for (let i = 0; i < 3; i++) {
-    //   for (let j = 0; j < 5; j++) {
-    
-    //   addColumnAgentGroup(
-    //     agentData,
-    //     1,
-    //     RADIUS * 1.5,
-    //     {
-    //     x: 0 - i * 5.0,
-    //     z: 12 - j * 6.0,
-  
-    //     },
-    //     {
-    //     x: -7 - i * 5.0,
-    //     z: 12 - j * 6.6,
-    //     },
-    //     0.8,
-    //     "X"
-    //     );
-  
-    //     }
-    //   }
-
 //-------- wall code start -------------
 
       const boxGeometry5 = new THREE.BoxGeometry(28, 5, 1);
       const boxMaterial5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
       const left = new THREE.Mesh(boxGeometry5, boxMaterial5);
-      left.position.set(-0, 2.5, -17);
+      left.position.set(-0, 2.5, -16);
       wallData.push({
-          center: new THREE.Vector3(-0, 2.5, -17),
+          center: new THREE.Vector3(-0, 2.5, -16),
           depth: 1, // along z-axis
           width: 28, // along x-axis
-          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -17),
-          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -17),
+          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -16),
+          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -16),
       });
       scene.add(left);
 
@@ -3488,14 +3420,15 @@ addColumnAgentGroup(
         const boxGeometry2 = new THREE.BoxGeometry(1, 5, 28);
         const boxMaterial2 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
         const bottom = new THREE.Mesh(boxGeometry2, boxMaterial2);
-        bottom.position.set(-23, 2.5, -0);
+        //bottom.position.set(-15, -12.5, 0);
+        bottom.position.set(-17, 2.5, -0);
 
         wallData.push({
-            center: new THREE.Vector3(-23, 2.5, -0),
+            center: new THREE.Vector3(-17, 2.5, -0),
             depth: 28, // along z-axis
             width: 1, // along x-axis
-            base: new THREE.Vector3(-23, 2.5, -0 - 28/2),
-            tip: new THREE.Vector3(-23, 2.5, -0 + 28 / 2),
+            base: new THREE.Vector3(-17, 2.5, -0 - 28/2),
+            tip: new THREE.Vector3(-17, 2.5, -0 + 28 / 2),
         });
         scene.add(bottom);
 
@@ -3523,75 +3456,6 @@ addColumnAgentGroup(
 //--------------- end --- For Torso Crowd-like Dense Scenario------------------------------------------------------------------------
 
 
-
-//------------- Start -- Rectangle Scenario------------------------------------------------------------------------
-
-function rectangle_Scenario() {
-
-  parameters.scenario = 'rectangle';
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: 14,
-    },
-    {
-      x: -13,
-      z: -14.0,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1,
-  {
-    x: -14,
-    z: -14,
-  },
-  {
-    x: 14,
-    z: 15,
-  },
-  0.8,
-  "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: 14,
-      z: -14,
-    },
-    {
-      x: -13,
-      z: 14,
-    },
-    0.8,
-    "X");
-
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.0,
-    {
-      x: -14,
-      z: 14,
-    },
-    {
-      x: 15,
-      z: -14.0,
-    },
-    0.8,
-    "X"); 
-
-}
-//------------- End -- Rectangle Scenario------------------------------------------------------------------------
 
 
 
@@ -6179,6 +6043,7 @@ function bottleneck_with_wall_scenario_x3() {
   }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.12; for suddenStop() scenario.   const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03; restrict velocity to rotate more than 90 degree.
 function suddenStop_Scenario() {
 
   parameters.scenario = 'suddenStop';
@@ -6215,9 +6080,136 @@ function suddenStop_Scenario() {
     "X"
   );
 
-} 
+}  
 
 
+// use angleThresholdBtwnDirectionAndNormalInDeg = 0.3; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection(). const C_LONG_RANGE_STIFF = 0.25;   const MAX_DELTA = 0.03;
+// Option 2 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.03;
+// Option 3 (Latest): use angleThresholdBtwnDirectionAndNormalInDeg = 0.2; for rectangle_Scenario() scenario. Restrict >90 big rotation of velocity inside findNewPositionByProjection().   const C_LONG_RANGE_STIFF = 0.15;  const MAX_DELTA = 0.024;  if (bestPointDiff <= 4.0 &&  (facingDiff < 0.015 || facingDiff - Math.PI) <0.015 ){
+function rectangle_Scenario() {
+/*
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -14,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1.5,
+  {
+    x: -14,
+    z: -14.0,
+  },
+  {
+    x: 14,
+    z: 14,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -14,
+      z: 14.0,
+    },
+    0.8,
+    "X");
+
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.0,
+      {
+        x: -14,
+        z: 14,
+      },
+      {
+        x: 14,
+        z: -14.0,
+      },
+      0.8,
+      "X");  
+*/  
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: 14,
+    },
+    {
+      x: -13,
+      z: -14.0,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+  agentData,
+  1,
+  RADIUS * 1,
+  {
+    x: -14,
+    z: -14,
+  },
+  {
+    x: 14,
+    z: 15,
+  },
+  0.8,
+  "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: 14,
+      z: -14,
+    },
+    {
+      x: -13,
+      z: 14,
+    },
+    0.8,
+    "X");
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.0,
+    {
+      x: -14,
+      z: 14,
+    },
+    {
+      x: 15,
+      z: -14.0,
+    },
+    0.8,
+    "X"); 
+
+}
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -6459,15 +6451,37 @@ function suddenStop_Scenario() {
 
 
 //----------------------------------------------------------
-//uncomment any of the scenarios below to test in different scenarios.
+//uncomment any of the 3 scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
-  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
-  // rectangle_Scenario();
-  suddenStop_Scenario();
 
+  // dense_Scenario_As_Torso_Crowd_Paper_V3();
+  // dense_Scenario_As_Torso_Crowd_Paper_V4();
+  // dense_Scenario_As_Torso_Crowd_Paper_V5();
+  // dense_Scenario_As_Torso_Crowd_Paper_V6(); // slight less dense scenario than v7 - working
+  // dense_Scenario_As_Torso_Crowd_Paper_V7();  // very dense scenario - working
+  // dense_Scenario_As_Torso_Crowd_Paper_V8();  // slightly sparse scenario
+  // dense_Scenario_As_Torso_Crowd_Paper_V9();
+  // dense_Scenario_As_Torso_Crowd_Paper_V10();
+  // dense_Scenario_As_Torso_Crowd_Paper_V11();
 
+  // dense_Scenario_As_Torso_Crowd_Paper_V12();
+
+  // dense_Scenario_As_Torso_Crowd_Paper_V13();
+
+  dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10
+
+  // tryingScenario_Bilas_1_4_agents_V2();
+  // oneAgentCrossingGroup();
+  // bidirectionalScenario();
+
+  // oneAgentCrossingAGroupInAngle();
+  // crossing_Two_Groups();
+
+  // suddenStop_Scenario();
+
+  // debug_passive_agent_oscillations();
   //----------------------------------------------------------
 
 
@@ -6763,7 +6777,7 @@ scene.add(trajectoryLine);
 
     if(member.index == 0)
     {
-      // member.agent.material = blueAgentMaterial;
+      member.agent.material = blueAgentMaterial;
     }
 
     if (member.colliding) {
