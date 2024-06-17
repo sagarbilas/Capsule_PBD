@@ -608,8 +608,6 @@ function circleScenario(){
 
   function oneAgentCrossingGroup() {
 
-    parameters.scenario = 'oneAgentCrossingGroup';
-
     addColumnAgentGroup(
       agentData,
       1,
@@ -673,8 +671,6 @@ function circleScenario(){
 
   
   function oneAgentCrossingAGroupInAngle() {
-
-    parameters.scenario = 'oneAgentCrossingAGroupInAngle';
 
     addColumnAgentGroup(
       agentData,
@@ -6763,7 +6759,7 @@ function suddenStop_Scenario() {
       },
       {
         x: -28,
-        z: 1.0,    // z: 1,    1.4,   z: 1.2, 
+        z: 1,
       },
       0.8,
       "X"
@@ -7034,13 +7030,13 @@ function tryingScenario_4_Bilas_Capsule() {
 //uncomment any of the scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
-  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
-  narrow_hallwayTwoAgent_FaceToFace_Scenario();
+  dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
+  // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
   // swap_Through_Narrow_Exit_Scenario();  
   // suddenStop_Scenario();
 
-//-------------------------------------------------------------------
+
 
   // tryingScenario_Bilas_1_4_agents_V2();
   // oneAgentCrossingGroup();
@@ -7346,7 +7342,7 @@ scene.add(trajectoryLine);
     }
 
     if (member.colliding) {
-      // member.agent.material = greenAgentMaterial;
+      member.agent.material = greenAgentMaterial;
     }
     member.colliding = false;
 

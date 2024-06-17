@@ -311,165 +311,136 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
 
 
-  function comfortConstraint_Capsule(best_i, best_j, p_best_i, p_best_j, capsule_i, capsule_j) 
+  function comfortConstraint_Capsule(best_i, best_j, p_best_i, p_best_j, capsule_i, capsule_j) {
+ 
+    //We need to use different stiffnesses for different scenarios to achieve the best results.
+  let stif = 0.0;
+  if(customParams.scenario == 'dense_torso_like')
   {
-      //We need to use different stiffnesses for different scenarios to achieve the best results.
-    let stif = 0.0;
-    if(customParams.scenario == 'dense_torso_like')
+    if(capsule_i.index == 0 || capsule_i.index == 1)
     {
-      if(capsule_i.index == 0 || capsule_i.index == 1)
-      {
-        stif = 0.045;    // stif = 0.045;
-      }else{
-        stif = 0.01;   //stif = 0.01;
+      stif = 0.045;
+    }else{
+      stif = 0.01;
+    }
+  }
+
+  else if(customParams.scenario == 'swap_Scenario')
+  {
+    stif = 0.02738;    // stif = 0.0272;   0.0282;     0.0275;   0.0274;
+  } else if(customParams.scenario == 'suddenStop'){
+    stif = 0.011;
+  }else if(customParams.scenario == 'rectangle'){
+    stif = 0.045;  
+  }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
+    stif = 0.025;   // .45
+  }
+  
+  const agentCentroidDist = distance(p_best_i.x, p_best_i.z, p_best_j.x, p_best_j.z);
+
+  const agentDist = agentCentroidDist - AGENTSIZE;
+  const dir_x = (p_best_j.x - p_best_i.x) / agentCentroidDist;
+  const dir_z = (p_best_j.z - p_best_i.z) / agentCentroidDist;
+  const agent_i_scaler = (1 / (1 + 1)) * agentDist;
+  const agent_j_scaler = (1 / (1 + 1)) * agentDist;
+
+  if(customParams.scenario == 'dense_torso_like'){
+  if (agentDist < 0.8)  
+  {
+    if(capsule_i.index != 0)
+    {
+      capsule_i.px += stif * agent_i_scaler * -dir_x;
+      capsule_i.pz += stif * agent_i_scaler * -dir_z;
+          
+      capsule_i.grad.dx += agent_i_scaler * -dir_x;
+      capsule_i.grad.dz += agent_i_scaler * -dir_z;
+    }
+
+    if(capsule_j.index != 0)
+    {
+      capsule_j.px += stif * -agent_j_scaler * -dir_x;
+      capsule_j.pz += stif * -agent_j_scaler * -dir_z;
+          
+      capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+      capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+    }
+  }
+  }
+
+
+  if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
+  {
+    if (agentDist < 1.71 )   // 1.7035, 1.704
+    {   
+      capsule_i.px += stif * agent_i_scaler * -dir_x;
+      capsule_i.pz += stif * agent_i_scaler * -dir_z;           
+      capsule_i.grad.dx += agent_i_scaler * -dir_x;
+      capsule_i.grad.dz += agent_i_scaler * -dir_z;
+
+      capsule_j.px += stif * -agent_j_scaler * -dir_x;
+      capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
+      capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+      capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+    }
+  }
+
+  if( customParams.scenario == 'swap_Scenario' )
+  {
+      if ( agentDist < 1.593 )      // agentDist < 1.6
+      {   
+        capsule_i.px += stif * agent_i_scaler * -dir_x;
+        capsule_i.pz += stif * agent_i_scaler * -dir_z;           
+        capsule_i.grad.dx += agent_i_scaler * -dir_x;
+        capsule_i.grad.dz += agent_i_scaler * -dir_z;
+  
+        capsule_j.px += stif * -agent_j_scaler * -dir_x;
+        capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
+        capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+        capsule_j.grad.dz += -agent_j_scaler * -dir_z;
       }
-    }
+  }
 
-    else if(customParams.scenario == 'swap_Scenario')
-    {
-      stif = 0.02738;    // stif = 0.0272;   0.0282;     0.0275;   0.0274;
-    } else if(customParams.scenario == 'suddenStop'){
-      stif = 0.024;       //  0.011;    0.021;    0.020
-    }else if(customParams.scenario == 'rectangle'){
-      stif = 0.045;  
-    }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
-      stif = 0.025;   // .45    0.025;   0.02547; 
-    }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
-      stif = 0.037;   // .45    0.025;
-    }
-    
-    const agentCentroidDist = distance(p_best_i.x, p_best_i.z, p_best_j.x, p_best_j.z);
-
-    const agentDist = agentCentroidDist - AGENTSIZE;
-    const dir_x = (p_best_j.x - p_best_i.x) / agentCentroidDist;
-    const dir_z = (p_best_j.z - p_best_i.z) / agentCentroidDist;
-    const agent_i_scaler = (1 / (1 + 1)) * agentDist;
-    const agent_j_scaler = (1 / (1 + 1)) * agentDist;
-
-    if(customParams.scenario == 'dense_torso_like'){
-    if (agentDist < 0.8)     //was 0.8
-    {
-      if(capsule_i.index != 0)
+  if( customParams.scenario == 'suddenStop' )
+  {
+    if (agentDist < 3.6 ) 
+    {  
+      if(capsule_i.index != 1)
       {
         capsule_i.px += stif * agent_i_scaler * -dir_x;
         capsule_i.pz += stif * agent_i_scaler * -dir_z;
-            
+
         capsule_i.grad.dx += agent_i_scaler * -dir_x;
         capsule_i.grad.dz += agent_i_scaler * -dir_z;
       }
 
-      if(capsule_j.index != 0)
-      {
+      if(capsule_j.index != 1 )
+      {  
         capsule_j.px += stif * -agent_j_scaler * -dir_x;
         capsule_j.pz += stif * -agent_j_scaler * -dir_z;
             
         capsule_j.grad.dx += -agent_j_scaler * -dir_x;
         capsule_j.grad.dz += -agent_j_scaler * -dir_z;
       }
+
     }
-    }
+  }
 
 
-    if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
-    {
-      if (agentDist < 1.71 )   // 1.7035, 1.704
-      {   
+  if( customParams.scenario == 'rectangle' )
+  { 
+      if (agentDist < 1.5 )   //0.9
+      { 
         capsule_i.px += stif * agent_i_scaler * -dir_x;
         capsule_i.pz += stif * agent_i_scaler * -dir_z;           
         capsule_i.grad.dx += agent_i_scaler * -dir_x;
         capsule_i.grad.dz += agent_i_scaler * -dir_z;
-
+  
         capsule_j.px += stif * -agent_j_scaler * -dir_x;
         capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
         capsule_j.grad.dx += -agent_j_scaler * -dir_x;
         capsule_j.grad.dz += -agent_j_scaler * -dir_z;
       }
-    }
-
-    if( customParams.scenario == 'swap_Scenario' )
-    {
-        if ( agentDist < 1.593 )      // agentDist < 1.6    
-        {   
-          capsule_i.px += stif * agent_i_scaler * -dir_x;
-          capsule_i.pz += stif * agent_i_scaler * -dir_z;           
-          capsule_i.grad.dx += agent_i_scaler * -dir_x;
-          capsule_i.grad.dz += agent_i_scaler * -dir_z;
-    
-          capsule_j.px += stif * -agent_j_scaler * -dir_x;
-          capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
-          capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-          capsule_j.grad.dz += -agent_j_scaler * -dir_z;
-        }
-    }
-
-    if( customParams.scenario == 'suddenStop' )
-    {
-      // if (agentDist < 3.6 ) 
-      if (agentDist < 2.06 )       // 2.4    2.15
-      {  
-        if(capsule_i.index != 1)
-        {
-          capsule_i.px += stif * agent_i_scaler * -dir_x;
-          capsule_i.pz += stif * agent_i_scaler * -dir_z;
-
-          capsule_i.grad.dx += agent_i_scaler * -dir_x;
-          capsule_i.grad.dz += agent_i_scaler * -dir_z;
-        }
-
-        if(capsule_j.index != 1 )
-        {  
-          capsule_j.px += stif * -agent_j_scaler * -dir_x;
-          capsule_j.pz += stif * -agent_j_scaler * -dir_z;
-              
-          capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-          capsule_j.grad.dz += -agent_j_scaler * -dir_z;
-        }
-
-      }
-    }
-
-
-    if( customParams.scenario == 'rectangle' )
-    { 
-        if (agentDist < 1.5 )   //0.9
-        { 
-          capsule_i.px += stif * agent_i_scaler * -dir_x;
-          capsule_i.pz += stif * agent_i_scaler * -dir_z;           
-          capsule_i.grad.dx += agent_i_scaler * -dir_x;
-          capsule_i.grad.dz += agent_i_scaler * -dir_z;
-    
-          capsule_j.px += stif * -agent_j_scaler * -dir_x;
-          capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
-          capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-          capsule_j.grad.dz += -agent_j_scaler * -dir_z;
-        }
-    }
-
-
-    if( customParams.scenario == 'oneAgentCrossingAGroupInAngle' )
-      { 
-          if (agentDist < 1.5 )   //0.9
-          { 
-            if(capsule_i.index != 0)
-              {
-                capsule_i.px += stif * agent_i_scaler * -dir_x;
-                capsule_i.pz += stif * agent_i_scaler * -dir_z;
-      
-                capsule_i.grad.dx += agent_i_scaler * -dir_x;
-                capsule_i.grad.dz += agent_i_scaler * -dir_z;
-              }
-      
-              if(capsule_j.index != 0 )
-              {  
-                capsule_j.px += stif * -agent_j_scaler * -dir_x;
-                capsule_j.pz += stif * -agent_j_scaler * -dir_z;
-                    
-                capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-                capsule_j.grad.dz += -agent_j_scaler * -dir_z;
-              }
-          }
-      }
-      
+  }
 
   return [
     sceneEntities[i].grad.x,
@@ -1005,20 +976,18 @@ function makeNextAgentActive( agent_index )
 
   function orientationConstraint(capsule, clearance, distToActivateOrientationConstraint, activate_orientation)
   { 
-    
     let cross_width = (dist_tip_to_base/2) + RADIUS;
 
-    if( (clearance) >= (2 * cross_width) && (activate_orientation == 'true') )
+    if( (clearance) >= (2 * cross_width) && (activate_orientation=='true') )
     {
-
-    }else if( ((clearance) < (2 * cross_width )) && ( clearance - capsule.radius > 0) && (activate_orientation == 'true') )
+    }else if( ((clearance) < (2 * cross_width )) && ( clearance - capsule.radius > 0) && (activate_orientation=='true') )
     {
       let cosValue = ( (clearance -  capsule.radius) / ( 2 * cross_width ));
       const angleInRadians = Math.acos(cosValue);
 
-        //smooth the rotation while changing orientation
-        if( Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)
-        {
+      //smooth the rotation while changing orientation
+      if( Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)
+      {
         // Using different rotation speed to achieve the best results for different scenarios. 
         if(customParams.scenario == 'dense_torso_like')
         {
@@ -1026,30 +995,20 @@ function makeNextAgentActive( agent_index )
         }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
           capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/100;
         }else{
-          capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;        // 150
+          capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;
         }    
       } 
     }
       else if(  (clearance - capsule.radius <= 0) && (activate_orientation=='true') )
       {
         // if no clearace available, agent needs to do 90 degree side-stepping.
-        if(customParams.scenario == 'suddenStop')
-        {
-          if( capsule.agent.rotation.z < 3.2)
-            {
-              capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/500;    // 1.57/250;
-            } 
-        }else{
         if( capsule.agent.rotation.z < 3.2)
         {
           capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/75;
         } 
 
-        }
-
       }
       else{
-
         }
   }
 
@@ -1215,41 +1174,41 @@ if(closest_wall_in_left.length() != 0 && closest_wall_in_right.length() != 0)
   let dist_with_closest_in_left = distance(capsule_entity.x, capsule_entity.z, closest_in_left.x, closest_in_left.z);
   let dist_with_closest_in_right = distance(capsule_entity.x, capsule_entity.z, closest_in_right.x, closest_in_right.z);
   let dist_with_closest_in_right_And_left = distance(closest_in_left.x, closest_in_left.z, closest_in_right.x, closest_in_right.z);
-  let activate_orientation = 'false';
+  let activate_orietation = 'false';
   let cross_width = (dist_tip_to_base/2) + RADIUS;
   
   // different threshold distances for work best in different scenarios. This activates when to start rptation to go through narrow exits. 
   if(customParams.scenario == 'suddenStop')
   {
-    // if( (dist_with_closest_in_left <= (cross_width + 5) || dist_with_closest_in_right <= (cross_width + 5))  )
-    if( (dist_with_closest_in_left <= (cross_width + 2) || dist_with_closest_in_right <= (cross_width + 2))  )
+    if( (dist_with_closest_in_left <= (cross_width+5) || dist_with_closest_in_right <= (cross_width+5))  )
       {
-        activate_orientation = 'true';  
+        activate_orietation = 'true'; 
       }else{
-        activate_orientation = 'false'; 
+        activate_orietation = 'false'; 
       }
   }
   else if( customParams.scenario == 'rectangle')
   {
     if( (dist_with_closest_in_left <= (cross_width+15) || dist_with_closest_in_right <= (cross_width+15)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 8 )   )
       {
-        activate_orientation = 'true'; 
+        activate_orietation = 'true'; 
       }else{
-        activate_orientation = 'false'; 
+        activate_orietation = 'false'; 
       }
   }
   else{
+    
   if( (dist_with_closest_in_left <= (cross_width+5) || dist_with_closest_in_right <= (cross_width+5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  )
-    // if( (dist_with_closest_in_left <= (cross_width+3) || dist_with_closest_in_right <= (cross_width+3)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  )
+  // if( (dist_with_closest_in_left <= (cross_width+3) || dist_with_closest_in_right <= (cross_width+3)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  )
   {
-      activate_orientation = 'true'; 
-    }else{
-      activate_orientation = 'false'; 
-    }
+    activate_orietation = 'true'; 
+  }else{
+    activate_orietation = 'false'; 
+  }
 
   }
       
-return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint, activate_orientation]            
+return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint, activate_orietation]            
 }
 
 

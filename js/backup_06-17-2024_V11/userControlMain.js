@@ -608,8 +608,6 @@ function circleScenario(){
 
   function oneAgentCrossingGroup() {
 
-    parameters.scenario = 'oneAgentCrossingGroup';
-
     addColumnAgentGroup(
       agentData,
       1,
@@ -673,8 +671,6 @@ function circleScenario(){
 
   
   function oneAgentCrossingAGroupInAngle() {
-
-    parameters.scenario = 'oneAgentCrossingAGroupInAngle';
 
     addColumnAgentGroup(
       agentData,
@@ -5091,14 +5087,14 @@ addColumnAgentGroup(
   const left = new THREE.Mesh(boxGeometry1, boxMaterial1);
   // left.position.set(20, 2.5, 0);
   // left.position.set(-10, 2.5, 0);
-  left.position.set(-10, 2.5, 2.3);
+  left.position.set(-10, 2.5, 2.2);
 
   wallData.push({
-      center: new THREE.Vector3(-10, 2.5, 2.3),
+      center: new THREE.Vector3(-10, 2.5, 2.2),
       depth: 1, // along z-axis
       width: 18, // along x-axis
-      base: new THREE.Vector3(-10 - 18/2, 2.5, 2.3),
-      tip: new THREE.Vector3(-10 + 18/2, 2.5, 2.3),
+      base: new THREE.Vector3(-10 - 18/2, 2.5, 2.2),
+      tip: new THREE.Vector3(-10 + 18/2, 2.5, 2.2),
   });
 
   const boxGeometry4 = new THREE.BoxGeometry(18, 5, 1);
@@ -5106,13 +5102,13 @@ addColumnAgentGroup(
   const right = new THREE.Mesh(boxGeometry4, boxMaterial4);
   // right.position.set(-30, 2.5, 0);
   // right.position.set(-10, 2.5, -4);
-  right.position.set(-10, 2.5, -5.25);
+  right.position.set(-10, 2.5, -5.15);
   wallData.push({
-      center: new THREE.Vector3(-10, 2.5, -5.25),
+      center: new THREE.Vector3(-10, 2.5, -5.15),
       depth: 1, // along z-axis
       width: 18, // along x-axis
-      base: new THREE.Vector3(-10 - 18 / 2, 2.5, -5.25),
-      tip: new THREE.Vector3(-10 + 18 / 2, 2.5, -5.25),
+      base: new THREE.Vector3(-10 - 18 / 2, 2.5, -5.15),
+      tip: new THREE.Vector3(-10 + 18 / 2, 2.5, -5.15),
   });
 
   scene.add(left);
@@ -6763,7 +6759,7 @@ function suddenStop_Scenario() {
       },
       {
         x: -28,
-        z: 1.0,    // z: 1,    1.4,   z: 1.2, 
+        z: 1,
       },
       0.8,
       "X"
@@ -7040,7 +7036,7 @@ function tryingScenario_4_Bilas_Capsule() {
   // swap_Through_Narrow_Exit_Scenario();  
   // suddenStop_Scenario();
 
-//-------------------------------------------------------------------
+
 
   // tryingScenario_Bilas_1_4_agents_V2();
   // oneAgentCrossingGroup();
@@ -7346,7 +7342,7 @@ scene.add(trajectoryLine);
     }
 
     if (member.colliding) {
-      // member.agent.material = greenAgentMaterial;
+      member.agent.material = greenAgentMaterial;
     }
     member.colliding = false;
 

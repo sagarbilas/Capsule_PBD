@@ -333,7 +333,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     }else if(customParams.scenario == 'rectangle'){
       stif = 0.045;  
     }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
-      stif = 0.025;   // .45    0.025;   0.02547; 
+      stif = 0.02547;   // .45    0.025;
     }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
       stif = 0.037;   // .45    0.025;
     }
