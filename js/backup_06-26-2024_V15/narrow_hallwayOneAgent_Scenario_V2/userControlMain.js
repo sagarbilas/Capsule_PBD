@@ -1405,7 +1405,7 @@ function swap_Through_Narrow_Exit_Scenario() {
 
 
 //===========================================================================
-// ------------------------- swap_Through_Narrow_Exit_Scenario --------- Start -------------------------------------------------------------------------------------------------------
+// ------------------------- swap_Through_Narrow_Exit_Scenario v2 --------- Start -------------------------------------------------------------------------------------------------------
 function swap_Through_Narrow_Exit_Scenario_V2() {
 
   parameters.scenario = 'swap_Scenario';
@@ -1431,114 +1431,114 @@ function swap_Through_Narrow_Exit_Scenario_V2() {
   );
 
 
-// index 1
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: 6.1,
-      z: -8.0,
-  },
-  {
-      // x: -20,
-      // z: -8.0,
-
-      x: 4.0,
-      // z: -8.0,
-      z: -8.0,
-  },
-  0.8,
-  "X"
-    );
-
-
-
-// index 2
-addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-    x: 7,
-    z: 5,
-  },
-  {
-    // x: -20,
-    // z: 5,
-
-    // x: 6,
-    x: 5.5,
-    // z: 5,
-    z: 5,
-  },
-    0.8,
-    "X"
-  );
-
-    //---------------------------------------------------------------
-
-    // index 3
+  // index 1
   addColumnAgentGroup(
     agentData,
     1,
     RADIUS * 1.5,
     {
-        x: 12.0,
-        z: -0.8,
+        x: 6.1,
+        z: -8.0,
     },
     {
-        // x: -30,
-        // z: -0.8,
-
-        x: 11.0,
-        z: -0.8,
-    },
-    0.8,
-    "X"
-  );
-  
-    
-  // index 4
-  addColumnAgentGroup(
-    agentData,
-    1,
-    RADIUS * 1.5,
-    {
-        x: 12.0,
-        z: -10.0,
-    },
-    {
-        // x: -30,
+        // x: -20,
         // z: -8.0,
 
-        x: 11.0,
-        z: -10.0,
+        x: 4.0,
+        // z: -8.0,
+        z: -8.0,
     },
     0.8,
     "X"
       );
-  
 
-// index 5 
+
+
+// index 2
   addColumnAgentGroup(
     agentData,
     1,
     RADIUS * 1.5,
     {
-      x: 13,
-      z: 7,
+      x: 7,
+      z: 5,
     },
-      {
-      // x: -30,
+    {
+      // x: -20,
       // z: 5,
 
-      x: 12,
-      z: 7,
+      // x: 6,
+      x: 5.5,
+      // z: 5,
+      z: 4,
+    },
+      0.8,
+      "X"
+    );
+
+    //---------------------------------------------------------------
+
+    // index 3
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.5,
+      {
+          x: 12.0,
+          z: -0.8,
+      },
+      {
+          // x: -30,
+          // z: -0.8,
+
+          x: 11.0,
+          z: -0.8,
       },
       0.8,
       "X"
     );
+  
+    
+  // index 4
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.5,
+      {
+          x: 12.0,
+          z: -10.0,
+      },
+      {
+          // x: -30,
+          // z: -8.0,
+
+          x: 11.0,
+          z: -10.0,
+      },
+      0.8,
+      "X"
+        );
+  
+
+// index 5 
+    addColumnAgentGroup(
+      agentData,
+      1,
+      RADIUS * 1.5,
+      {
+        x: 13,
+        z: 7,
+      },
+        {
+        // x: -30,
+        // z: 5,
+
+        x: 12,
+        z: 7,
+        },
+        0.8,
+        "X"
+      );
 
  //------------- 1st group end------------------------------ 
 
@@ -1566,49 +1566,49 @@ addColumnAgentGroup(
 );
 
 // index  7
-  addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      // x: -24,
-      x: -25,
-      z: 3,
-  },
-  {
-      // x: 20,
-      // z: 3,
-
-      x: -24.5,
-      z: 3,
-  },
-  0.8,
-  "X"
-    );
-
-
-// index 8
-  addColumnAgentGroup(
+    addColumnAgentGroup(
     agentData,
     1,
     RADIUS * 1.5,
     {
-        // x: -25,
-        x: -27,
-        // z: -7,
-        z: -7.5,
+        // x: -24,
+        x: -25,
+        z: 3,
     },
     {
         // x: 20,
-        // z: -7,
+        // z: 3,
 
-        x: -26,
-        // z: -7,
-        z: -7.5,
+        x: -24.5,
+        z: 3,
     },
     0.8,
     "X"
       );
+
+
+// index 8
+      addColumnAgentGroup(
+        agentData,
+        1,
+        RADIUS * 1.5,
+        {
+            // x: -25,
+            x: -27,
+            // z: -7,
+            z: -7.5,
+        },
+        {
+            // x: 20,
+            // z: -7,
+
+            x: -26,
+            // z: -7,
+            z: -7.5,
+        },
+        0.8,
+        "X"
+          );
 //-------------------------------------------------- 
 
 // index 9
@@ -1633,45 +1633,45 @@ addColumnAgentGroup(
 
 
 // index 10
-  addColumnAgentGroup(
-  agentData,
-  1,
-  RADIUS * 1.5,
-  {
-      x: -34,
-      z: 5,
-  },
-  {
-      // x: 20,
-      // z: 3,
-
-      x: -32,
-      z: 5,
-  },
-  0.8,
-  "X"
-    );
-
-
-// index 11
-  addColumnAgentGroup(
+    addColumnAgentGroup(
     agentData,
     1,
     RADIUS * 1.5,
     {
         x: -34,
-        z: -9,
+        z: 5,
     },
     {
         // x: 20,
-        // z: -7,
+        // z: 3,
 
         x: -32,
-        z: -9,
+        z: 5,
     },
     0.8,
     "X"
       );
+
+
+// index 11
+      addColumnAgentGroup(
+        agentData,
+        1,
+        RADIUS * 1.5,
+        {
+            x: -34,
+            z: -9,
+        },
+        {
+            // x: 20,
+            // z: -7,
+
+            x: -32,
+            z: -9,
+        },
+        0.8,
+        "X"
+          );
 
 //--------------------------------------------------
   
@@ -1810,7 +1810,7 @@ addColumnAgentGroup(
     parameters.wallData = wallData;
   }
   
-// ------------------------- swap_Through_Narrow_Exit_Scenario --------- End -------------------------------------------------------------------------------------------------------
+// ------------------------- swap_Through_Narrow_Exit_Scenario v2 --------- End -------------------------------------------------------------------------------------------------------
 //===========================================================================
 
 
@@ -2041,12 +2041,12 @@ function suddenStop_Scenario() {
       1,
       RADIUS * 1.0,
       {
-        x: 30,
-        z: 1.3,
+        x: 28,
+        z: 1,
       },
       {
         x: -28,
-        z: 7.0,    // z: 1,    1.4,   z: 1.2, 
+        z: 1.0,    // z: 1,    1.4,   z: 1.2, 
       },
       0.8,
       "X"
@@ -2142,9 +2142,6 @@ function suddenStop_Scenario() {
         prev_cur_to_best_wall_dist_right: 1000,
         prev_cur_to_best_wall_dist_left: 1000,
 
-                prev_closest_Wall_in_right: new THREE.Vector3(),
-        prev_closest_Wall_in_left: new THREE.Vector3(),
-
         agent_state: 'passive',
 
         cur_orientation: 0,
@@ -2198,17 +2195,18 @@ function suddenStop_Scenario() {
 //----------------------------------------------------------
 //uncomment any of the scenarios below to test in different scenarios.
 
-    suddenStop_Scenario();
-  // rectangle_Scenario(); 
-  // swap_Through_Narrow_Exit_Scenario_V2();
-  // narrow_hallwayOneAgent_Scenario();
+  narrow_hallwayOneAgent_Scenario();
+  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
-  // bidirectionalScenario();
-//-------------------------------------------------------------------
+  // rectangle_Scenario(); 
+  // swap_Through_Narrow_Exit_Scenario();  
+  // swap_Through_Narrow_Exit_Scenario_V2();    // use this version
+  // suddenStop_Scenario();
 
-//  tryingScenario_Bilas_1_4_agents_V2();
+//-------------------------------------------------------------------
+  //  tryingScenario_Bilas_1_4_agents_V2();
   // oneAgentCrossingGroup();
-  
+  // bidirectionalScenario();
   // oneAgentCrossingAGroupInAngle();
 
   // hallway_facing_4_agents_scenario();
@@ -2419,28 +2417,23 @@ function render() {
 function getRightRotation_v2() {
 
   agentData.forEach(function (member) {
+    // member.agent.position.x = member.x;
+    // member.agent.position.y = member.y;
+    // member.agent.position.z = member.z;
 
     const dx = member.goal_x - member.x;
     const dz = member.goal_z - member.z;
 
-    if(parameters.scenario == 'dense_torso_like')
-    {
-      if(member.index == 0)
-      {
-        member.goal_orientation = Math.atan2(dz, dx);
-        member.agent.rotation.z = member.goal_orientation;
-      }
-    }else{
-      member.goal_orientation = Math.atan2(dz, dx);
-      member.agent.rotation.z = member.goal_orientation; 
-      
-      if( parameters.scenario == 'swap_Scenario' && member.index == 2)
-      {
-        member.agent.rotation.z = 4.2;
-      }
+    // const dx = Math.abs(member.goal_x - member.x) ;
+    // const dz = Math.abs(member.goal_z - member.z) ;
 
-    }
+    member.goal_orientation = Math.atan2(dz, dx);
+    member.agent.rotation.z = member.goal_orientation;
 
+    // member.agent.rotation.z = Math.atan2(dz, dx);
+
+    // console.log("member.x: ", member.x, ", member.z: ", member.z, ", member.goal_x: ", member.goal_x, ", member.goal_z: ", member.goal_z);
+    // console.log("id:---------- ", member.index,", rotation: ", member.agent.rotation.z, "\n\n");
 
   });
 

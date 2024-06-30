@@ -317,12 +317,11 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     let stif = 0.0;
     if(customParams.scenario == 'dense_torso_like')
     {
-      // if(capsule_i.index == 0 || capsule_i.index == 1)
-      if(capsule_i.index == 0)
+      if(capsule_i.index == 0 || capsule_i.index == 1)
       {
-        stif = 0.015;    // stif = 0.045;
+        stif = 0.045;    // stif = 0.045;
       }else{
-        stif = 0.007;   //stif = 0.01;
+        stif = 0.01;   //stif = 0.01;
       }
     }
 
@@ -330,12 +329,12 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     {
       stif = 0.02738;    // stif = 0.0272;   0.0282;     0.0275;   0.0274;
     } else if(customParams.scenario == 'suddenStop'){
-      stif = 0.022;       //  0.011;    0.021;    0.020   0.024
+      stif = 0.024;       //  0.011;    0.021;    0.020
     }else if(customParams.scenario == 'rectangle'){
       // stif = 0.045;
-      stif = 0.0058;     //0.007;    0.011;
+      stif = 0.011;     //0.007;
     }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
-      stif = 0.0295;   // .45    0.025;   0.02547;   0.025
+      stif = 0.0256;   // .45    0.025;   0.02547;   0.025;  0.0258;
     }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
       stif = 0.037;   // .45    0.025;
     }
@@ -349,7 +348,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     const agent_j_scaler = (1 / (1 + 1)) * agentDist;
 
     if(customParams.scenario == 'dense_torso_like'){
-    if (agentDist < 1.5)     //was 0.8
+    if (agentDist < 0.8)     //was 0.8
     {
       if(capsule_i.index != 0)
       {
@@ -374,7 +373,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
     {
-      if (agentDist < 1.715 )   // 1.7035, 1.704  1.715
+      if (agentDist < 1.70 )   // 1.7035, 1.704  1.71
       {   
         capsule_i.px += stif * agent_i_scaler * -dir_x;
         capsule_i.pz += stif * agent_i_scaler * -dir_z;           
@@ -392,6 +391,16 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     {
       if ( agentDist < 1.593 )      // agentDist < 1.6    
       {   
+        // capsule_i.px += stif * agent_i_scaler * -dir_x;
+        // capsule_i.pz += stif * agent_i_scaler * -dir_z;           
+        // capsule_i.grad.dx += agent_i_scaler * -dir_x;
+        // capsule_i.grad.dz += agent_i_scaler * -dir_z;
+  
+        // capsule_j.px += stif * -agent_j_scaler * -dir_x;
+        // capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
+        // capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+        // capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+
         if(capsule_i.agent_state != 'passive')
         {
           capsule_i.px += stif * agent_i_scaler * -dir_x;
@@ -442,7 +451,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'rectangle' )
     { 
-        if (agentDist < 6.6 )   //0.9    if (agentDist < 1.5 )   //3.6
+        if (agentDist < 3.6 )   //0.9    if (agentDist < 1.5 )
         { 
           capsule_i.px += stif * agent_i_scaler * -dir_x;
           capsule_i.pz += stif * agent_i_scaler * -dir_z;           
@@ -491,32 +500,34 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 } 
 
 
-  function makeNextAgentActive( agent_index ) 
+function makeNextAgentActive( agent_index ) 
+{
+  i = 0;
+  while (i < sceneEntities.length) 
   {
-    i = 0;
-    while (i < sceneEntities.length) 
+    if( i == agent_index + 1 && sceneEntities[i].agent_state == 'passive')
     {
-      if( i == agent_index + 1 && sceneEntities[i].agent_state == 'passive')
-      {
-        sceneEntities[i].agent_state = 'active';
-        if( (sceneEntities[i].index == 0 || sceneEntities[i].index == 1 || sceneEntities[i].index == 2 || sceneEntities[i].index == 3 || sceneEntities[i].index == 4 || sceneEntities[i].index == 5 ) && (sceneEntities[i].agent_state == 'active') )
-        {   
-              sceneEntities[i].goal_x = -4;
-              sceneEntities[i].goal_z = -0.1;
-        }
-
-        if( (sceneEntities[i].index == 6 || sceneEntities[i].index == 7 || sceneEntities[i].index == 8 || sceneEntities[i].index == 9 || sceneEntities[i].index == 10 || sceneEntities[i].index == 11 ) && (sceneEntities[i].agent_state == 'active') )
-        {   
-          sceneEntities[i].goal_x = -13.8;
-          sceneEntities[i].goal_z = -2.4;            
-        }
-
+      sceneEntities[i].agent_state = 'active';
+      if( (sceneEntities[i].index == 0 || sceneEntities[i].index == 1 || sceneEntities[i].index == 2 || sceneEntities[i].index == 3 || sceneEntities[i].index == 4 || sceneEntities[i].index == 5 ) && (sceneEntities[i].agent_state == 'active') )
+      {   
+            sceneEntities[i].goal_x = -4;
+            sceneEntities[i].goal_z = -0.1;
       }
 
-      i += 1;
+      if( (sceneEntities[i].index == 6 || sceneEntities[i].index == 7 || sceneEntities[i].index == 8 || sceneEntities[i].index == 9 || sceneEntities[i].index == 10 || sceneEntities[i].index == 11 ) && (sceneEntities[i].agent_state == 'active') )
+      {   
+        sceneEntities[i].goal_x = -13.8;
+        sceneEntities[i].goal_z = -2.4;            
+      }
+
     }
-    
+
+    i += 1;
   }
+  
+}
+
+
 
 
   function agentVelocityPlanner() {
@@ -542,10 +553,10 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       // ---------- for Torso Dense Crowd -------  START -----------------------------------------------
         // if(distToGoal < 5 * RADIUS)
         if(distToGoal < 3 * RADIUS && agent_i.index != 0)
-        {
-          agent_i.vx = 0.01 * agent_i.vx;
-          agent_i.vz = 0.01 * agent_i.vz;        
-        }
+          {
+            agent_i.vx = 0.01 * agent_i.vx;
+            agent_i.vz = 0.01 * agent_i.vz;        
+          }
         //----------- for Torso Dense Crowd ------- END ----------------------------------------------
     }
 
@@ -936,6 +947,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
   }
 
 
+
   function find_best_point_On_right_or_Left_of_Velocity(capsule_entity, capsule_or_wall_entity, agents_pair_type)
   {
     let bestA_agent = new THREE.Vector3();
@@ -979,8 +991,18 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     // Determine if the point is to the left or right of the velocity vector.
     const direction = dotProduct > 0 ? 'right' : 'left';
 
+    //--------------------------------------------------------------------
+    // let velocity_vec = new THREE.Vector3(capsule_entity.vx, 0, capsule_entity.vz);
+    // // Compute the dot product between the velocity and vectorToP
+    // // let dotProduct_vel_pos = velocity_vec.dot(vectorToPoint);
+    // let dotProduct_vel_pos = vel_direction.dot(vectorToPoint);
+    // // console.log("dotProduct_vel_pos: ", dotProduct_vel_pos);
+    //--------------------------------------------------------------------
+
     if(direction == 'right')
+    // if( direction == 'right' && dotProduct_vel_pos > 0 )
     {
+      // console.log("id: ", capsule_entity.index, "hi1");
       let best_in_right_agent = point_on_obs;
 
       let cur_to_best_agent_dist_right = distance(capsule_entity.x, capsule_entity.z, best_in_right_agent.x, best_in_right_agent.z);
@@ -990,12 +1012,16 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
         capsule_entity.prev_cur_to_best_agent_dist_right = cur_to_best_agent_dist_right;
       }
       // capsule_entity.prev_cur_to_best_agent_dist_right = cur_to_best_agent_dist_right;
+
+      // console.log("id: ", capsule_entity.index, ", capsule_entity.closest_agent_in_right: ", capsule_entity.closest_agent_in_right, ", direction: ", direction);
         
       return [capsule_entity.closest_agent_in_right, direction]
     }
     
     if(direction == 'left' )  
+    // if(direction == 'left' && dotProduct_vel_pos > 0 )             
     {
+      // console.log("id: ", capsule_entity.index, "hi2");
       let best_in_left_agent = point_on_obs;
 
       let cur_to_best_agent_dist_left = distance(capsule_entity.x, capsule_entity.z, best_in_left_agent.x, best_in_left_agent.z);
@@ -1007,6 +1033,8 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       }
       // capsule_entity.prev_cur_to_best_agent_dist_left = cur_to_best_agent_dist_left;
 
+      // console.log("id: ", capsule_entity.index, ", capsule_entity.closest_agent_in_right: ", capsule_entity.closest_agent_in_right, ", direction: ", direction);
+      
       return [capsule_entity.closest_agent_in_left, direction]
     }    
   
@@ -1020,7 +1048,6 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
   {
     j = 0;  
     let point_on_obs = new THREE.Vector3();
-    // let prev_closest_Wall_in_right = new THREE.Vector3();
 
     //only if the scenario has walls
     while(j<customParams.wallData.length)
@@ -1044,7 +1071,18 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       // Determine if the point is to the left or right of the velocity vector.
       const direction = dotProduct > 0 ? 'right' : 'left';
 
+      //--------------------------------------------------------------------
+      
+      // let velocity_vec = new THREE.Vector3(capsule_entity.vx, 0, capsule_entity.vz);
+      // // Compute the dot product between the velocity and vectorToP
+      // // let dotProduct_vel_pos = velocity_vec.dot(vectorToPoint);
+      // let dotProduct_vel_pos = vel_direction.dot(vectorToPoint);
+      // // console.log("dotProduct_vel_pos: ", dotProduct_vel_pos);
+      //--------------------------------------------------------------------
+
+
       if(direction == 'right')
+      // if(direction == 'right' && dotProduct_vel_pos > 0)
       {
         let best_in_right_wall = point_on_obs;
 
@@ -1053,15 +1091,13 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
         if(cur_to_best_wall_dist_right <= capsule_entity.prev_cur_to_best_wall_dist_right  )
         {
           capsule_entity.closest_wall_in_right = best_in_right_wall;
-          capsule_entity.prev_cur_to_best_wall_dist_right = cur_to_best_wall_dist_right;
-        }else{
-          capsule_entity.prev_cur_to_best_wall_dist_right = cur_to_best_wall_dist_right;
-          capsule_entity.closest_wall_in_right = capsule_entity.prev_closest_Wall_in_right;
+          // capsule_entity.prev_cur_to_best_wall_dist_right = cur_to_best_wall_dist_right;
         }
-        capsule_entity.prev_closest_Wall_in_right = best_in_right_wall;
+        capsule_entity.prev_cur_to_best_wall_dist_right = cur_to_best_wall_dist_right;
       }
       
       if(direction == 'left') 
+      // if(direction == 'left' && dotProduct_vel_pos > 0)             
       {
         let best_in_left_wall = point_on_obs;
         let cur_to_best_wall_dist_left = distance(capsule_entity.x, capsule_entity.z, best_in_left_wall.x, best_in_left_wall.z);
@@ -1069,17 +1105,16 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
         if(cur_to_best_wall_dist_left <= capsule_entity.prev_cur_to_best_wall_dist_left  )
         {
           capsule_entity.closest_wall_in_left = best_in_left_wall;
-          capsule_entity.prev_cur_to_best_wall_dist_left = cur_to_best_wall_dist_left;
-        }else{
-          capsule_entity.prev_cur_to_best_wall_dist_left = cur_to_best_wall_dist_left;
-          capsule_entity.closest_wall_in_left = capsule_entity.prev_closest_Wall_in_left;
+          // capsule_entity.prev_cur_to_best_wall_dist_left = cur_to_best_wall_dist_left;
         }
-        capsule_entity.prev_closest_Wall_in_left = best_in_left_wall;        
+        capsule_entity.prev_cur_to_best_wall_dist_left = cur_to_best_wall_dist_left;
       }
 
     j += 1;
     }
     
+    // console.log("closest_wall_in_left: ", capsule_entity.closest_wall_in_left, ", closest_wall_in_right: ", capsule_entity.closest_wall_in_right);
+
     return [capsule_entity.closest_wall_in_left, capsule_entity.closest_wall_in_right]
   }
 
@@ -1087,98 +1122,47 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
 function findFinalClosestLeftOrRightPointOfVel(capsule_entity, closest_wall_in_left, closest_wall_in_right, closest_agent_in_left, closest_agent_in_right)
 {
-    //---------------------------------------------------------------------------------------------------------------------
-    let currentPosition = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);
-    let vel_i = new THREE.Vector3(capsule_entity.vx, 0, capsule_entity.vz).normalize();
-
-    // Compute the opposite direction by multiplying by -2 (for 2 units behind)
-    var oppositeDirection = vel_i.clone().multiplyScalar(-3);
-    // Calculate the new position 2 units behind the current position
-    var newPosition = new THREE.Vector3().addVectors(currentPosition, oppositeDirection);
-
-    let directionVector_closest_agent_in_right = closest_agent_in_right.clone().sub(currentPosition); 
-    let directionVector_closest_wall_in_right = closest_wall_in_right.clone().sub(currentPosition); 
-    let angDirAndVel_closest_agent_in_right = angleBetweenVectors_2(directionVector_closest_agent_in_right, vel_i);
-    let angDirAndVel_closest_wall_in_right = angleBetweenVectors_2(directionVector_closest_wall_in_right, vel_i);
-
-    let directionVector_closest_agent_in_left = closest_agent_in_left.clone().sub(currentPosition); 
-    let directionVector_closest_wall_in_left = closest_wall_in_left.clone().sub(currentPosition); 
-    let angDirAndVel_closest_agent_in_left = angleBetweenVectors_2(directionVector_closest_agent_in_left, vel_i);
-    let angDirAndVel_closest_wall_in_left = angleBetweenVectors_2(directionVector_closest_wall_in_left, vel_i);
-
-  //---------------------------------------------------------------------------------------------------------------------
-
   // if there are walls in the scenarios either in left or right side of agent i. else the closest points in right and left could be other agents or obstacles. Below we are deciding that.
   if(closest_wall_in_left.length() != 0 && closest_wall_in_right.length() != 0)   
   {
-    
-    let cur_to_closest_left_wall_dist = distance(capsule_entity.x, capsule_entity.z, closest_wall_in_left.x,closest_wall_in_left.z);
-    let cur_to_closest_left_agent_dist = distance(capsule_entity.x, capsule_entity.z, closest_agent_in_left.x, closest_agent_in_left.z);
-    let cur_to_closest_right_wall_dist = distance(capsule_entity.x, capsule_entity.z, closest_wall_in_right.x, closest_wall_in_right.z);
-    let cur_to_closest_right_agent_dist = distance(capsule_entity.x, capsule_entity.z, closest_agent_in_right.x, closest_agent_in_right.z);
+      let cur_to_closest_left_wall_dist = distance(capsule_entity.x, capsule_entity.z, closest_wall_in_left.x,closest_wall_in_left.z);
+      let cur_to_closest_left_agent_dist = distance(capsule_entity.x, capsule_entity.z, closest_agent_in_left.x, closest_agent_in_left.z);
 
-    // if there are no agent in the left side, the closer left wall is the closest_in_left
-    if( closest_agent_in_left.length() != 0 && angDirAndVel_closest_agent_in_left < 96 && angDirAndVel_closest_wall_in_left< 96)
-    { 
-      if(cur_to_closest_left_wall_dist >= cur_to_closest_left_agent_dist)
-      {
-        closest_in_left = closest_agent_in_left;
+      let cur_to_closest_right_wall_dist = distance(capsule_entity.x, capsule_entity.z, closest_wall_in_right.x, closest_wall_in_right.z);
+      let cur_to_closest_right_agent_dist = distance(capsule_entity.x, capsule_entity.z, closest_agent_in_right.x, closest_agent_in_right.z);
+
+      // if there are no agent in the left side, the closer left wall is the closest_in_left
+      if( closest_agent_in_left.length() != 0)
+      { 
+        if(cur_to_closest_left_wall_dist >= cur_to_closest_left_agent_dist)
+        {
+          closest_in_left = closest_agent_in_left;
+        }else{
+            closest_in_left = closest_wall_in_left;
+          }
       }else{
-          closest_in_left = closest_wall_in_left;
-        }
-    }
-
-    else if( closest_agent_in_left.length() != 0 && angDirAndVel_closest_agent_in_left > 96 && angDirAndVel_closest_wall_in_left > 96)
-    {
-      if(angDirAndVel_closest_agent_in_left > angDirAndVel_closest_wall_in_left)
-      {
         closest_in_left = closest_wall_in_left;
+      }
+
+      // if there are no agent in the right side, the closer right wall is the closest_in_right
+      if( closest_agent_in_right.length() != 0)
+      {      
+        if(cur_to_closest_right_wall_dist >= cur_to_closest_right_agent_dist)
+        {
+          closest_in_right = closest_agent_in_right;
+        }else{
+        {
+          closest_in_right = closest_wall_in_right;
+        }
+        }
       }else{
-        closest_in_left = closest_agent_in_left;
-      }
-    }    
-    else{
-      closest_in_left = closest_wall_in_left;
-    }
-
-
-
-    // if there are no agent in the right side, the closer right wall is the closest_in_right
-    if( closest_agent_in_right.length() != 0 && angDirAndVel_closest_agent_in_right < 96 && angDirAndVel_closest_wall_in_right< 96)
-    // if( closest_agent_in_right.length() != 0  )
-    {    
-     
-      if(cur_to_closest_right_wall_dist >= cur_to_closest_right_agent_dist)
-      {
-        closest_in_right = closest_agent_in_right;
-      }else
-      {  
         closest_in_right = closest_wall_in_right;
-
       }
+
     }
-
-    else if( closest_agent_in_right.length() != 0 && angDirAndVel_closest_agent_in_right > 96 && angDirAndVel_closest_wall_in_right > 96)
-    {
-      
-      if(angDirAndVel_closest_agent_in_right > angDirAndVel_closest_wall_in_right)
-      {
-        closest_in_right = closest_wall_in_right;
-
-      }else{
-        closest_in_right = closest_agent_in_right;
-      }
-    }
-
-    else{
-      closest_in_right = closest_wall_in_right;
-    }
-
-  }
     else{
       closest_in_left = closest_agent_in_left;                        // else the closest points in right and left would be other agents
       closest_in_right = closest_agent_in_right;
-
     }
     
     let dist_with_closest_in_left = distance(capsule_entity.x, capsule_entity.z, closest_in_left.x, closest_in_left.z);
@@ -1186,17 +1170,12 @@ function findFinalClosestLeftOrRightPointOfVel(capsule_entity, closest_wall_in_l
     let dist_with_closest_in_right_And_left = distance(closest_in_left.x, closest_in_left.z, closest_in_right.x, closest_in_right.z);
     let activate_orientation = 'false';
     let cross_width = (dist_tip_to_base/2) + RADIUS;
-
-    let current_position = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);
-    let normalized_velocity = new THREE.Vector3(capsule_entity.vx, 0, capsule_entity.vz).normalize();
-    let perpendicularDistance_right = compute_Shortest_Perpendicular_dist(closest_in_right, current_position, normalized_velocity);
-    let perpendicularDistance_left = compute_Shortest_Perpendicular_dist(closest_in_left, current_position, normalized_velocity);
-    let clearance = perpendicularDistance_right + perpendicularDistance_left;
     
     // different threshold distances for work best in different scenarios. This activates when to start rptation to go through narrow exits. 
     if(customParams.scenario == 'suddenStop')
     {
-      if( (dist_with_closest_in_left <= (cross_width + 1.5) || dist_with_closest_in_right <= (cross_width + 1.5))  )
+      // if( (dist_with_closest_in_left <= (cross_width + 5) || dist_with_closest_in_right <= (cross_width + 5))  )
+      if( (dist_with_closest_in_left <= (cross_width + 2) || dist_with_closest_in_right <= (cross_width + 2))  )
       {
         activate_orientation = 'true';  
       }else{
@@ -1205,8 +1184,9 @@ function findFinalClosestLeftOrRightPointOfVel(capsule_entity, closest_wall_in_l
     }
     else if( customParams.scenario == 'rectangle')
     {
-      // if( (dist_with_closest_in_left <= (cross_width + 0) || dist_with_closest_in_right <= (cross_width + 0)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  ) //now
-      if( (dist_with_closest_in_left <= (cross_width + 2) || dist_with_closest_in_right <= (cross_width + 2)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  ) 
+      // if( (dist_with_closest_in_left <= (cross_width+15) || dist_with_closest_in_right <= (cross_width+15)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 8 )   )   //before
+      if( (dist_with_closest_in_left <= (cross_width + 0) || dist_with_closest_in_right <= (cross_width + 0)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  ) //now
+      // if( (dist_with_closest_in_left <= (cross_width+5) || dist_with_closest_in_right <= (cross_width+5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 8 )   ) 
       {
         activate_orientation = 'true'; 
       }else{
@@ -1215,16 +1195,18 @@ function findFinalClosestLeftOrRightPointOfVel(capsule_entity, closest_wall_in_l
     }
     else  if( customParams.scenario == 'narrow_hallwayOneAgent_Scenario')
     {
-      if( (dist_with_closest_in_left <= (cross_width + 1.5) || dist_with_closest_in_right <= (cross_width + 1.5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width ) && (clearance < 2*cross_width) )
+      if( (dist_with_closest_in_left <= (cross_width+ 1.4) || dist_with_closest_in_right <= (cross_width + 1.4)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  )
       {
           activate_orientation = 'true'; 
       }else{
         activate_orientation = 'false'; 
       }
+
     }
     else  if( customParams.scenario == 'swap_Scenario')
     {
-      if( (dist_with_closest_in_left <= (cross_width + 3) || dist_with_closest_in_right <= (cross_width + 3)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  && (clearance < 2*cross_width) )
+      // if( (dist_with_closest_in_left <= (cross_width+5) || dist_with_closest_in_right <= (cross_width+5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  )
+      if( (dist_with_closest_in_left <= (cross_width + 3) || dist_with_closest_in_right <= (cross_width + 3)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  )
       {
         activate_orientation = 'true'; 
     }else{
@@ -1233,29 +1215,31 @@ function findFinalClosestLeftOrRightPointOfVel(capsule_entity, closest_wall_in_l
 
     }
 
-    else  if( customParams.scenario == 'dense_torso_like')
+    else  if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
     {
-      if( (dist_with_closest_in_left <= (cross_width + 0.8) || dist_with_closest_in_right <= (cross_width + 0.8)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  && (clearance < 2*cross_width) )
+      // if( (dist_with_closest_in_left <= (cross_width + 1) || dist_with_closest_in_right <= (cross_width + 1)) && (dist_with_closest_in_right_And_left <= 2*cross_width )  )
+      if( (dist_with_closest_in_left <= (cross_width + 6) || dist_with_closest_in_right <= (cross_width + 6)) && (dist_with_closest_in_right_And_left <= 2*cross_width )  )
       {
         activate_orientation = 'true'; 
-    }else{
+      }else{
         activate_orientation = 'false'; 
       }
 
     }
 
     else{
-      // if( (dist_with_closest_in_left <= (cross_width + 0.8) || dist_with_closest_in_right <= (cross_width + 0.8)) && (dist_with_closest_in_right_And_left <= 2 * cross_width ) && (clearance < 2*cross_width) )
-      if( (dist_with_closest_in_left <= (cross_width + 3) || dist_with_closest_in_right <= (cross_width + 3)) && (dist_with_closest_in_right_And_left <= 2 * cross_width ) && (clearance < 2*cross_width) )
-      {
-          activate_orientation = 'true'; 
-      }else{
-          activate_orientation = 'false'; 
-        }
-
-  }
-
-
+        // if( (dist_with_closest_in_left <= (cross_width+5) || dist_with_closest_in_right <= (cross_width+5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width + 3 )  )
+        if( (dist_with_closest_in_left <= (cross_width+1.5) || dist_with_closest_in_right <= (cross_width+1.5)) && (dist_with_closest_in_right_And_left <= 2 * cross_width )  )
+        // if( (dist_with_closest_in_left <= (cross_width + 1) && dist_with_closest_in_right <= (cross_width + 1)) && (dist_with_closest_in_right_And_left <= 1 * cross_width )  )
+        {
+            activate_orientation = 'true'; 
+        }else{
+            activate_orientation = 'false'; 
+            // console.log(" activate_orientation false ");
+          }
+    
+      }
+      
 return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint, activate_orientation]            
 }
 
@@ -1292,25 +1276,23 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
 
     let current_position = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);   
 
-  //----------------  WAY 3 ------  START  -----------------------------------------------------------------------------------------
-  let cur_position = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);
-  let distCurToRight = distance(cur_position.x, cur_position.z, closest_in_right_2.x, closest_in_right_2.z);
-  let distCurToLeft = distance(cur_position.x, cur_position.z, closest_in_left_2.x, closest_in_left_2.z);
-  //----------------  WAY 3 ------ END -----------------------------------------------------------------------------------------
+    //----------------  WAY 3 ------  START  -----------------------------------------------------------------------------------------
+    let cur_position = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);
+    let distCurToRight = distance(cur_position.x, cur_position.z, closest_in_right_2.x, closest_in_right_2.z);
+    let distCurToLeft = distance(cur_position.x, cur_position.z, closest_in_left_2.x, closest_in_left_2.z);
+    //----------------  WAY 3 ------ END -----------------------------------------------------------------------------------------
 
-  if(customParams.scenario != 'dense_torso_like')
-  {
     // if(closest_in_right_2.length() != 0)
-    if(closest_in_right_2.length() != 0 && distCurToRight < 5)   //5   12
+    if(closest_in_right_2.length() != 0 && distCurToRight < 5)
     {
       perpendicularDistance_right = compute_Shortest_Perpendicular_dist(closest_in_right_2, current_position, normalized_velocity_2);   
     }
     else{
       perpendicularDistance_right = 1000;
     }
-
+  
     // if(closest_in_left_2.length() != 0)
-    if(closest_in_left_2.length() != 0 && distCurToLeft < 5)   //5
+    if(closest_in_left_2.length() != 0 && distCurToLeft < 5)
     {
       perpendicularDistance_left = compute_Shortest_Perpendicular_dist(closest_in_left_2, current_position, normalized_velocity_2);
     }
@@ -1321,45 +1303,19 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
         perpendicularDistance_left = 100;
       }
       
-    }    
-  }else{
-
-      // if(closest_in_right_2.length() != 0)
-      if(closest_in_right_2.length() != 0 && distCurToRight < 12)   //5   12
-      {
-        perpendicularDistance_right = compute_Shortest_Perpendicular_dist(closest_in_right_2, current_position, normalized_velocity_2);   
-      }
-      else{
-        perpendicularDistance_right = 1000;
-      }
-
-      // if(closest_in_left_2.length() != 0)
-      if(closest_in_left_2.length() != 0 && distCurToLeft < 12)   //5
-      {
-        perpendicularDistance_left = compute_Shortest_Perpendicular_dist(closest_in_left_2, current_position, normalized_velocity_2);
-      }
-      else{
-
-        if(customParams.scenario != 'suddenStop')
-        {
-          perpendicularDistance_left = 100;
-        }
-        
-      }
-
-  }
-
-
-
-  if(object_type_in_both_sides == 'wall_and_agents')
-  {
-    clearance = perpendicularDistance_right + perpendicularDistance_left - capsule_entity.radius;   
-  } else 
-    {
-      clearance = perpendicularDistance_right + perpendicularDistance_left - capsule_entity.radius ;
     }
-      
-  return clearance;
+
+
+
+    if(object_type_in_both_sides == 'wall_and_agents')
+    {
+      clearance = perpendicularDistance_right + perpendicularDistance_left - 2 * capsule_entity.radius;   
+    } else 
+      {
+        clearance = perpendicularDistance_right + perpendicularDistance_left - capsule_entity.radius ;
+      }
+        
+    return clearance;
   }
 
 
@@ -1367,20 +1323,29 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
 function orientationConstraint(capsule, clearance, distToActivateOrientationConstraint, activate_orientation)
 { 
 
-  if(capsule.index == 0)
+  if(capsule.index == 1)
   {
-    console.log("clr: ", clearance);
-  }
+    let current_pos = new THREE.Vector3(capsule.x, 0, capsule.z);
+    // console.log("id: ", capsule.index, ", clearance: ", clearance);
+    // console.log("current_pos: ", current_pos, "\n\n");
+    // console.log("clearance: ", clearance, "\n\n");
+  }  
 
   let cross_width = (dist_tip_to_base/2) + RADIUS;
-  if( (clearance) >= (2 * cross_width)  )
+
+  // if( (clearance) >= (2 * cross_width) && (activate_orientation == 'true') )
+  if( (clearance) >= (2 * cross_width) && (activate_orientation == 'false') ) 
   {
     customParams.orientation = 'front';
-  }else if( ((clearance) < (2 * cross_width )) && ( clearance - capsule.radius > 0) && (activate_orientation == 'true') )
+  }else if( ((clearance) < (2 * cross_width )) && ( clearance - capsule.radius > 0) && (activate_orientation == 'true')  )
   {
+
+    if( (capsule.index == 0 && capsule.x < -8)  )
+    {
+
     customParams.orientation = 'side_step';
 
-    let cosValue = ( (clearance - capsule.radius) / ( 2 * cross_width ));
+    let cosValue = ( (clearance -  2.5*capsule.radius) / ( 2 * cross_width ));
     const angleInRadians = Math.acos(cosValue);
 
     //------------------------------------------------------------------------------------------------------
@@ -1392,54 +1357,145 @@ function orientationConstraint(capsule, clearance, distToActivateOrientationCons
     let VelocityVec2 = new THREE.Vector3(capsule.vx, 0 , capsule.vz);
     let angleBodyNormalToGoalVec2 = angleBetweenVectors_2(capsuleBodyNormalVec2, VelocityVec2);
 
-    //smooth the rotation speed while changing orientation
-    if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90)   )   //20 for rectangle
+    // console.log("hi beginning")
+
+    //smooth the rotation while changing orientation
+    // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec > -70 && angleBodyNormalToGoalVec < 70) )
+    // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec > 1 && angleBodyNormalToGoalVec < 120) )
+
+    // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 > 1 && angleBodyNormalToGoalVec2 < 90) )
+    if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90) )
     // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 30) )   // for suddenstop scenario
+    // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)   )
+    //------------------------------------------------------------------------------------------------------
+    //smooth the rotation while changing orientation
+    // if( Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)
     {
-        // Using different rotation speed to achieve the best results for different scenarios. 
-      if(customParams.scenario == 'dense_torso_like')
+      // Using different rotation speed to achieve the best results for different scenarios. 
+    if(customParams.scenario == 'dense_torso_like')
+    {
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;
+    }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
+      // capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/100;
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;
+    }else if(customParams.scenario == 'swap_Scenario') {
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150
+
+      /*
+      let next_orientation = angleInRadians;
+      let cur_orientation = capsule.agent.rotation.z;
+      if( cur_orientation >= next_orientation)
       {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;   //200
-      }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
-      {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/100;
+        capsule.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;    //250
+        console.log("hi1")
+      }else{
+        capsule.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;    //250 
       }
-      
-      else if(customParams.scenario == 'swap_Scenario') {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150
-      }
-      
-      else
-      {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;        // 150
-      }    
+        */
+
+    }else{
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;        // 150
+      console.log("hi2")
+    }      
     } 
-    
   }
+  else{
+    customParams.orientation = 'front';
+  }
+
+
+  if( (capsule.index == 1 && capsule.x > -11) )
+  {
+
+    customParams.orientation = 'side_step';
+    let cosValue = ( (clearance -  capsule.radius) / ( 2 * cross_width ));
+    const angleInRadians = Math.acos(cosValue);
+    //------------------------------------------------------------------------------------------------------
+    let capsuleBodyNormalVec = getCapsuleBodyNormal(capsule, agentLength, RADIUS, capsule.agent.rotation.z);
+    let capsuleCurToGoalVec = new THREE.Vector3(capsule.goal_z - capsule.z, 0, capsule.goal_x - capsule.x);
+    let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, capsuleCurToGoalVec);
+
+    let capsuleBodyNormalVec2 = getCapsuleBodyNormal(capsule, agentLength, RADIUS, capsule.agent.rotation.z);
+    let VelocityVec2 = new THREE.Vector3(capsule.vx, 0 , capsule.vz);
+    let angleBodyNormalToGoalVec2 = angleBetweenVectors_2(capsuleBodyNormalVec2, VelocityVec2);
+
+    if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90) )
+
+      // Using different rotation speed to achieve the best results for different scenarios. 
+    if(customParams.scenario == 'dense_torso_like')
+    {
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;
+    }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/220;
+    }else if(customParams.scenario == 'swap_Scenario') {
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150
+
+
+
+    }else{
+      capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;        // 150
+      console.log("hi2")
+    }      
+    } 
+    else{
+      customParams.orientation = 'front';
+    }
+  }
+
+
+
+
+  
     
   else if(  (clearance - capsule.radius <= 0) && (activate_orientation=='true') )
+  // else if(  (clearance > 50) )
   {
     // if no clearace available, agent needs to do 90 degree side-stepping.
     if(customParams.scenario == 'suddenStop')
     {
-      if( capsule.agent.rotation.z > 2.4)
+      /*
+      if( capsule.agent.rotation.z < 3.2)
       {
-        let next_orientation = capsule.agent.rotation.z - 1.57;
+        // capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/500;    // 1.57/250;
+        // capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/10;
+        capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/5;
+        // capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57 ;
+        // capsule.agent.rotation.z = capsule.agent.rotation.z / 20 ;
+      } 
+      */
+
+      // if( capsule.agent.rotation.z < 4.0)
+      if( capsule.agent.rotation.z < 3.75)
+      {
+        let next_orientation = capsule.agent.rotation.z + 1.57 * 10;
+        
+        //----------------------------------------------------------------------------------------
         let cur_orientation = capsule.agent.rotation.z;
+        // let  next_orientation = Math.atan2(dz, dx);
+
         if( cur_orientation >= next_orientation)
         {
-          capsule.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/1500 ;    //250 
-        }
-        else{
-          capsule.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/1500 ;    //250 
+          capsule.agent.rotation.z = cur_orientation + (cur_orientation - next_orientation)/1200 ;    //250 
+        }else{
+          capsule.agent.rotation.z = cur_orientation -  (cur_orientation - next_orientation)/1200 ;    //250 
         }
     }
+      //----------------------------------------------------------------------------------------
+
+    }else{
+    if( capsule.agent.rotation.z < 3.1)
+    {
+      capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57/75;
+      // capsule.agent.rotation.z = capsule.agent.rotation.z + 1.57 ;
+    } 
     }
 
     customParams.orientation = 'side_step';
+    
   }
     else{
-      customParams.orientation = 'front';
+      // console.log("else, , id: ", capsule.index, ", capsule.agent.rotation.z: ", capsule.agent.rotation.z, ", activate_orientation: ", activate_orientation );
+
       }
 }
 
@@ -1553,7 +1609,7 @@ while (i < sceneEntities.length) {
   
   if( customParams.scenario != 'swap_Scenario' )
   {
-    // apply orientation constraint to adapt the 
+      // apply orientation constraint to adapt the 
     orientationConstraint(sceneEntities[i], clearance, distToActivateOrientationConstraint, activate_orientation);
   }else if(customParams.scenario == 'swap_Scenario')     // for swap scenario, intially all static agents are agent_state = 'passive'. So we don't want to active orientationConstraint() for the static agents. that might cause oscillations for static agents sometimes.
   {
@@ -1573,10 +1629,10 @@ i = 0;
 while (i < sceneEntities.length) {
   j = i + 1;
   while (j < sceneEntities.length) {
-    let [bestA, bestB, agent_i, agent_j] = getBestPoint(sceneEntities[i].x, sceneEntities[i].z, sceneEntities[j].x, sceneEntities[j].z);
-    let [p_bestA, p_bestB, p_agent_i,p_agent_j] = getBestPoint(sceneEntities[i].px, sceneEntities[i].pz, sceneEntities[j].px, sceneEntities[j].pz);
-    
-    let [delta_correction_i, delta_correction_j, grad_i, grad_j, s] = comfortConstraint_Capsule(bestA, bestB, p_bestA, p_bestB, sceneEntities[i], sceneEntities[j]);
+      let [bestA, bestB, agent_i, agent_j] = getBestPoint(sceneEntities[i].x, sceneEntities[i].z, sceneEntities[j].x, sceneEntities[j].z);
+      let [p_bestA, p_bestB, p_agent_i,p_agent_j] = getBestPoint(sceneEntities[i].px, sceneEntities[i].pz, sceneEntities[j].px, sceneEntities[j].pz);
+      
+      let [delta_correction_i, delta_correction_j, grad_i, grad_j, s] = comfortConstraint_Capsule(bestA, bestB, p_bestA, p_bestB, sceneEntities[i], sceneEntities[j]);
 
     j += 1;
   }
@@ -1587,28 +1643,28 @@ while (i < sceneEntities.length) {
 
   // agent to wall short-range collision constraint    
   i=0;
-  while(i<sceneEntities.length)
-  {
-    j=0;
-    while(j<customParams.wallData.length)
-    {
-      let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+   while(i<sceneEntities.length)
+   {
+     j=0;
+     while(j<customParams.wallData.length)
+     {
+       let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
 
-      let penetration_normal = p_bestA.clone().sub(w_bestB);
-      const len = penetration_normal.length();
-      penetration_normal.divideScalar(len); // normalize
-      const penetration_depth = sceneEntities[i].radius + 0.50 - len ;  //0.5 is the depth of the wall
+       let penetration_normal = p_bestA.clone().sub(w_bestB);
+       const len = penetration_normal.length();
+       penetration_normal.divideScalar(len); // normalize
+       const penetration_depth = sceneEntities[i].radius + 0.50 - len ;  //0.5 is the depth of the wall
 
-      const intersects = penetration_depth > 0;
-      if (intersects) {
-        sceneEntities[i].colliding = true;
-        sceneEntities[i].px += penetration_normal.x * 1.0 * penetration_depth;  
-        sceneEntities[i].pz += penetration_normal.z * 1.0 * penetration_depth;
-      }
-      j+=1;
-    }
-    i+=1
-  }
+       const intersects = penetration_depth > 0;
+       if (intersects) {
+         sceneEntities[i].colliding = true;
+          sceneEntities[i].px += penetration_normal.x * 1.0 * penetration_depth;  
+         sceneEntities[i].pz += penetration_normal.z * 1.0 * penetration_depth;
+       }
+       j+=1;
+     }
+     i+=1
+   }
 
 
 
@@ -1726,76 +1782,121 @@ while (i < sceneEntities.length) {
     const dx = item.px - item.x;
     const dz = item.pz - item.z;
 
-  let capsuleBodyNormalVec = getCapsuleBodyNormal(item, agentLength, RADIUS, item.agent.rotation.z);
-  let VelocityVec = new THREE.Vector3(item.vx, 0 , item.vz);
-  // let capsuleCurToGoalVec = new THREE.Vector3(item.goal_z - item.z, 0, item.goal_x - item.x);
-  let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
-  let cur_orientation = item.agent.rotation.z;
-  let  next_orientation = Math.atan2(dz, dx);
-
-  // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
-  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
-  {
-
-    if(customParams.scenario == 'dense_torso_like')
+  /*
+    if( customParams.scenario == ''  || customParams.scenario == '')
+    // if( customParams.orientation == 'front')
     {
-      if(item.index == 0)
+        item.agent.rotation.z = Math.atan2(dz, dx);
+    }
+    else 
+    {
+      let cur_orientation = item.agent.rotation.z;
+      let  next_orientation = Math.atan2(dz, dx);
+      if( Math.abs(cur_orientation - next_orientation) >= 0.08 )   // 0.0 makes the orientation better after recovering from the full body rotations.
       {
-        if( cur_orientation >= next_orientation)
-        {
-          item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
-        }else{
-          item.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
-        }
-      }else{    
-        }
-    }else{
-
-        if( cur_orientation >= next_orientation)
-        {
-          // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
-          item.agent.rotation.z = cur_orientation - 0.01 ;
-        }else{
-          // item.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
-          item.agent.rotation.z = cur_orientation +  0.01 ;
-
-        }
-        
+        // item.agent.rotation.z = cur_orientation - cur_orientation/200 ;
+      }
     }
-  }     
+  */
 
+/*    
+    let cur_orientation = item.agent.rotation.z;
+    let  next_orientation = Math.atan2(dz, dx);
 
-  item.vx = (item.px - item.x) / timestep;
-  item.vz = (item.pz - item.z) / timestep;
-  item.vy = (item.py - item.y) / timestep;
-
-  item.x = item.px;
-  item.z = item.pz;
-  item.y = item.py;
-
-  if(customParams.scenario == 'suddenStop')
-  {
-    // if(distance(item.x, item.z, item.goal_x, item.goal_z) < 0.1)
-    if(distance(item.x, item.z, item.goal_x, item.goal_z) < 0.01)
+    if(item.index == 1)
     {
-      item.vx = 0;
-      item.vy = 0;
-      item.vz = 0;
-
-      item.x = item.goal_x;
-      item.z = item.goal_z;
-      item.y = 0;
-
-      item.agent.rotation.z = 3.1516;
+      console.log("id:: ", item.index, ", cur_orientation: ", cur_orientation, ", next_orientation: ", next_orientation);
     }
+    
+
+    Math.abs(cur_orientation - next_orientation) >= 0.08
+    {
+      if( customParams.orientation == 'front')
+        {
+          if( cur_orientation >= next_orientation)
+          {
+            item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
+            console.log(" still spinning =================================================================1 ");
+          }else{
+            item.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
+            console.log(" still spinning =================================================================2 ");
+          }
+        }
+    }
+*/
+
+let capsuleBodyNormalVec = getCapsuleBodyNormal(item, agentLength, RADIUS, item.agent.rotation.z);
+let VelocityVec = new THREE.Vector3(item.vx, 0 , item.vz);
+// let capsuleCurToGoalVec = new THREE.Vector3(item.goal_z - item.z, 0, item.goal_x - item.x);
+let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
+
+let cur_orientation = item.agent.rotation.z;
+let  next_orientation = Math.atan2(dz, dx);
+
+if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
+{
+  if( cur_orientation >= next_orientation)
+  {
+    // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
+    item.agent.rotation.z = cur_orientation - 0.01 ;
+  }else{
+    // item.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
+    item.agent.rotation.z = cur_orientation +  0.01 ;
   }
+}
+
+
+//for swap scenario
+/*
+// if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 45 )
+if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 35 )
+{
+  if( cur_orientation >= next_orientation)
+  {
+    // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
+    item.agent.rotation.z = cur_orientation - 0.01 ;
+  }else{
+    // item.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
+    item.agent.rotation.z = cur_orientation +  0.01 ;
+  }
+}
+*/
+
+      
+
+
+item.vx = (item.px - item.x) / timestep;
+item.vz = (item.pz - item.z) / timestep;
+item.vy = (item.py - item.y) / timestep;
+
+item.x = item.px;
+item.z = item.pz;
+item.y = item.py;
+
+
+if(customParams.scenario == 'suddenStop')
+{
+  // if(distance(item.x, item.z, item.goal_x, item.goal_z) < 0.1)
+  if(distance(item.x, item.z, item.goal_x, item.goal_z) < 0.01)
+  {
+    item.vx = 0;
+    item.vy = 0;
+    item.vz = 0;
+
+    item.x = item.goal_x;
+    item.z = item.goal_z;
+    item.y = 0;
+
+    item.agent.rotation.z = 3.1516;
+  }
+}
 
 
 // ------------------------- Start------------------ For swap_Scenario  -------------------------------------------------------------------------------------------------------------
-  if( item.index == 0 || item.index == 6  )
-  {   
-    item.agent_state = 'active';      
-  }
+if( item.index == 0 || item.index == 6  )
+{   
+  item.agent_state = 'active';      
+}
 
   if(customParams.scenario === 'swap_Scenario')
   {   
@@ -1817,9 +1918,8 @@ while (i < sceneEntities.length) {
           
   }
 
-
   if( (customParams.scenario === 'swap_Scenario') && ((item.index == 0 || item.index == 1 || item.index == 2 || item.index == 3 || item.index == 4 || item.index == 5 )) && (item.agent_state == 'active') )
-  {
+  {   
     let dist3 = distance(item.x, item.z, -4, -0.1   ); 
     if(dist3 < 1.0  )
     {
@@ -1952,14 +2052,14 @@ while (i < sceneEntities.length) {
   }
 
   if( (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 ) && ( item.z > 15  || item.z < -15)  )
-    {
-      item.vx = 0;
-      item.vy = 0;
-      item.vz = 0;
+  {
+    item.vx = 0;
+    item.vy = 0;
+    item.vz = 0;
 
-      item.x = item.goal_x;
-      item.z = item.goal_z;
-      item.y = 0;
+    item.x = item.goal_x;
+    item.z = item.goal_z;
+    item.y = 0;
 
     // item.agent.rotation.z = 0;  
     if( item.index == 0 || item.index == 1 || item.index == 2 || item.index == 3 || item.index == 4 || item.index == 5 )
@@ -1970,8 +2070,8 @@ while (i < sceneEntities.length) {
     {
       // item.agent.rotation.z = 0; 
       item.agent.rotation.z = 3.1516;
-    }     
-    }
+    }    
+  }
 // ------------------------- End------------------ For swap_Scenario  -------------------------------------------
  
 

@@ -333,7 +333,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       stif = 0.022;       //  0.011;    0.021;    0.020   0.024
     }else if(customParams.scenario == 'rectangle'){
       // stif = 0.045;
-      stif = 0.0058;     //0.007;    0.011;
+      stif = 0.007;     //0.007;    0.011;
     }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
       stif = 0.0295;   // .45    0.025;   0.02547;   0.025
     }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
@@ -442,7 +442,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'rectangle' )
     { 
-        if (agentDist < 6.6 )   //0.9    if (agentDist < 1.5 )   //3.6
+        if (agentDist < 5.6 )   //0.9    if (agentDist < 1.5 )   //3.6
         { 
           capsule_i.px += stif * agent_i_scaler * -dir_x;
           capsule_i.pz += stif * agent_i_scaler * -dir_z;           
@@ -1734,7 +1734,7 @@ while (i < sceneEntities.length) {
   let  next_orientation = Math.atan2(dz, dx);
 
   // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
-  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
+  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )
   {
 
     if(customParams.scenario == 'dense_torso_like')

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>Agent Dynamics Tutorial</title>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "./build/three.module.js",
+      "three/addons/": "./examples/jsm/",
+      "simplePhysics": "./js/agentsPBD.js"
+    }
+  }
+</script>
+<script type="module" src="./js/agentsMain.js" ></script>
+
+<style>
+  .gameCanvas {
+    position: relative;
+  }
+
+  .insideText {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+
+</style>
+
+</head>
+
+<body style="margin:0;text-align:left;">
+  <!-- 
+    https://stackoverflow.com/questions/52068814/how-do-i-draw-div-elements-on-top-of-a-three-js-canvas-with-a-transparent-back 
+  -->
+  <div id="gameCanvas">
+    <div style="position: absolute; left: 30em; top: 55em;"> 
+      <input type="image" id="pause" src="./resources/icons/8666604_pause_icon.png" onclick="pauseButton(this)" width="40" height="auto" style="background: white;"; />
+    </div>
+    <div style="position: absolute; left: 33em; top: 55em;"> 
+      <input type="image" id="download" src="./resources/icons/786223_download_icon.png" onclick="downloadButton(this)" width="40" height="auto" style="background: white;"; />
+    </div>
+  </div>
+
+  <script>
+    function pauseButton(elem) {
+      let event = new Event("pause");
+      elem.dispatchEvent(event, {srcElem: elem} );
+      //elem.src="./resources/icons/8666634_play_icon.png";
+    }
+    function downloadButton(elem) {
+      let event = new Event("download");
+      elem.dispatchEvent(event, {srcElem: elem} );
+    }
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
