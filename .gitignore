@@ -1,13 +1,6 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-
-
-/js/backup_*
-/js/Backups
-/js/For_Torso_Crowds
-/js/userControlPBD_*.js
-/js/userControlMain_*.js
+js/backup_*
+js/Backups
+js/For_Torso_Crowds
+js/userControlPBD_*.js
+js/userControlMain_*.js
 
