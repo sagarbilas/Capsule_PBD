@@ -333,7 +333,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       stif = 0.022;       //  0.011;    0.021;    0.020   0.024
     }else if(customParams.scenario == 'rectangle'){
       // stif = 0.045;
-      stif = 0.007;     //0.007;    0.011;
+      stif = 0.0058;     //0.007;    0.011;
     }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
       stif = 0.0295;   // .45    0.025;   0.02547;   0.025
     }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
@@ -442,7 +442,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'rectangle' )
     { 
-        if (agentDist < 5.6 )   //0.9    if (agentDist < 1.5 )   //3.6
+        if (agentDist < 6.6 )   //0.9    if (agentDist < 1.5 )   //3.6
         { 
           capsule_i.px += stif * agent_i_scaler * -dir_x;
           capsule_i.pz += stif * agent_i_scaler * -dir_z;           
@@ -1369,7 +1369,7 @@ function orientationConstraint(capsule, clearance, distToActivateOrientationCons
 
   if(capsule.index == 0)
   {
-    console.log("clr: ", clearance);
+    // console.log("clr: ", clearance);
   }
 
   let cross_width = (dist_tip_to_base/2) + RADIUS;
@@ -1406,7 +1406,7 @@ function orientationConstraint(capsule, clearance, distToActivateOrientationCons
       }
       
       else if(customParams.scenario == 'swap_Scenario') {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150
+        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150  200
       }
       
       else
@@ -1731,10 +1731,56 @@ while (i < sceneEntities.length) {
   // let capsuleCurToGoalVec = new THREE.Vector3(item.goal_z - item.z, 0, item.goal_x - item.x);
   let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
   let cur_orientation = item.agent.rotation.z;
-  let  next_orientation = Math.atan2(dz, dx);
+  // let  next_orientation = Math.atan2(dz, dx);
+
+
+
+  // Rotate the velocity vector by 90 degrees in the 2D plane to get the perpendicular vector
+  const perpendicularVector = new THREE.Vector3(-item.vz, 0, item.vx);
+
+  // Compute the dot product
+  const dotProduct = perpendicularVector.dot(capsuleBodyNormalVec);
+
+  // Determine if the point is to the left or right of the velocity vector.
+  const direction = dotProduct > 0 ? 'right' : 'left';
+
+  // if(item.index == 6)
+  // {
+  //   if(direction == 'right')
+  //   {
+  //     console.log("right");
+  //   }else{
+  //     console.log("left");
+  //   }
+  // }
+
+
+  let  next_orientation = 0;
+  let angleBodyNormalToGoalVecInRad = angleBodyNormalToGoalVec * (Math.PI / 180)
+
+  if(direction == 'right')
+  {
+      next_orientation = cur_orientation - angleBodyNormalToGoalVecInRad;
+  }else{
+      next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
+  }
+  
+
+  // let  next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
+
+  // if(angleBodyNormalToGoalVecInRad >= 3.14159)
+  // {
+  //   next_orientation = 6.28319 - angleBodyNormalToGoalVecInRad;
+  //   console.log("After, next_orientation: ", next_orientation, "\n\n");
+  // }
+
+  
+  // console.log("next_orientation: ", next_orientation, ", next_orientation2: ", next_orientation2);
+
+
 
   // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
-  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )
+  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
   {
 
     if(customParams.scenario == 'dense_torso_like')
@@ -1751,18 +1797,30 @@ while (i < sceneEntities.length) {
         }
     }else{
 
-        if( cur_orientation >= next_orientation)
-        {
-          // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
-          item.agent.rotation.z = cur_orientation - 0.01 ;
-        }else{
-          // item.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
-          item.agent.rotation.z = cur_orientation +  0.01 ;
+      // console.log("Math.abs(cur_orientation - next_orientation) : ", Math.abs(cur_orientation - next_orientation) ); 
 
-        }
+      if( cur_orientation >= next_orientation )
+      {
+        // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
+        item.agent.rotation.z = cur_orientation - 0.01 ;
+      }else{
+        // item.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
+        item.agent.rotation.z = cur_orientation +  0.01 ;
+
+      }
         
     }
-  }     
+  }
+
+
+
+//--------------------------------------------------------
+
+
+  
+
+
+
 
 
   item.vx = (item.px - item.x) / timestep;

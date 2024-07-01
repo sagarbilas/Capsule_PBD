@@ -5198,7 +5198,7 @@ addColumnAgentGroup(
     // x: 6,
     x: 5.5,
     // z: 5,
-    z: 4,
+    z: 5,
   },
     0.8,
     "X"
@@ -6985,14 +6985,14 @@ function tryingScenario_4_Bilas_Capsule() {
   // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
-  // swap_Through_Narrow_Exit_Scenario();  
+  swap_Through_Narrow_Exit_Scenario();  
   // suddenStop_Scenario();
 
 //-------------------------------------------------------------------
 
   // tryingScenario_Bilas_1_4_agents_V2();
   // oneAgentCrossingGroup();
-  bidirectionalScenario();
+  // bidirectionalScenario();
   // oneAgentCrossingAGroupInAngle();
 
   //----------------------------------------------------------
@@ -7268,10 +7268,10 @@ function getRightRotation_v2() {
     member.goal_orientation = Math.atan2(dz, dx);
     member.agent.rotation.z = member.goal_orientation;
 
-    if( parameters.scenario == 'swap_Scenario' && member.index == 2)
-    {
-      member.agent.rotation.z = 4.2;
-    }
+    // if( parameters.scenario == 'swap_Scenario' && member.index == 2)
+    // {
+    //   member.agent.rotation.z = 4.2;
+    // }
 
   });
 

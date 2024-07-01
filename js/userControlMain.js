@@ -1572,15 +1572,15 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       // x: -24,
-      x: -25,
-      z: 3,
+      x: -25,   //-25,
+      z: 3,  // 3,
   },
   {
       // x: 20,
       // z: 3,
 
-      x: -24.5,
-      z: 3,
+      x: -24.5,  //-24.5,
+      z: 3,    //3,
   },
   0.8,
   "X"
@@ -2198,9 +2198,9 @@ function suddenStop_Scenario() {
 //----------------------------------------------------------
 //uncomment any of the scenarios below to test in different scenarios.
 
-    suddenStop_Scenario();
+    // suddenStop_Scenario();
   // rectangle_Scenario(); 
-  // swap_Through_Narrow_Exit_Scenario_V2();
+  swap_Through_Narrow_Exit_Scenario_V2();
   // narrow_hallwayOneAgent_Scenario();
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // bidirectionalScenario();
@@ -2434,10 +2434,10 @@ function getRightRotation_v2() {
       member.goal_orientation = Math.atan2(dz, dx);
       member.agent.rotation.z = member.goal_orientation; 
       
-      if( parameters.scenario == 'swap_Scenario' && member.index == 2)
-      {
-        member.agent.rotation.z = 4.2;
-      }
+      // if( parameters.scenario == 'swap_Scenario' && member.index == 2)
+      // {
+      //   member.agent.rotation.z = 4.2;
+      // }
 
     }
 
