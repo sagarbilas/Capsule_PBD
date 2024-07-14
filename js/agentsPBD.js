@@ -328,7 +328,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     else if(customParams.scenario == 'swap_Scenario')
     {
-      stif = 0.02738;    // stif = 0.0272;   0.0282;     0.0275;   0.0274;
+      stif = 0.02738;    // stif = 0.0272;   0.0282;     0.0275;   0.0274;   0.02738
     } else if(customParams.scenario == 'suddenStop'){
       stif = 0.022;       //  0.011;    0.021;    0.020   0.024
     }else if(customParams.scenario == 'rectangle'){
@@ -390,7 +390,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'swap_Scenario' )
     {
-      if ( agentDist < 1.593 )      // agentDist < 1.6    
+      if ( agentDist < 1.593 )      // agentDist < 1.6      1.593
       {   
         if(capsule_i.agent_state != 'passive')
         {
@@ -1381,8 +1381,10 @@ function orientationConstraint(capsule, clearance, distToActivateOrientationCons
     customParams.orientation = 'side_step';
 
     let cosValue = ( (clearance - capsule.radius) / ( 2 * cross_width ));
-    const angleInRadians = Math.acos(cosValue);
+    capsule.nextOrientationInRadians = Math.acos(cosValue);
 
+    /*
+    const nextOrientationInRadians = Math.acos(cosValue);
     //------------------------------------------------------------------------------------------------------
     let capsuleBodyNormalVec = getCapsuleBodyNormal(capsule, agentLength, RADIUS, capsule.agent.rotation.z);
     let capsuleCurToGoalVec = new THREE.Vector3(capsule.goal_z - capsule.z, 0, capsule.goal_x - capsule.x);
@@ -1393,27 +1395,28 @@ function orientationConstraint(capsule, clearance, distToActivateOrientationCons
     let angleBodyNormalToGoalVec2 = angleBetweenVectors_2(capsuleBodyNormalVec2, VelocityVec2);
 
     //smooth the rotation speed while changing orientation
-    if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90)   )   //20 for rectangle
-    // if( (Math.abs(capsule.agent.rotation.z - angleInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 30) )   // for suddenstop scenario
+    if( (Math.abs(capsule.agent.rotation.z - nextOrientationInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90)   )   //20 for rectangle
+    // if( (Math.abs(capsule.agent.rotation.z - nextOrientationInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 30) )   // for suddenstop scenario
     {
         // Using different rotation speed to achieve the best results for different scenarios. 
       if(customParams.scenario == 'dense_torso_like')
       {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;   //200
+        capsule.agent.rotation.z = capsule.agent.rotation.z + nextOrientationInRadians/150;   //200
       }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
       {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/100;
+        capsule.agent.rotation.z = capsule.agent.rotation.z + nextOrientationInRadians/100;
       }
       
       else if(customParams.scenario == 'swap_Scenario') {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/200;        // 150  200
+        capsule.agent.rotation.z = capsule.agent.rotation.z + nextOrientationInRadians/200;        // 150  200
       }
       
       else
       {
-        capsule.agent.rotation.z = capsule.agent.rotation.z + angleInRadians/150;        // 150
+        capsule.agent.rotation.z = capsule.agent.rotation.z + nextOrientationInRadians/150;        // 150
       }    
     } 
+      */
     
   }
     
@@ -1567,6 +1570,103 @@ while (i < sceneEntities.length) {
 }
 //===============================================================================
 
+
+
+function rotationConstraint_V2(capsule_entity)
+{
+  // const nextOrientationInRadians = Math.acos(cosValue);
+
+  let capsuleBodyNormalVec = getCapsuleBodyNormal(capsule_entity, agentLength, RADIUS, capsule_entity.agent.rotation.z);
+  let VelocityVec = new THREE.Vector3(capsule_entity.vx, 0 , capsule_entity.vz);
+  // let capsuleCurToGoalVec = new THREE.Vector3(capsule_entity.goal_z - capsule_entity.z, 0, capsule_entity.goal_x - capsule_entity.x);
+  let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
+  let cur_orientation = capsule_entity.agent.rotation.z;
+  // let  next_orientation = Math.atan2(dz, dx);
+
+
+  //smooth the rotation speed while changing orientation
+  // if( (Math.abs(capsule_entity.agent.rotation.z - nextOrientationInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 90)   )   //20 for rectangle
+  if( (Math.abs(capsule_entity.agent.rotation.z - capsule_entity.nextOrientationInRadians) >= 0.08)  && (angleBodyNormalToGoalVec < 90)   )   //20 for rectangle
+  // if( (Math.abs(capsule.agent.rotation.z - nextOrientationInRadians) >= 0.08)  && (angleBodyNormalToGoalVec2 < 30) )   // for suddenstop scenario
+  {
+      // Using different rotation speed to achieve the best results for different scenarios. 
+    if(customParams.scenario == 'dense_torso_like')
+    {
+      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/150;   //200
+    }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
+    {
+      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/100;
+    }
+    else if(customParams.scenario == 'swap_Scenario') {
+      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/200;        // 150  200
+    }
+    else
+    {
+      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/150;        // 150
+    }    
+  }
+
+  // Rotate the velocity vector by 90 degrees in the 2D plane to get the perpendicular vector
+  const perpendicularVector = new THREE.Vector3(-capsule_entity.vz, 0, capsule_entity.vx);
+  // Compute the dot product
+  const dotProduct = perpendicularVector.dot(capsuleBodyNormalVec);
+  // Determine if the point is to the left or right of the velocity vector.
+  const direction = dotProduct > 0 ? 'right' : 'left';
+
+  let  next_orientation = 0;
+  let angleBodyNormalToGoalVecInRad = angleBodyNormalToGoalVec * (Math.PI / 180)
+
+  // find the shortest-path rotation. 
+  if(direction == 'right')
+  {
+    next_orientation = cur_orientation - angleBodyNormalToGoalVecInRad;
+  }else{
+    next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
+  }
+  
+
+  // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
+  if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
+  {
+    if(customParams.scenario == 'dense_torso_like')
+    {
+      if(capsule_entity.index == 0)
+      {
+        if( cur_orientation >= next_orientation)
+        {
+          capsule_entity.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
+        }else{
+          capsule_entity.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
+        }
+      }else{    
+        }
+    }else{
+
+        if( cur_orientation >= next_orientation )
+        {
+          // capsule_entity.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
+          capsule_entity.agent.rotation.z = cur_orientation - 0.01 ;
+        }else{
+          // capsule_entity.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
+          capsule_entity.agent.rotation.z = cur_orientation +  0.01 ;
+        }
+        
+    }
+  }
+  
+  
+  // return [capsule_entity.closest_wall_in_left, capsule_entity.closest_wall_in_right];
+}
+
+
+
+i = 0;
+while (i < sceneEntities.length) {
+
+  rotationConstraint_V2(sceneEntities[i]);
+
+  i += 1;
+}
 
 
 i = 0;
@@ -1726,6 +1826,7 @@ while (i < sceneEntities.length) {
     const dx = item.px - item.x;
     const dz = item.pz - item.z;
 
+/*
   let capsuleBodyNormalVec = getCapsuleBodyNormal(item, agentLength, RADIUS, item.agent.rotation.z);
   let VelocityVec = new THREE.Vector3(item.vx, 0 , item.vz);
   // let capsuleCurToGoalVec = new THREE.Vector3(item.goal_z - item.z, 0, item.goal_x - item.x);
@@ -1733,56 +1834,28 @@ while (i < sceneEntities.length) {
   let cur_orientation = item.agent.rotation.z;
   // let  next_orientation = Math.atan2(dz, dx);
 
-
-
   // Rotate the velocity vector by 90 degrees in the 2D plane to get the perpendicular vector
   const perpendicularVector = new THREE.Vector3(-item.vz, 0, item.vx);
-
   // Compute the dot product
   const dotProduct = perpendicularVector.dot(capsuleBodyNormalVec);
-
   // Determine if the point is to the left or right of the velocity vector.
   const direction = dotProduct > 0 ? 'right' : 'left';
-
-  // if(item.index == 6)
-  // {
-  //   if(direction == 'right')
-  //   {
-  //     console.log("right");
-  //   }else{
-  //     console.log("left");
-  //   }
-  // }
-
 
   let  next_orientation = 0;
   let angleBodyNormalToGoalVecInRad = angleBodyNormalToGoalVec * (Math.PI / 180)
 
+  // find the shortest-path rotation. 
   if(direction == 'right')
   {
-      next_orientation = cur_orientation - angleBodyNormalToGoalVecInRad;
+    next_orientation = cur_orientation - angleBodyNormalToGoalVecInRad;
   }else{
-      next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
+    next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
   }
   
-
-  // let  next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
-
-  // if(angleBodyNormalToGoalVecInRad >= 3.14159)
-  // {
-  //   next_orientation = 6.28319 - angleBodyNormalToGoalVecInRad;
-  //   console.log("After, next_orientation: ", next_orientation, "\n\n");
-  // }
-
-  
-  // console.log("next_orientation: ", next_orientation, ", next_orientation2: ", next_orientation2);
-
-
 
   // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
   if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
   {
-
     if(customParams.scenario == 'dense_torso_like')
     {
       if(item.index == 0)
@@ -1797,31 +1870,19 @@ while (i < sceneEntities.length) {
         }
     }else{
 
-      // console.log("Math.abs(cur_orientation - next_orientation) : ", Math.abs(cur_orientation - next_orientation) ); 
-
-      if( cur_orientation >= next_orientation )
-      {
-        // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
-        item.agent.rotation.z = cur_orientation - 0.01 ;
-      }else{
-        // item.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
-        item.agent.rotation.z = cur_orientation +  0.01 ;
-
-      }
+        if( cur_orientation >= next_orientation )
+        {
+          // item.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;   200
+          item.agent.rotation.z = cur_orientation - 0.01 ;
+        }else{
+          // item.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
+          item.agent.rotation.z = cur_orientation +  0.01 ;
+        }
         
     }
   }
-
-
-
+*/
 //--------------------------------------------------------
-
-
-  
-
-
-
-
 
   item.vx = (item.px - item.x) / timestep;
   item.vz = (item.pz - item.z) / timestep;

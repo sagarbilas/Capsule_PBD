@@ -201,6 +201,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
 
 
     function longRangeConstraint(agent_i, agent_j) {
+        console.log("hi from long-range");
         const agentCentroidDist = distance(agent_i.px, agent_i.pz,
             agent_j.px, agent_j.pz);
         const radius_init = 2 * AGENTSIZE;
@@ -227,19 +228,6 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         const d_sq = b_sq - a * c;
         const d = Math.sqrt(d_sq);
         const tao = (b - d) / a;
-
-
-
-
-        // if (agent_i.index % 2 !== 0 && agent_j.index % 2 !== 0){
-        //
-        //   C_TAO0 = 6;
-        // }else if (agent_i.index % 2 === 0 && agent_j.index % 2 === 0){
-        //
-        //   C_TAO0 = 80;
-        // }else {
-        //   return;
-        // }
 
         let lengthV;
         if (d_sq > 0.0 && Math.abs(a) > epsilon && tao > 0 && tao < C_TAU_MAX) {
@@ -275,6 +263,8 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         }
     }
 
+
+
     let C_TAU_MAX = 20;
     // const C_MAX_ACCELERATION = 0.01;
     let C_TAO0 = 25; //
@@ -290,6 +280,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         }
         return {"x":vx, "y":vy}
     }
+
 
 
     function longRangeConstraintCapsule(best_i, best_j, p_best_i, p_best_j) {
@@ -370,6 +361,8 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         ];
     }
 
+
+
     function getBestPointWithWall(xi, zi, wall){
 
         const iCoords = rotateLineSegment(
@@ -437,9 +430,59 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         return [bestA, bestB, a, b]
     }
 
+
+    //sphere-sphere short-range collision detection.
+    function collisionConstraint(agent_i,agent_j)
+    {
+      const agentCentroidDist = distance(agent_i.px, agent_i.pz, agent_j.px, agent_j.pz );
+      const agentDist = agentCentroidDist - AGENTSIZE;
+      const dir_x = (agent_j.px- agent_i.px)/agentCentroidDist; 
+      const dir_z = (agent_j.pz- agent_i.pz)/agentCentroidDist;
+  
+      const agent_i_goal_distance = distance(agent_i.px, agent_i.pz, agent_i.goal_x, agent_i.goal_z );
+      const agent_j_goal_distance = distance(agent_j.px, agent_j.pz, agent_j.goal_x, agent_j.goal_z );
+  
+  
+      const agent_i_scaler = agent_i.invmass/(agent_i.invmass+agent_j.invmass) * agentDist
+      const agent_j_scaler = agent_j.invmass/(agent_i.invmass+agent_j.invmass) * agentDist 
+      if(agentDist < 0)
+      {
+          // if agent i has the collision with the agent j, one has the smaller distance to the goal should gain 2x
+          // weight on adjusted position for giving space to another agent to navigate to its goal
+          if (agent_i_goal_distance >  agent_j_goal_distance){
+  
+              // const alpha = agent_i_goal_distance/agent_j_goal_distance;
+  
+              agent_i.px += agent_i_scaler * dir_x
+              agent_i.pz += agent_i_scaler * dir_z
+              agent_j.px += - agent_j_scaler * 2 * dir_x
+              agent_j.pz += - agent_j_scaler * 2 * dir_z
+  
+          }else if(agent_i_goal_distance <  agent_j_goal_distance){
+  
+              // const alpha = agent_j_goal_distance/agent_i_goal_distance;
+  
+  
+              agent_i.px += agent_i_scaler  * 2 * dir_x
+              agent_i.pz += agent_i_scaler  * 2 * dir_z
+              agent_j.px += - agent_j_scaler * dir_x
+              agent_j.pz += - agent_j_scaler * dir_z
+  
+          }else {
+              agent_i.px += agent_i_scaler * dir_x
+              agent_i.pz += agent_i_scaler * dir_z
+              agent_j.px += - agent_j_scaler * dir_x
+              agent_j.pz += - agent_j_scaler * dir_z
+  
+          }
+  
+  
+      } 
+    }
+
+
+
     function getCircleCenterWithWall(xi, zi, wall){
-
-
 
         // Agent A
         const a = {
@@ -573,34 +616,8 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
 
     while (pbdIters < ITERNUM) {
 
-        // wall collision (based on short range)
-        i=0;
-        while(i<sceneEntities.length)
-        {
-            j=0;
-            while(j<customParams.wallData.length)
-            {
-                // let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
-                let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getCircleCenterWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
 
-                let penetration_normal = p_bestA.clone().sub(w_bestB);
-                const len = penetration_normal.length();
-                penetration_normal.divideScalar(len); // normalize
-                const penetration_depth = sceneEntities[i].radius + sceneEntities[i].radius - len;
-                const intersects = penetration_depth > 0;
-                if (intersects) {
-                    sceneEntities[i].colliding = true;
-
-                    sceneEntities[i].px += penetration_normal.x * 1 * penetration_depth;
-                    sceneEntities[i].pz += penetration_normal.z * 1 * penetration_depth;
-
-                }
-
-                j+=1;
-            }
-            i+=1
-        }
-
+        /*
         i = 0;
         while (i < sceneEntities.length) {
             j = i + 1;
@@ -616,31 +633,196 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
                 customParams.best[i][j] = [bestA, bestB]
                 customParams.best[j][i] = [bestB, bestA]
 
-                // short range collision
-                // didn't correct position in real time
-                // let penetration_normal = bestA.clone().sub(bestB);
-                // const len = penetration_normal.length();
-                // penetration_normal.divideScalar(len); // normalize
-                // const penetration_depth = sceneEntities[i].radius + sceneEntities[j].radius - len;
-                // const intersects = penetration_depth > 0;
-                // if (intersects) {
-                //   sceneEntities[i].colliding = true;
-                //   sceneEntities[j].colliding = true;
-                //
-                //   sceneEntities[i].px += penetration_normal.x * 0.5 * penetration_depth;
-                //   sceneEntities[i].pz += penetration_normal.y * 0.5 * penetration_depth;
-                //
-                //   sceneEntities[j].px +=
-                //       -1 * penetration_normal.x * 0.5 * penetration_depth;
-                //   sceneEntities[j].pz +=
-                //       -1 * penetration_normal.y * 0.5 * penetration_depth;
-                // }
-
-
                 j += 1;
             }
             i += 1;
         }
+        */
+
+
+
+
+/*
+    // wall collision (based on short range)
+    i=0;
+    while(i<sceneEntities.length)
+    {
+        j=0;
+        while(j<customParams.wallData.length)
+        {
+            let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+            // let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getCircleCenterWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+
+            let penetration_normal = p_bestA.clone().sub(w_bestB);
+            const len = penetration_normal.length();
+            penetration_normal.divideScalar(len); // normalize
+            const penetration_depth = sceneEntities[i].radius + sceneEntities[i].radius - len;
+            const intersects = penetration_depth > 0;
+
+            const agentCentroidDist = distance(sceneEntities[i].px, sceneEntities[i].pz, w_bestB.x, w_bestB.z);
+
+            let dist = agentCentroidDist - RADIUS - 0.5;
+
+            if(sceneEntities[i].index == 1  && customParams.wallData[i].base == customParams.wallData[1].base )
+            {
+                console.log("id: ",sceneEntities[i].index, ", dist: ", dist );
+                // console.log("customParams.wallData[j].base: ", customParams.wallData[0].base );
+            }
+
+
+            // if (intersects) {
+            if (dist <= 0) {
+                sceneEntities[i].colliding = true;
+                // console.log("sceneEntities[i].radius",sceneEntities[i].radius,  ", len: ", len, ", penetration_depth: ", penetration_depth);
+
+                console.log("id: ",sceneEntities[i].index );
+                // console.log("p_bestA: ", p_bestA,  ", w_bestB: ", w_bestB, "\n\n");
+
+                sceneEntities[i].px += penetration_normal.x * .001 * penetration_depth;
+                sceneEntities[i].pz += penetration_normal.z * .001 * penetration_depth;
+
+            }
+
+            j+=1;
+        }
+        i+=1
+    }
+*/
+
+    // function collisionConstraint(agent_i, agent_j) {
+    //     const agentCentroidDist = distance(
+    //         agent_i.px,
+    //         agent_i.pz,
+    //         agent_j.px,
+    //         agent_j.pz
+    //     );
+    //     const agentDist = agentCentroidDist - AGENTSIZE;
+    //     const dir_x = (agent_j.px - agent_i.px) / agentCentroidDist;
+    //     const dir_z = (agent_j.pz - agent_i.pz) / agentCentroidDist;
+    //     const agent_i_scaler =
+    //         (agent_i.invmass / (agent_i.invmass + agent_j.invmass)) * agentDist;
+    //     const agent_j_scaler =
+    //         (agent_j.invmass / (agent_i.invmass + agent_j.invmass)) * agentDist;
+    //     if (agentDist < 0) {
+    //         agent_i.px += agent_i_scaler * dir_x;
+    //         agent_i.pz += agent_i_scaler * dir_z;
+    //         agent_j.px += -agent_j_scaler * dir_x;
+    //         agent_j.pz += -agent_j_scaler * dir_z;
+    //     }
+    // }
+
+    function collisionConstraint_wall(agent_i, agent_j) {
+
+        let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(agent_i.px, agent_i.pz, customParams.wallData[j]);
+        // let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getCircleCenterWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+
+        const agentCentroidDist = distance(agent_i.px, agent_i.pz, w_bestB.x, w_bestB.z);
+        let agentDist = agentCentroidDist - RADIUS - 1.0;   // 1.25 or 1.7 for narrow_hallwayOneAgent_Scenario,    .5  for narrow_hallwayTwoAgent_FaceToFace_Scenario
+
+        const dir_x = (w_bestB.x - agent_i.px) / agentCentroidDist;
+        const dir_z = (w_bestB.z - agent_i.pz) / agentCentroidDist;
+        const agent_i_scaler = (agent_i.invmass / (agent_i.invmass + 1)) * agentDist;
+        const agent_j_scaler = ( 1 / ( agent_i.invmass + 1)) * agentDist;
+
+        if (agentDist <= 0) {
+            if( agent_i.object_type == 'agent')
+            {
+                agent_i.px += agent_i_scaler * dir_x;
+                agent_i.pz += agent_i_scaler * dir_z;
+                // console.log("1. id: ", sceneEntities[i].index);
+
+                console.log("agent_i.px: ", agent_i.px, ", agent_i.pz: ", agent_i.pz);
+
+            }else{
+                agent_j.px += -agent_j_scaler * dir_x;
+                agent_j.pz += -agent_j_scaler * dir_z;
+                console.log("2. id: ", agent_j.index);
+            }
+
+        }
+    }
+
+
+    // wall collision (based on short range)
+    i=0;
+    while(i<sceneEntities.length)
+    {
+        j=0;
+        while(j<customParams.wallData.length)
+        {
+            collisionConstraint_wall(sceneEntities[i],customParams.wallData[j]);
+            j+=1;
+        }
+        i+=1
+    }
+
+
+    /*
+    // wall collision (based on short range)
+    i=0;
+    while(i<sceneEntities.length)
+    {
+        j=0;
+        while(j<customParams.wallData.length)
+        {
+            let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+            // let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getCircleCenterWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+
+            let penetration_normal = p_bestA.clone().sub(w_bestB);
+            const len = penetration_normal.length();
+            penetration_normal.divideScalar(len); // normalize
+            const penetration_depth = sceneEntities[i].radius + sceneEntities[i].radius - len;
+            const intersects = penetration_depth > 0;
+
+            const agentCentroidDist = distance(sceneEntities[i].px, sceneEntities[i].pz, w_bestB.x, w_bestB.z);
+
+            let dist = agentCentroidDist - RADIUS - 0.5;
+
+            if(sceneEntities[i].index == 1  && customParams.wallData[i].base == customParams.wallData[1].base )
+            {
+                console.log("id: ",sceneEntities[i].index, ", dist: ", dist );
+                // console.log("customParams.wallData[j].base: ", customParams.wallData[0].base );
+            }
+
+
+            // if (intersects) {
+            if (dist <= 0) {
+                sceneEntities[i].colliding = true;
+                // console.log("sceneEntities[i].radius",sceneEntities[i].radius,  ", len: ", len, ", penetration_depth: ", penetration_depth);
+
+                console.log("id: ",sceneEntities[i].index );
+                // console.log("p_bestA: ", p_bestA,  ", w_bestB: ", w_bestB, "\n\n");
+
+                sceneEntities[i].px += penetration_normal.x * .001 * penetration_depth;
+                sceneEntities[i].pz += penetration_normal.z * .001 * penetration_depth;
+
+            }
+
+            j+=1;
+        }
+        i+=1
+    }
+*/
+
+
+
+
+
+
+
+
+    //  short range collision avoidance (sphere-sphere)
+    i=0;
+    while(i<sceneEntities.length)
+    {
+        j=i+1;
+        while(j<sceneEntities.length)
+        {
+          collisionConstraint(sceneEntities[i],sceneEntities[j])
+          j+=1;
+        }
+        i+=1
+    }
 
 
 
@@ -658,4 +840,20 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         item.z = item.pz;
         item.y = item.py;
     });
+
+
+
+if( customParams.scenario != 'swap_Scenario' && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 )  )
+{
+    item.vx = 0;
+    item.vy = 0;
+    item.vz = 0;
+
+    item.x = item.goal_x;
+    item.z = item.goal_z;
+    item.y = 0;
+
+    
+}
+
 }

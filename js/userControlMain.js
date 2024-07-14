@@ -1453,7 +1453,6 @@ addColumnAgentGroup(
     );
 
 
-
 // index 2
 addColumnAgentGroup(
   agentData,
@@ -1674,139 +1673,34 @@ addColumnAgentGroup(
       );
 
 //--------------------------------------------------
-  
-//---------------------------------------------------------------------------------------------------------------
-    const boxGeometry3 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial3 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right2 = new THREE.Mesh(boxGeometry3, boxMaterial3);
-    right2.position.set(-10, 2.5, 3.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 3.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 3.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 3.4),
-    });
-    scene.add(right2);
 
 
-    const boxGeometry_right4 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right4 = new THREE.Mesh(boxGeometry_right4, boxMaterial_right4);
-    right4.position.set(-10, 2.5, 4.4);
+    const boxGeometry11 = new THREE.BoxGeometry( 6, 5, 30);
+    const boxMaterial11 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
+    const right11 = new THREE.Mesh(boxGeometry11, boxMaterial11);
+    right11.position.set(-10, 2.5,  17.50);
   
     wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 4.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 4.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 4.4),
-    });
-    scene.add(right4);
-
-
-    const boxGeometry_right5 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right5 = new THREE.Mesh(boxGeometry_right5, boxMaterial_right5);
-    right5.position.set(-10, 2.5, 5.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 5.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 5.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 5.4),
-    });
-    scene.add(right5);
-
-    const boxGeometry_right6 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right6 = new THREE.Mesh(boxGeometry_right6, boxMaterial_right6);
-    right6.position.set(-10, 2.5, 6.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 6.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 6.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 6.4),
-    });
-    scene.add(right6);
-
-
-    const boxGeometry_right7 = new THREE.BoxGeometry( 6, 5, 25);
-    const boxMaterial_right7 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right7 = new THREE.Mesh(boxGeometry_right7, boxMaterial_right7);
-    right7.position.set(-10, 2.5, 19.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 19.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 19.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 19.4),
-    });
-    scene.add(right7);
-
-    const boxGeometry1 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial1 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right = new THREE.Mesh(boxGeometry1, boxMaterial1);
-    right.position.set(-10, 2.5, 3.0);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 3.0),
-        depth: 1, // along z-axis
+        depth: 30, // along z-axis
         width: 6, // along x-axis
         base: new THREE.Vector3(-10 - 6/2, 2.5, 3.0),
         tip: new THREE.Vector3(-10 + 6/2, 2.5, 3.0),
     });
-    scene.add(right);
-//---------------------------------------------------------------------------------------------------------------
-
-    const boxGeometry4 = new THREE.BoxGeometry(6, 5, 1);
-    const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left = new THREE.Mesh(boxGeometry4, boxMaterial4);
-    left.position.set(-10, 2.5, -5.7);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -5.7),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -5.76),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -5.7),
-    });
-    scene.add(left);
+    scene.add(right11);
 
 
-    const boxGeometry8 = new THREE.BoxGeometry(6, 5, 25);
-    const boxMaterial8 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left8 = new THREE.Mesh(boxGeometry8, boxMaterial8);
-    left8.position.set(-10, 2.5, -19.1);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -19.1),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -19.1),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -19.1),
-    });
-  
-    scene.add(left8);
+  const boxGeometry9 = new THREE.BoxGeometry(6, 5, 30);
+  const boxMaterial9 = new THREE.MeshBasicMaterial({ color: 0x1111f26 });
+  const left9 = new THREE.Mesh(boxGeometry9, boxMaterial9);
+  // left9.position.set(-20, 2.5, -5.7);
+  left9.position.set(-10, 2.5, -20.0);
+  wallData.push({
+      depth: 30, // along z-axis
+      base: new THREE.Vector3(-10 - 6 / 2, 2.5, -5.7),
+      tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -5.7),
+  });
+  scene.add(left9);
 
-    const boxGeometry9 = new THREE.BoxGeometry(6, 5, 1);
-    const boxMaterial9 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left9 = new THREE.Mesh(boxGeometry9, boxMaterial9);
-    left9.position.set(-10, 2.5, -6.1);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -6.1),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -6.1),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -6.1),
-    });
-  
-    scene.add(left9);
-    
-  
     parameters.wallData = wallData;
   }
   
@@ -2151,6 +2045,8 @@ function suddenStop_Scenario() {
         next_orientation: 0,
         goal_orientation: 0,
 
+        nextOrientationInRadians: 0,
+
         x_prev: 0.0,
         y_prev: 0.0,
         z_prev: 0.0,
@@ -2481,77 +2377,6 @@ function animate() {
     // const dz = member.goal_z - member.z;
     // member.agent.rotation.z = Math.atan2(dz, dx); 
     // member.agent.rotation.z = getRightRotation(member.x, member.z, member.goal_x, member.goal_z); 
-
-    // console.log("orientation: ", parameters.orientation);
-
-    let cur_orientation = member.agent.rotation.z;
-    const dx = member.goal_x - member.x;
-    const dz = member.goal_z - member.z;
-    // let next_orientation = Math.atan2(dz, dx);
-    let next_orientation = member.goal_orientation;
-
-    if(member.index == 1)
-    {
-      // console.log("cur_orientation: ", cur_orientation, ",next_orientation: ",next_orientation );
-      // console.log("member.x: ", member.x, ",member.z: ",member.z, ", member.goal_x: ", member.goal_x, ", member.goal_z: ", member.goal_z );
-      // console.log("dx: ", dx, ",dz: ", dz, "\n\n" );
-
-    }
-    
-    if( parameters.orientation == 'front')
-    {
-
-    /*
-      let cur_orientation = item.agent.rotation.z;
-      let  next_orientation = Math.atan2(dz, dx);
-      if( Math.abs(cur_orientation - next_orientation) >= 0.0 )   // 0.0 makes the orientation better after recovering from the full body rotations.
-      {
-        item.agent.rotation.z = cur_orientation - cur_orientation/200 ;
-      }
-    */
-
-      // if( Math.abs(cur_orientation - next_orientation) >= 0.08 && cur_orientation > next_orientation)   // 0.0 makes the orientation better after recovering from the full body rotations.
-      // {
-      //   member.agent.rotation.z = cur_orientation - cur_orientation/150 ;
-      // }
-      // else{
-      //   member.agent.rotation.z = cur_orientation + cur_orientation/150 ;
-      // }
-
-/*
-      if( Math.abs(cur_orientation - next_orientation) >= 0.08)   // 0.0 makes the orientation better after recovering from the full body rotations.
-      {
-
-        // if( cur_orientation >= next_orientation)
-        // {
-        //   member.agent.rotation.z = cur_orientation - cur_orientation/200 ;
-        //   console.log(" still spinning =================================================================1 ");
-        // }else{
-        //   member.agent.rotation.z = cur_orientation + cur_orientation/200 ;
-        //   console.log(" still spinning =================================================================2 ");
-        // }
-
-
-        if( cur_orientation >= next_orientation)
-          {
-            member.agent.rotation.z = cur_orientation - (cur_orientation - next_orientation)/200 ;
-            console.log(" still spinning =================================================================1 ");
-          }else{
-            member.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
-            console.log(" still spinning =================================================================2 ");
-          }
-
-      }
-      */
-
-      // member.agent.rotation.z = Math.atan2(dz, dx); 
-      // member.agent.rotation.z = getRightRotation(member.x, member.z, member.goal_x, member.goal_z); 
-
-      // console.log("member.x: ", member.x, ", member.z: ", member.z, ", member.goal_x: ", member.goal_x, ", member.goal_z: ", member.goal_z);
-      // console.log("member.agent.rotation.z: ", member.agent.rotation.z);
-    }
-  
-  
 
     // const dx = member.px - member.x;
     // const dz = member.pz - member.z;
