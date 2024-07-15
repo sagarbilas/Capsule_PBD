@@ -335,7 +335,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       // stif = 0.045;
       stif = 0.0058;     //0.007;    0.011;
     }  else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace'){
-      stif = 0.0295;   // .45    0.025;   0.02547;   0.025
+      stif = 0.028;   // .45    0.025;   0.02547;   0.025;  0.0295;
     }else if(customParams.scenario == 'oneAgentCrossingAGroupInAngle'){
       stif = 0.037;   // .45    0.025;
     }
@@ -374,7 +374,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
 
     if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
     {
-      if (agentDist < 1.715 )   // 1.7035, 1.704  1.715
+      if (agentDist < 1.55 )   // 1.7035, 1.704  1.715
       {   
         capsule_i.px += stif * agent_i_scaler * -dir_x;
         capsule_i.pz += stif * agent_i_scaler * -dir_z;           
@@ -1595,7 +1595,7 @@ function rotationConstraint_V2(capsule_entity)
       capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/150;   //200
     }else if(customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
     {
-      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/100;
+      capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/180;   //100 before
     }
     else if(customParams.scenario == 'swap_Scenario') {
       capsule_entity.agent.rotation.z = capsule_entity.agent.rotation.z + capsule_entity.nextOrientationInRadians/200;        // 150  200
@@ -1698,6 +1698,7 @@ while (i < sceneEntities.length) {
       const len = penetration_normal.length();
       penetration_normal.divideScalar(len); // normalize
       const penetration_depth = sceneEntities[i].radius + 0.50 - len ;  //0.5 is the depth of the wall
+      // const penetration_depth = sceneEntities[i].radius + customParams.wallData[0].width/2 - len ;
 
       const intersects = penetration_depth > 0;
       if (intersects) {

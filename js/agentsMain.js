@@ -1289,7 +1289,9 @@ addColumnAgentGroup(
 
 
 // ------------------------- swap_Through_Narrow_Exit_Scenario --------- Start -------------------------------------------------------------------------------------------------------
-function swap_Through_Narrow_Exit_Scenario() {
+//===========================================================================
+// ------------------------- swap_Through_Narrow_Exit_Scenario --------- Start -------------------------------------------------------------------------------------------------------
+function swap_Through_Narrow_Exit_Scenario_V2() {
 
   parameters.scenario = 'swap_Scenario';
 
@@ -1334,7 +1336,6 @@ addColumnAgentGroup(
   0.8,
   "X"
     );
-
 
 
 // index 2
@@ -1442,7 +1443,7 @@ addColumnAgentGroup(
       x: 20,
       // z: -1.8,
       // z: -2.1,
-      z: -1.5,    //
+      z: -1.5,
   },
   0.8,
   "X"
@@ -1455,15 +1456,12 @@ addColumnAgentGroup(
   RADIUS * 1.5,
   {
       // x: -24,
-      x: -25,
-      z: 3,
+      x: -25,   //-25,
+      z: 3,  // 3,
   },
   {
-      // x: 20,
-      // z: 3,
-
-      x: -24.5,
-      z: 3,
+      x: -24.5,  //-24.5,
+      z: 3,    //3,
   },
   0.8,
   "X"
@@ -1482,9 +1480,6 @@ addColumnAgentGroup(
         z: -7.5,
     },
     {
-        // x: 20,
-        // z: -7,
-
         x: -26,
         // z: -7,
         z: -7.5,
@@ -1504,9 +1499,6 @@ addColumnAgentGroup(
       z: -1.8,
   },
   {
-      // x: 20,
-      // z: -1.8,
-
       x: -32,
       z: -1.8,
   },
@@ -1525,9 +1517,6 @@ addColumnAgentGroup(
       z: 5,
   },
   {
-      // x: 20,
-      // z: 3,
-
       x: -32,
       z: 5,
   },
@@ -1546,9 +1535,6 @@ addColumnAgentGroup(
         z: -9,
     },
     {
-        // x: 20,
-        // z: -7,
-
         x: -32,
         z: -9,
     },
@@ -1557,142 +1543,37 @@ addColumnAgentGroup(
       );
 
 //--------------------------------------------------
-  
-//---------------------------------------------------------------------------------------------------------------
-    const boxGeometry3 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial3 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right2 = new THREE.Mesh(boxGeometry3, boxMaterial3);
-    right2.position.set(-10, 2.5, 3.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 3.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 3.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 3.4),
-    });
-    scene.add(right2);
+
+  const boxGeometry11 = new THREE.BoxGeometry( 6, 5, 30);
+  const boxMaterial11 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
+  const right11 = new THREE.Mesh(boxGeometry11, boxMaterial11);
+  right11.position.set(-10, 2.5, 17.5);
+  wallData.push({
+      center: new THREE.Vector3(-10, 2.5, 17.5),
+      depth: 30, // along z-axis
+      width: 6, // along x-axis
+      base: new THREE.Vector3(-10, 2.5, 17.50 - 30/2),
+      tip: new THREE.Vector3(-10, 2.5, 17.50 + 30/2),
+  });
+  scene.add(right11);
 
 
-    const boxGeometry_right4 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right4 = new THREE.Mesh(boxGeometry_right4, boxMaterial_right4);
-    right4.position.set(-10, 2.5, 4.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 4.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 4.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 4.4),
-    });
-    scene.add(right4);
+  const boxGeometry9 = new THREE.BoxGeometry(6, 5, 30);
+  const boxMaterial9 = new THREE.MeshBasicMaterial({ color: 0x1111f26 });
+  const left9 = new THREE.Mesh(boxGeometry9, boxMaterial9);
+  left9.position.set(-10, 2.5, -20.0);
+  wallData.push({
+    center: new THREE.Vector3(-10, 2.5, -20.0),
+      depth: 30, // along z-axis
+      width: 6, // along x-axis
+      base: new THREE.Vector3(-10, 2.5, -20.0 - 30/2),
+      tip: new THREE.Vector3(-10, 2.5, -20.0 + 30/2),
+  });
+  scene.add(left9);
 
-
-    const boxGeometry_right5 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right5 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right5 = new THREE.Mesh(boxGeometry_right5, boxMaterial_right5);
-    right5.position.set(-10, 2.5, 5.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 5.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 5.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 5.4),
-    });
-    scene.add(right5);
-
-    const boxGeometry_right6 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial_right6 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right6 = new THREE.Mesh(boxGeometry_right6, boxMaterial_right6);
-    right6.position.set(-10, 2.5, 6.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 6.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 6.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 6.4),
-    });
-    scene.add(right6);
-
-
-    const boxGeometry_right7 = new THREE.BoxGeometry( 6, 5, 25);
-    const boxMaterial_right7 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right7 = new THREE.Mesh(boxGeometry_right7, boxMaterial_right7);
-    right7.position.set(-10, 2.5, 19.4);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 19.4),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 19.4),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 19.4),
-    });
-    scene.add(right7);
-
-    const boxGeometry1 = new THREE.BoxGeometry( 6, 5, 1);
-    const boxMaterial1 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right = new THREE.Mesh(boxGeometry1, boxMaterial1);
-    right.position.set(-10, 2.5, 3.0);
-  
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, 3.0),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 3.0),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 3.0),
-    });
-    scene.add(right);
-//---------------------------------------------------------------------------------------------------------------
-
-    const boxGeometry4 = new THREE.BoxGeometry(6, 5, 1);
-    const boxMaterial4 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left = new THREE.Mesh(boxGeometry4, boxMaterial4);
-    left.position.set(-10, 2.5, -5.7);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -5.7),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -5.76),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -5.7),
-    });
-    scene.add(left);
-
-
-    const boxGeometry8 = new THREE.BoxGeometry(6, 5, 25);
-    const boxMaterial8 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left8 = new THREE.Mesh(boxGeometry8, boxMaterial8);
-    left8.position.set(-10, 2.5, -19.1);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -19.1),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -19.1),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -19.1),
-    });
-  
-    scene.add(left8);
-
-    const boxGeometry9 = new THREE.BoxGeometry(6, 5, 1);
-    const boxMaterial9 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const left9 = new THREE.Mesh(boxGeometry9, boxMaterial9);
-    left9.position.set(-10, 2.5, -6.1);
-    wallData.push({
-        center: new THREE.Vector3(-10, 2.5, -6.1),
-        depth: 1, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6 / 2, 2.5, -6.1),
-        tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -6.1),
-    });
-  
-    scene.add(left9);
-    
-  
     parameters.wallData = wallData;
   }
-  
+
 // ------------------------- swap_Through_Narrow_Exit_Scenario --------- End -------------------------------------------------------------------------------------------------------
 
 
@@ -1873,12 +1754,12 @@ function suddenStop_Scenario() {
 //----------------------------------------------------------
 //uncomment any of the scenarios below to test in different scenarios.
 
-  narrow_hallwayOneAgent_Scenario();
+  // narrow_hallwayOneAgent_Scenario();
   // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
   // rectangle_Scenario_V2();
-  // swap_Through_Narrow_Exit_Scenario();  
+  swap_Through_Narrow_Exit_Scenario_V2();  
   // suddenStop_Scenario();
 
 //-------------------------------------------------------------------

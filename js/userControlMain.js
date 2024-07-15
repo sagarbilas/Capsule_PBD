@@ -1575,9 +1575,6 @@ addColumnAgentGroup(
       z: 3,  // 3,
   },
   {
-      // x: 20,
-      // z: 3,
-
       x: -24.5,  //-24.5,
       z: 3,    //3,
   },
@@ -1598,9 +1595,6 @@ addColumnAgentGroup(
         z: -7.5,
     },
     {
-        // x: 20,
-        // z: -7,
-
         x: -26,
         // z: -7,
         z: -7.5,
@@ -1620,9 +1614,6 @@ addColumnAgentGroup(
       z: -1.8,
   },
   {
-      // x: 20,
-      // z: -1.8,
-
       x: -32,
       z: -1.8,
   },
@@ -1641,9 +1632,6 @@ addColumnAgentGroup(
       z: 5,
   },
   {
-      // x: 20,
-      // z: 3,
-
       x: -32,
       z: 5,
   },
@@ -1662,9 +1650,6 @@ addColumnAgentGroup(
         z: -9,
     },
     {
-        // x: 20,
-        // z: -7,
-
         x: -32,
         z: -9,
     },
@@ -1674,30 +1659,30 @@ addColumnAgentGroup(
 
 //--------------------------------------------------
 
-
-    const boxGeometry11 = new THREE.BoxGeometry( 6, 5, 30);
-    const boxMaterial11 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
-    const right11 = new THREE.Mesh(boxGeometry11, boxMaterial11);
-    right11.position.set(-10, 2.5,  17.50);
-  
-    wallData.push({
-        depth: 30, // along z-axis
-        width: 6, // along x-axis
-        base: new THREE.Vector3(-10 - 6/2, 2.5, 3.0),
-        tip: new THREE.Vector3(-10 + 6/2, 2.5, 3.0),
-    });
-    scene.add(right11);
+  const boxGeometry11 = new THREE.BoxGeometry( 6, 5, 30);
+  const boxMaterial11 = new THREE.MeshBasicMaterial({ color: 0x000f26 });
+  const right11 = new THREE.Mesh(boxGeometry11, boxMaterial11);
+  right11.position.set(-10, 2.5, 17.5);
+  wallData.push({
+      center: new THREE.Vector3(-10, 2.5, 17.5),
+      depth: 30, // along z-axis
+      width: 6, // along x-axis
+      base: new THREE.Vector3(-10, 2.5, 17.50 - 30/2),
+      tip: new THREE.Vector3(-10, 2.5, 17.50 + 30/2),
+  });
+  scene.add(right11);
 
 
   const boxGeometry9 = new THREE.BoxGeometry(6, 5, 30);
   const boxMaterial9 = new THREE.MeshBasicMaterial({ color: 0x1111f26 });
   const left9 = new THREE.Mesh(boxGeometry9, boxMaterial9);
-  // left9.position.set(-20, 2.5, -5.7);
   left9.position.set(-10, 2.5, -20.0);
   wallData.push({
+    center: new THREE.Vector3(-10, 2.5, -20.0),
       depth: 30, // along z-axis
-      base: new THREE.Vector3(-10 - 6 / 2, 2.5, -5.7),
-      tip: new THREE.Vector3(-10 + 6 / 2, 2.5, -5.7),
+      width: 6, // along x-axis
+      base: new THREE.Vector3(-10, 2.5, -20.0 - 30/2),
+      tip: new THREE.Vector3(-10, 2.5, -20.0 + 30/2),
   });
   scene.add(left9);
 
@@ -1705,7 +1690,6 @@ addColumnAgentGroup(
   }
   
 // ------------------------- swap_Through_Narrow_Exit_Scenario --------- End -------------------------------------------------------------------------------------------------------
-//===========================================================================
 
 
 
