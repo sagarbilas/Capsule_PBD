@@ -22,7 +22,7 @@ let grid, ring;
 let spotLights = {};
 let topTextures = {};
 let topTexture;
-const RADIUS = 2;
+const RADIUS = 1.5;
 const blueAgentMaterial = new THREE.MeshLambertMaterial({
   color: 0x0000ff,
 });
@@ -1735,8 +1735,266 @@ function suddenStop_Scenario() {
   );
 
 } 
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+function hallway_facing_2_agents_scenario() {
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 15,
+      z: 0,
+    },
+    {
+      x: -38,
+      z: 0,
+    },
+    0.8,
+    "X"
+);
+
+addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: -15,
+      z: 0.5,
+    },
+    {
+      x: 38,
+      z: 0.5,
+    },
+    0.8,
+    "X"
+);
+
+}
+
+
+
+function Two_agents_moving_orthogonally() {
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 15,
+      z: 0,
+    },
+    {
+      x: -15,
+      z: 0,
+    },
+    0.8,
+    "X"
+  );
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 0,
+      z: 15,
+    },
+    {
+      x: 0,
+      z: -15,
+    },
+    0.8,
+    "X"
+  );
+
+}
+
+
+
+function passing_groups() {
+
+  parameters.scenario = 'passing_groups';
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        addColumnAgentGroup(
+            agentData,
+            1,
+            RADIUS * 1.5,
+            {
+              x: 25 - i * 6,
+              //x: 30,
+              z: -10 + j * 6,
+            },
+            {
+              x: -38,
+              //x: -20,
+              z: -10 + j * 6,
+            },
+            0.8,
+            "X"
+        );
+      }
+    }
+  
+  
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      addColumnAgentGroup(
+          agentData,
+          1,
+          RADIUS * 1.5,
+          {
+            x: -25 + i * 6,
+            //x: 30,
+            z: 5 - j * 6,
+          },
+          {
+            x: 38,
+            //x: -20,
+            z: 5 - j * 6,
+          },
+          0.8,
+          "X"
+      );
+    }
+  }  
+}
+
+
+
+
+
+function orthogonal_passing_groups() {
+
+  parameters.scenario = 'orthogonal_passing_groups';
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        addColumnAgentGroup(
+          agentData,
+          1,
+          RADIUS * 1.5,
+          {
+            x: 25 - i * 6,
+            z: -15 + j * 6,
+          },
+          {
+            x: -25 - i * 6,
+            z: -15 + j * 6,
+          },
+          0.8,
+          "X"
+        );
+      }
+    }
+  
+  
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      addColumnAgentGroup(
+        agentData,
+        1,
+        RADIUS * 1.5,
+        {
+          x: 5 - i * 6,
+          z: 20 - j * 6,
+        },
+        {
+          x: 5 - i * 6,
+          z: -20 - j * 6,
+        },
+        0.8,
+        "X"
+      );
+    }
+  }  
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function sampleCirclePointsWithDistance(sampleCount, distanceBetweenPoints, centerX, centerY) {
+  // Calculating the total circumference that would fit the points with the given distance
+  let totalCircumference = distanceBetweenPoints * sampleCount;
+
+  // Updating the radius based on the new circumference
+  let radius = totalCircumference / (2 * Math.PI);
+
+  let points = [];
+  for (let i = 0; i < sampleCount; i++) {
+    // Angle in radians
+    let angle = 2 * Math.PI * i / sampleCount;
+
+    // Calculating x and y coordinates
+    let x = centerX + radius * Math.cos(angle);
+    let y = centerY + radius * Math.sin(angle);
+
+    points.push({ x: x, y: y });
+  }
+  return points;
+}
+
+
+function sampleCirclePoints(radius, sampleCount, centerX, centerY) {
+  let points = [];
+  for (let i = 0; i < sampleCount; i++) {
+    // Angle in radians
+    let angle = 2 * Math.PI * i / sampleCount;
+
+    // Calculating x and y coordinates
+    let x = centerX + radius * Math.cos(angle);
+    let y = centerY + radius * Math.sin(angle);
+
+    points.push({ x: x, y: y });
+  }
+  return points;
+}
+
+
+function circleScenario(){
+
+// Use below values for that scenario.
+/*
+const C_LONG_RANGE_STIFF = 0.25;  
+const MAX_DELTA = 0.03;
+
+const C_LONG_RANGE_STIFF = 0.15;  
+const MAX_DELTA = 0.01;
+
+let angleThresholdBtwnDirectionAndNormalInDeg = 0.30; 
+*/
+
+  let points = sampleCirclePoints(20, 10, 0, 0);
+  // let points = sampleCirclePointsWithDistance(42, 2 * 2* RADIUS + 2, 0, 0);
+  console.log(points);
+  points.forEach(function (point){
+    addColumnAgentGroup(
+        agentData,
+        1,
+        0,
+        {
+          x: point.x,
+          z: point.y,
+        },
+        {
+          x: -point.x * 1.1 ,
+          z: -point.y * 1.1 ,
+        },
+        0.8,
+        "X"
+    );
+  });
+
+}
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   function addColumnAgentGroup(
     agentData,
@@ -1824,8 +2082,7 @@ function suddenStop_Scenario() {
         x_prev: 0.0,
         y_prev: 0.0,
         z_prev: 0.0,
-        x_2nd_prev: 0.0,
-        z_2nd_prev: 0.0,
+        passing_groupsz_2nd_prev: 0.0,
         x_3rd_prev: 0.0,
         z_3rd_prev: 0.0,
         
@@ -1874,7 +2131,7 @@ function suddenStop_Scenario() {
 //uncomment any of the scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
-  dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
+  // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
   // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
   // rectangle_Scenario_V2();
@@ -1887,7 +2144,13 @@ function suddenStop_Scenario() {
   // oneAgentCrossingGroup();
   // bidirectionalScenario();
   // oneAgentCrossingAGroupInAngle();
+//-------------------------------------------------------------------
 
+  // hallway_facing_2_agents_scenario();
+  // Two_agents_moving_orthogonally();
+  // passing_groups();
+  // orthogonal_passing_groups();
+  circleScenario();
   //----------------------------------------------------------
 
 
@@ -2031,25 +2294,25 @@ function suddenStop_Scenario() {
   }
 
 
-  let pauseButton = document.getElementById("pause");
-  pauseButton.addEventListener("pause", pauseButtonLogic);
+  // let pauseButton = document.getElementById("pause");
+  // // pauseButton.addEventListener("pause", pauseButtonLogic);
 
-  function pauseButtonLogic()
-  {
-      console.log("pause");
-      world.pause=!world.pause;
-      if(!world.pause)
-      {
-          pauseButton.src= "./resources/icons/8666604_pause_icon.png";
-      }
-      else
-      {
-          pauseButton.src= "./resources/icons/8666634_play_icon.png";
-      }
-  }
+  // function pauseButtonLogic()
+  // {
+  //     console.log("pause");
+  //     world.pause=!world.pause;
+  //     if(!world.pause)
+  //     {
+  //         pauseButton.src= "./resources/icons/8666604_pause_icon.png";
+  //     }
+  //     else
+  //     {
+  //         pauseButton.src= "./resources/icons/8666634_play_icon.png";
+  //     }
+  // }
 
-  let downloadButton = document.getElementById("download");
-  downloadButton.addEventListener("download", downloadButtonLogic);
+  // let downloadButton = document.getElementById("download");
+  // downloadButton.addEventListener("download", downloadButtonLogic);
 
   function parsePositions(data)
   {

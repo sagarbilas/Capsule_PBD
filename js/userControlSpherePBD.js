@@ -7,9 +7,18 @@ export function distance(x1, y1, x2, y2) {
 export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
     const AGENTSIZE = RADIUS * 2;
     const epsilon = 0.0001;
-    const timestep = 0.03;
+    const timestep = 0.01;
     const ITERNUM = 1; // 3
     const agentLength = RADIUS;
+
+    //-------------------------------
+
+    
+    let C_TAU_MAX = 20;  //20 before
+    // const C_MAX_ACCELERATION = 0.01;
+    let C_TAO0 = 5; //
+    const C_LONG_RANGE_STIFF = 0.009;    //0.02; before
+    const MAX_DELTA = 0.1;    // before 0.9; 
 
     // collision functions
 
@@ -201,7 +210,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
 
 
     function longRangeConstraint(agent_i, agent_j) {
-        console.log("hi from long-range");
+        // console.log("hi from long-range");
         const agentCentroidDist = distance(agent_i.px, agent_i.pz,
             agent_j.px, agent_j.pz);
         const radius_init = 2 * AGENTSIZE;
@@ -265,11 +274,6 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
 
 
 
-    let C_TAU_MAX = 20;
-    // const C_MAX_ACCELERATION = 0.01;
-    let C_TAO0 = 25; //
-    const C_LONG_RANGE_STIFF = 0.02;
-    const MAX_DELTA = 0.9;
 
     function clamp2D(vx,vy, maxValue) {
         const lengthV = Math.sqrt(vx * vx + vy * vy);
@@ -430,7 +434,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         return [bestA, bestB, a, b]
     }
 
-
+/*
     //sphere-sphere short-range collision detection.
     function collisionConstraint(agent_i,agent_j)
     {
@@ -479,7 +483,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
   
       } 
     }
-
+*/
 
 
     function getCircleCenterWithWall(xi, zi, wall){
@@ -617,27 +621,27 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
     while (pbdIters < ITERNUM) {
 
 
-        /*
-        i = 0;
-        while (i < sceneEntities.length) {
-            j = i + 1;
-            while (j < sceneEntities.length) {
+        
+    i = 0;
+    while (i < sceneEntities.length) {
+        j = i + 1;
+        while (j < sceneEntities.length) {
 
-                // spheres
-                let bestA, bestB;
-                longRangeConstraint(sceneEntities[i], sceneEntities[j]);
-                bestA = new THREE.Vector3(sceneEntities[i].x, 0, sceneEntities[i].z);
-                bestB = new THREE.Vector3(sceneEntities[j].x, 0, sceneEntities[j].z);
+            // spheres
+            let bestA, bestB;
+            longRangeConstraint(sceneEntities[i], sceneEntities[j]);
+            bestA = new THREE.Vector3(sceneEntities[i].x, 0, sceneEntities[i].z);
+            bestB = new THREE.Vector3(sceneEntities[j].x, 0, sceneEntities[j].z);
 
-                // utilities
-                customParams.best[i][j] = [bestA, bestB]
-                customParams.best[j][i] = [bestB, bestA]
+            // utilities
+            customParams.best[i][j] = [bestA, bestB]
+            customParams.best[j][i] = [bestB, bestA]
 
-                j += 1;
-            }
-            i += 1;
+            j += 1;
         }
-        */
+        i += 1;
+    }
+    
 
 
 
@@ -731,12 +735,12 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
                 agent_i.pz += agent_i_scaler * dir_z;
                 // console.log("1. id: ", sceneEntities[i].index);
 
-                console.log("agent_i.px: ", agent_i.px, ", agent_i.pz: ", agent_i.pz);
+                // console.log("agent_i.px: ", agent_i.px, ", agent_i.pz: ", agent_i.pz);
 
             }else{
                 agent_j.px += -agent_j_scaler * dir_x;
                 agent_j.pz += -agent_j_scaler * dir_z;
-                console.log("2. id: ", agent_j.index);
+                // console.log("2. id: ", agent_j.index);
             }
 
         }
@@ -839,21 +843,24 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
         item.x = item.px;
         item.z = item.pz;
         item.y = item.py;
+
+
+        if( customParams.scenario != 'swap_Scenario' && item.index != 0 && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 )  )
+        {
+            item.vx = 0;
+            item.vy = 0;
+            item.vz = 0;
+        
+            item.x = item.goal_x;
+            item.z = item.goal_z;
+            item.y = 0;
+        }
+
+
     });
 
 
 
-if( customParams.scenario != 'swap_Scenario' && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 )  )
-{
-    item.vx = 0;
-    item.vy = 0;
-    item.vz = 0;
 
-    item.x = item.goal_x;
-    item.z = item.goal_z;
-    item.y = 0;
-
-    
-}
 
 }

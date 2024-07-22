@@ -22,6 +22,23 @@ function angleBetweenVectors_2(v1, v2) {
   return angleDegrees;
 }
 
+function angleBetweenVectors_new(vec1, vec2) {
+  // Ensure the vectors are normalized (unit vectors)
+  vec1.normalize();
+  vec2.normalize();
+  
+  // Calculate the dot product
+  const dotProduct = vec1.dot(vec2);
+  
+  // Compute the angle in radians
+  const angleRadians = Math.acos(dotProduct);
+  
+  // Convert the angle to degrees
+  const angleDegrees = THREE.MathUtils.radToDeg(angleRadians);
+  
+  return angleDegrees;
+}
+
 
 // Function to get a vector direction deviated by a certain angle from a known normalized vector
 function deviateVectorByAngle(knownVector, angle) {
@@ -66,7 +83,7 @@ export function step(RADIUS, sceneEntities, world, scene, customParams = {}) {
   let C_TAU_MAX = 20;
   let C_TAO0 = 250; 
   let C_LONG_RANGE_STIFF = 0.22  ;  
-  let MAX_DELTA = 0.01; 
+  let MAX_DELTA = 0.018; 
 
   let angleThresholdBtwnDirectionAndNormalInDeg = 5.48;   //0.08; 
 
@@ -231,7 +248,6 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       let normal_to_capsule = new THREE.Vector3(nx, 0, nz);
       agent.normal_to_capsule = normal_to_capsule;
 
-      
       let angle_capsule_normal_and_vel = angleBetweenVectors_2(agent.normal_to_capsule, agent.normal_to_capsule_prev);
 
       if(angle_capsule_normal_and_vel > 20){    // forcing normal vector to capsule body to be in the capsule's facing direction. 
@@ -349,30 +365,29 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     const agent_j_scaler = (1 / (1 + 1)) * agentDist;
 
     if(customParams.scenario == 'dense_torso_like'){
-    if (agentDist < 1.5)     //was 0.8
-    {
-      if(capsule_i.index != 0)
+      if (agentDist < 1.5)     //was 0.8
       {
-        capsule_i.px += stif * agent_i_scaler * -dir_x;
-        capsule_i.pz += stif * agent_i_scaler * -dir_z;
-            
-        capsule_i.grad.dx += agent_i_scaler * -dir_x;
-        capsule_i.grad.dz += agent_i_scaler * -dir_z;
-      }
+        if(capsule_i.index != 0)
+        {
+          capsule_i.px += stif * agent_i_scaler * -dir_x;
+          capsule_i.pz += stif * agent_i_scaler * -dir_z;
+              
+          capsule_i.grad.dx += agent_i_scaler * -dir_x;
+          capsule_i.grad.dz += agent_i_scaler * -dir_z;
+        }
 
-      if(capsule_j.index != 0)
-      {
-        capsule_j.px += stif * -agent_j_scaler * -dir_x;
-        capsule_j.pz += stif * -agent_j_scaler * -dir_z;
-            
-        capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-        capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+        if(capsule_j.index != 0)
+        {
+          capsule_j.px += stif * -agent_j_scaler * -dir_x;
+          capsule_j.pz += stif * -agent_j_scaler * -dir_z;
+              
+          capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+          capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+        }
       }
     }
-    }
 
-
-    if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
+    else if( customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace')
     {
       if (agentDist < 1.55 )   // 1.7035, 1.704  1.715
       {   
@@ -388,7 +403,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       }
     }
 
-    if( customParams.scenario == 'swap_Scenario' )
+    else  if( customParams.scenario == 'swap_Scenario' )
     {
       if ( agentDist < 1.593 )      // agentDist < 1.6      1.593
       {   
@@ -413,7 +428,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
       }
     }
 
-    if( customParams.scenario == 'suddenStop' )
+    else if( customParams.scenario == 'suddenStop' )
     {
       // if (agentDist < 3.6 ) 
       if (agentDist < 2.58 )       // 2.4    2.15   2.06
@@ -440,7 +455,7 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     }
 
 
-    if( customParams.scenario == 'rectangle' )
+    else if( customParams.scenario == 'rectangle' )
     { 
         if (agentDist < 6.6 )   //0.9    if (agentDist < 1.5 )   //3.6
         { 
@@ -457,30 +472,45 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
     }
 
 
-    if( customParams.scenario == 'oneAgentCrossingAGroupInAngle' )
-      { 
-          if (agentDist < 1.5 )   //0.9
-          { 
-            if(capsule_i.index != 0)
-              {
-                capsule_i.px += stif * agent_i_scaler * -dir_x;
-                capsule_i.pz += stif * agent_i_scaler * -dir_z;
-      
-                capsule_i.grad.dx += agent_i_scaler * -dir_x;
-                capsule_i.grad.dz += agent_i_scaler * -dir_z;
-              }
-      
-              if(capsule_j.index != 0 )
-              {  
-                capsule_j.px += stif * -agent_j_scaler * -dir_x;
-                capsule_j.pz += stif * -agent_j_scaler * -dir_z;
-                    
-                capsule_j.grad.dx += -agent_j_scaler * -dir_x;
-                capsule_j.grad.dz += -agent_j_scaler * -dir_z;
-              }
-          }
-      }
-      
+    else if( customParams.scenario == 'oneAgentCrossingAGroupInAngle' )
+    { 
+        if (agentDist < 1.5 )   //0.9
+        { 
+          if(capsule_i.index != 0)
+            {
+              capsule_i.px += stif * agent_i_scaler * -dir_x;
+              capsule_i.pz += stif * agent_i_scaler * -dir_z;
+    
+              capsule_i.grad.dx += agent_i_scaler * -dir_x;
+              capsule_i.grad.dz += agent_i_scaler * -dir_z;
+            }
+    
+            if(capsule_j.index != 0 )
+            {  
+              capsule_j.px += stif * -agent_j_scaler * -dir_x;
+              capsule_j.pz += stif * -agent_j_scaler * -dir_z;
+                  
+              capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+              capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+            }
+        }
+    }
+
+//   else{
+//     if (agentDist < 1.55 )   // 1.7035, 1.704  1.715
+//     {   
+//       capsule_i.px += stif * agent_i_scaler * -dir_x;
+//       capsule_i.pz += stif * agent_i_scaler * -dir_z;           
+//       capsule_i.grad.dx += agent_i_scaler * -dir_x;
+//       capsule_i.grad.dz += agent_i_scaler * -dir_z;
+
+//       capsule_j.px += stif * -agent_j_scaler * -dir_x;
+//       capsule_j.pz += stif * -agent_j_scaler * -dir_z;   
+//       capsule_j.grad.dx += -agent_j_scaler * -dir_x;
+//       capsule_j.grad.dz += -agent_j_scaler * -dir_z;
+//     }
+// }
+  
 
   return [
     sceneEntities[i].grad.x,
@@ -659,6 +689,71 @@ function getCapsuleBodyNormal(agent, agentLength, RADIUS, current_rotation) {
         s
     ];
   }
+
+
+  function longRangeConstraint(agent_i, agent_j) {
+    // console.log("hi from long-range");
+    const agentCentroidDist = distance(agent_i.px, agent_i.pz,
+        agent_j.px, agent_j.pz);
+    const radius_init = 2 * AGENTSIZE;
+    const radius_sq_init = radius_init * radius_init;
+    var radius_sq = radius_sq_init;
+    const dv_i = 1.;  // 1./delta_t;
+    let delta_correction_i = {"x":0, "y":0};
+    let delta_correction_j= {"x":0, "y":0};
+    if (agentCentroidDist < radius_init) {
+        radius_sq = (radius_init - agentCentroidDist) * (radius_init - agentCentroidDist);
+    }
+    const v_x = (agent_i.px - agent_i.x) / timestep - (agent_j.px - agent_j.x) / timestep;
+    const v_y = (agent_i.pz - agent_i.z) / timestep - (agent_j.pz - agent_j.z) / timestep;
+    const x0 = agent_i.x - agent_j.x;
+    const y0 = agent_i.z - agent_j.z;
+    const v_sq = v_x * v_x + v_y * v_y;
+    const x0_sq = x0 * x0;
+    const y0_sq = y0 * y0;
+    const x_sq = x0_sq + y0_sq;
+    const a = v_sq;
+    const b = -v_x * x0 - v_y * y0;   // b = -1 * v_.dot(x0_).  Have to check this.
+    const b_sq = b * b;
+    const c = x_sq - radius_sq;
+    const d_sq = b_sq - a * c;
+    const d = Math.sqrt(d_sq);
+    const tao = (b - d) / a;
+
+    let lengthV;
+    if (d_sq > 0.0 && Math.abs(a) > epsilon && tao > 0 && tao < C_TAU_MAX) {
+        const c_tao = Math.exp(-tao * tao / C_TAO0);  //Math.abs(tao - C_TAO0);
+        const tao_sq = c_tao * c_tao;
+        const grad_x_i = 2 * c_tao * ((dv_i / a) * ((-2. * v_x * tao) - (x0 + (v_y * x0 * y0 + v_x * (radius_sq - y0_sq)) / d)));
+        const grad_y_i = 2 * c_tao * ((dv_i / a) * ((-2. * v_y * tao) - (y0 + (v_x * x0 * y0 + v_y * (radius_sq - x0_sq)) / d)));
+        const grad_x_j = -grad_x_i;
+        const grad_y_j = -grad_y_i;
+        const stiff = C_LONG_RANGE_STIFF * Math.exp(-tao * tao / C_TAO0);    //changed
+        const s = stiff * tao_sq / (agent_i.invmass * (grad_y_i * grad_y_i + grad_x_i * grad_x_i) + agent_j.invmass * (grad_y_j * grad_y_j + grad_x_j * grad_x_j));     //changed
+
+        lengthV = Math.sqrt(s * agent_i.invmass * grad_x_i * s * agent_i.invmass * grad_x_i
+            + s * agent_i.invmass * grad_y_i * s * agent_i.invmass * grad_y_i);
+
+        delta_correction_i = clamp2D(s * agent_i.invmass * grad_x_i,
+            s * agent_i.invmass * grad_y_i,
+            MAX_DELTA);
+
+        delta_correction_j = clamp2D(s * agent_j.invmass * grad_x_j,
+            s * agent_j.invmass * grad_y_j,
+            MAX_DELTA);
+        agent_i.px += delta_correction_i.x;
+        agent_i.pz += delta_correction_i.y;
+        agent_j.px += delta_correction_j.x;
+        agent_j.pz += delta_correction_j.y;
+
+        agent_i.grad[0] += delta_correction_i.x;
+        agent_i.grad[1] += delta_correction_i.y;
+        agent_j.grad[0] += delta_correction_j.x;
+        agent_j.grad[1] += delta_correction_j.y;
+
+    }
+}
+
 
   function toVisualize_Capsule_normal(capsule_entity)
   {
@@ -1301,16 +1396,16 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
   if(customParams.scenario != 'dense_torso_like')
   {
     // if(closest_in_right_2.length() != 0)
-    if(closest_in_right_2.length() != 0 && distCurToRight < 5)   //5   12
+    if(closest_in_right_2.length() != 0 && distCurToRight < 3)   //5   12
     {
       perpendicularDistance_right = compute_Shortest_Perpendicular_dist(closest_in_right_2, current_position, normalized_velocity_2);   
     }
     else{
-      perpendicularDistance_right = 1000;
+      // perpendicularDistance_right = 1000;
     }
 
     // if(closest_in_left_2.length() != 0)
-    if(closest_in_left_2.length() != 0 && distCurToLeft < 5)   //5
+    if(closest_in_left_2.length() != 0 && distCurToLeft < 3)   //5
     {
       perpendicularDistance_left = compute_Shortest_Perpendicular_dist(closest_in_left_2, current_position, normalized_velocity_2);
     }
@@ -1318,7 +1413,7 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
 
       if(customParams.scenario != 'suddenStop')
       {
-        perpendicularDistance_left = 100;
+        // perpendicularDistance_left = 100;
       }
       
     }    
@@ -1348,8 +1443,7 @@ return [closest_in_left,  closest_in_right, distToActivateOrientationConstraint,
       }
 
   }
-
-
+  
 
   if(object_type_in_both_sides == 'wall_and_agents')
   {
@@ -1576,12 +1670,40 @@ function rotationConstraint_V2(capsule_entity)
 {
   // const nextOrientationInRadians = Math.acos(cosValue);
 
+  // let capsuleBodyNormalVec = getCapsuleBodyNormal(capsule_entity, agentLength, RADIUS, capsule_entity.agent.rotation.z);
+  // let VelocityVec = new THREE.Vector3(capsule_entity.vx, 0 , capsule_entity.vz);
+  // // let capsuleCurToGoalVec = new THREE.Vector3(capsule_entity.goal_z - capsule_entity.z, 0, capsule_entity.goal_x - capsule_entity.x);
+  // let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
+  // let cur_orientation = capsule_entity.agent.rotation.z;
+  // // let  next_orientation = Math.atan2(dz, dx);
+
+
   let capsuleBodyNormalVec = getCapsuleBodyNormal(capsule_entity, agentLength, RADIUS, capsule_entity.agent.rotation.z);
   let VelocityVec = new THREE.Vector3(capsule_entity.vx, 0 , capsule_entity.vz);
-  // let capsuleCurToGoalVec = new THREE.Vector3(capsule_entity.goal_z - capsule_entity.z, 0, capsule_entity.goal_x - capsule_entity.x);
   let angleBodyNormalToGoalVec = angleBetweenVectors_2(capsuleBodyNormalVec, VelocityVec);
   let cur_orientation = capsule_entity.agent.rotation.z;
-  // let  next_orientation = Math.atan2(dz, dx);
+//---------------------------------------------------
+  let NormalVectorToCapsuleBody = getCapsuleBodyNormal(capsule_entity, agentLength, RADIUS, capsule_entity.agent.rotation.z);
+  let NormalVectorToCapsuleBodyNormalized = NormalVectorToCapsuleBody.clone().normalize();
+
+  let currentPosition = new THREE.Vector3(capsule_entity.x, 0, capsule_entity.z);
+  let predicted_position = new THREE.Vector3(capsule_entity.px, 0, capsule_entity.pz);
+  let directionVector = predicted_position.clone().sub(currentPosition);    
+  let directionVectorNormalized = directionVector.clone().normalize();
+
+  let angleOfDirectionAndCapsuleBodyNormal = angleBetweenVectors_new(directionVectorNormalized, NormalVectorToCapsuleBodyNormalized);
+
+  if(capsule_entity.index == 1)
+  {
+    // console.log("directionVectorNormalized: ", directionVectorNormalized, "NormalVectorToCapsuleBodyNormalized: ", NormalVectorToCapsuleBodyNormalized );
+    console.log("angleOfDirectionAndCapsuleBodyNormal: ", angleOfDirectionAndCapsuleBodyNormal );
+
+  }
+
+  // if(angleOfDirectionAndCapsuleBodyNormal > 5)
+  // {
+    // console.log("index: ", capsule_entity.index, "capsuleBodyNormalVec: ", angleOfDirectionAndCapsuleBodyNormal );
+  // }
 
 
   //smooth the rotation speed while changing orientation
@@ -1624,7 +1746,6 @@ function rotationConstraint_V2(capsule_entity)
     next_orientation = cur_orientation + angleBodyNormalToGoalVecInRad;
   }
   
-
   // if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 3 )   // for swap scenario.
   if( customParams.orientation == 'front' && angleBodyNormalToGoalVec > 1 )
   {
@@ -1638,8 +1759,7 @@ function rotationConstraint_V2(capsule_entity)
         }else{
           capsule_entity.agent.rotation.z = cur_orientation +  (cur_orientation - next_orientation)/200 ;
         }
-      }else{    
-        }
+      }
     }else{
 
         if( cur_orientation >= next_orientation )
@@ -1649,8 +1769,7 @@ function rotationConstraint_V2(capsule_entity)
         }else{
           // capsule_entity.agent.rotation.z = cur_orientation +  ( next_orientation - cur_orientation)/200 ;   //200
           capsule_entity.agent.rotation.z = cur_orientation +  0.01 ;
-        }
-        
+        }      
     }
   }
   
@@ -1685,39 +1804,32 @@ while (i < sceneEntities.length) {
 //===============================================================================
 
 
-  // agent to wall short-range collision constraint    
-  i=0;
-  while(i<sceneEntities.length)
-  {
-    j=0;
-    while(j<customParams.wallData.length)
-    {
-      let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+  i = 0;
+  while (i < sceneEntities.length) {
+    j = i + 1;
+    while (j < sceneEntities.length) {
 
-      let penetration_normal = p_bestA.clone().sub(w_bestB);
-      const len = penetration_normal.length();
-      penetration_normal.divideScalar(len); // normalize
-      const penetration_depth = sceneEntities[i].radius + 0.50 - len ;  //0.5 is the depth of the wall
-      // const penetration_depth = sceneEntities[i].radius + customParams.wallData[0].width/2 - len ;
+        // spheres
+        let bestA, bestB;
+        longRangeConstraint(sceneEntities[i], sceneEntities[j]);
+        bestA = new THREE.Vector3(sceneEntities[i].x, 0, sceneEntities[i].z);
+        bestB = new THREE.Vector3(sceneEntities[j].x, 0, sceneEntities[j].z);
 
-      const intersects = penetration_depth > 0;
-      if (intersects) {
-        sceneEntities[i].colliding = true;
-        sceneEntities[i].px += penetration_normal.x * 1.0 * penetration_depth;  
-        sceneEntities[i].pz += penetration_normal.z * 1.0 * penetration_depth;
-      }
-      j+=1;
+        // utilities
+        customParams.best[i][j] = [bestA, bestB]
+        customParams.best[j][i] = [bestB, bestA]
+
+        j += 1;
     }
-    i+=1
+    i += 1;
   }
 
 
-
 /*
-   // if( (customParams.scenario == 'rectangle' ) && (customParams.scenario != 'bottleneck'))
+  // if( (customParams.scenario == 'rectangle' ) && (customParams.scenario != 'bottleneck'))
   // if( (customParams.scenario == 'rectangle') || (customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace' ) )
-  if( (customParams.scenario == 'rectangle') || (customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace') || ( customParams.scenario == 'swap_Scenario' ) )
-  {
+  // if( (customParams.scenario == 'rectangle') || (customParams.scenario == 'narrow_hallwayTwoAgent_FaceToFace') || ( customParams.scenario == 'swap_Scenario' ) )
+  // {
 //=========================================== our Long-range call started ======================================================================
     //Capsule to Capsule long-range collision avoidance.
     i = 0;
@@ -1736,8 +1848,7 @@ while (i < sceneEntities.length) {
             i, j
         );
 
-        let long_stif = 1;
-
+        let long_stif = 0.1;
         sceneEntities[i].px += delta_correction_i.x;
         sceneEntities[i].pz += delta_correction_i.y;
         sceneEntities[j].px += delta_correction_j.x;
@@ -1765,11 +1876,38 @@ while (i < sceneEntities.length) {
       i += 1;
     }
 //======================================== our Long-range call ended ===============================================================
-  }
+  // }
 */
 
 
-  
+
+  // agent to wall short-range collision constraint    
+  i=0;
+  while(i<sceneEntities.length)
+  {
+    j=0;
+    while(j<customParams.wallData.length)
+    {
+      let [p_bestA, w_bestB, p_agent_i,p_agent_j] = getBestPointWithWall(sceneEntities[i].px, sceneEntities[i].pz, customParams.wallData[j]);
+
+      let penetration_normal = p_bestA.clone().sub(w_bestB);
+      const len = penetration_normal.length();
+      penetration_normal.divideScalar(len); // normalize
+      const penetration_depth = sceneEntities[i].radius + 0.50 - len ;  //0.5 is the depth of the wall
+      // const penetration_depth = sceneEntities[i].radius + customParams.wallData[0].width/2 - len ;
+
+      const intersects = penetration_depth > 0;
+      if (intersects) {
+        sceneEntities[i].colliding = true;
+        sceneEntities[i].px += penetration_normal.x * 1.0 * penetration_depth;  
+        sceneEntities[i].pz += penetration_normal.z * 1.0 * penetration_depth;
+      }
+      j+=1;
+    }
+    i+=1
+  }
+
+
 
 //short range constraint.
   i = 0;
@@ -1892,6 +2030,26 @@ while (i < sceneEntities.length) {
   item.x = item.px;
   item.z = item.pz;
   item.y = item.py;
+
+  // if( (customParams.scenario != 'swap_Scenario' && customParams.scenario != 'suddenStop') && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 )  )
+  if( (customParams.scenario === 'orthogonal_passing_groups') && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 )  )
+  {
+    item.vx = 0;
+    item.vy = 0;
+    item.vz = 0;
+
+    item.x = item.goal_x;
+    item.z = item.goal_z;
+    item.y = 0;
+
+    if( item.index < 10  )
+    {
+      item.agent.rotation.z = 0; 
+    }else 
+    {
+      item.agent.rotation.z = 1.555;
+    }    
+  }
 
   if(customParams.scenario == 'suddenStop')
   {
@@ -2071,27 +2229,28 @@ while (i < sceneEntities.length) {
 
   }
 
-  if( (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 ) && ( item.z > 15  || item.z < -15)  )
-    {
-      item.vx = 0;
-      item.vy = 0;
-      item.vz = 0;
+  // if( (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 ) && ( item.z > 15  || item.z < -15)  )
+  if( (customParams.scenario === 'swap_Scenario') && (distance(item.x, item.z, item.goal_x, item.goal_z) < 1 ) && ( item.z > 15  || item.z < -15)  )
+  {
+    item.vx = 0;
+    item.vy = 0;
+    item.vz = 0;
 
-      item.x = item.goal_x;
-      item.z = item.goal_z;
-      item.y = 0;
+    item.x = item.goal_x;
+    item.z = item.goal_z;
+    item.y = 0;
 
-    // item.agent.rotation.z = 0;  
-    if( item.index == 0 || item.index == 1 || item.index == 2 || item.index == 3 || item.index == 4 || item.index == 5 )
-    {
-      // item.agent.rotation.z = 3.1516; 
-      item.agent.rotation.z = 0; 
-    }else if( item.index == 6 || item.index == 7 || item.index == 8 || item.index == 9 || item.index == 10 || item.index == 11 )
-    {
-      // item.agent.rotation.z = 0; 
-      item.agent.rotation.z = 3.1516;
-    }     
-    }
+  // item.agent.rotation.z = 0;  
+  if( item.index == 0 || item.index == 1 || item.index == 2 || item.index == 3 || item.index == 4 || item.index == 5 )
+  {
+    // item.agent.rotation.z = 3.1516; 
+    item.agent.rotation.z = 0; 
+  }else if( item.index == 6 || item.index == 7 || item.index == 8 || item.index == 9 || item.index == 10 || item.index == 11 )
+  {
+    // item.agent.rotation.z = 0; 
+    item.agent.rotation.z = 3.1516;
+  }     
+  }
 // ------------------------- End------------------ For swap_Scenario  -------------------------------------------
  
 

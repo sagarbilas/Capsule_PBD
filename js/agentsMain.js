@@ -1756,10 +1756,10 @@ function suddenStop_Scenario() {
 
   // narrow_hallwayOneAgent_Scenario();
   // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
-  // narrow_hallwayTwoAgent_FaceToFace_Scenario();
+  narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
   // rectangle_Scenario_V2();
-  swap_Through_Narrow_Exit_Scenario_V2();  
+  // swap_Through_Narrow_Exit_Scenario_V2();  
   // suddenStop_Scenario();
 
 //-------------------------------------------------------------------
@@ -1898,6 +1898,27 @@ function suddenStop_Scenario() {
   window.addEventListener("mousedown", mouseDown, false);
   // window.addEventListener("mousemove", mouseMove, false);
 
+  world.wallData = parameters.wallData;
+
+  world.wallDataString = "";
+  for(let i=0;i<world.wallData.length;i++)
+  {
+    world.wallDataString+= "wall," + world.wallData[i].center.x +","+
+                          world.wallData[i].center.z + "," + 
+                          world.wallData[i].width + "," + 
+                          world.wallData[i].depth + "\n";
+    /*
+      left.position.set(-0, 2.5, -10);
+      wallData.push({
+          center: new THREE.Vector3(-0, 2.5, -10),
+          depth: 1, // along z-axis
+          width: 28, // along x-axis
+          base: new THREE.Vector3(-0 - 28 / 2, 2.5, -10),
+          tip: new THREE.Vector3(-0 + 28 / 2, 2.5, -10),
+      });
+    */
+  }
+
   // parameters setting
   for (let i =0; i<agentData.length;i++){
       parameters.best.push(
@@ -1952,6 +1973,10 @@ function suddenStop_Scenario() {
       {
         console.log(world.positions);
         var textFile = parsePositions(world.positions);
+        if(world.wallDataString.length>0)
+        { 
+          textFile=world.wallDataString+textFile;
+        }
         let a = document.createElement('a');
         //a.href = "data:application/octet-stream,"+encodeURIComponent(JSON.stringify(world.positions));
         a.href = "data:application/octet-stream,"+encodeURIComponent(textFile);
