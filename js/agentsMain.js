@@ -1618,6 +1618,297 @@ function suddenStop_Scenario() {
 } 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+function hallway_facing_2_agents_scenario() {
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 15,
+      z: 0,
+    },
+    {
+      x: -38,
+      z: 0,
+    },
+    0.8,
+    "X"
+  );
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: -15,
+      z: 1,
+    },
+    {
+      x: 38,
+      z: 1,
+    },
+    0.8,
+    "X"
+  );
+
+}
+
+function Two_agents_moving_orthogonally() {
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 15,
+      z: 0,
+    },
+    {
+      x: -15,
+      z: 0,
+    },
+    0.8,
+    "X"
+  );
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 0,
+      z: 15,
+    },
+    {
+      x: 0,
+      z: -15,
+    },
+    0.8,
+    "X"
+  );
+
+}
+
+
+function Two_agents_Facing_In_Angle() {
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: 15,
+      z: 0,
+    },
+    {
+      x: -15,
+      z: 0,
+    },
+    0.8,
+    "X"
+  );
+
+  addColumnAgentGroup(
+    agentData,
+    1,
+    RADIUS * 1.5,
+    {
+      x: -0,
+      z: 10,
+    },
+    {
+      x: 10,
+      z: -15,
+    },
+    0.8,
+    "X"
+  );
+
+}
+
+
+
+function passing_groups() {
+
+  parameters.scenario = 'passing_groups';
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        addColumnAgentGroup(
+            agentData,
+            1,
+            RADIUS * 1.5,
+            {
+              x: 25 - i * 6,
+              //x: 30,
+              z: -10 + j * 6,
+            },
+            {
+              x: -38,
+              //x: -20,
+              z: -10 + j * 6,
+            },
+            0.8,
+            "X"
+        );
+      }
+    }
+  
+  
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      addColumnAgentGroup(
+          agentData,
+          1,
+          RADIUS * 1.5,
+          {
+            x: -25 + i * 6,
+            //x: 30,
+            z: 5 - j * 6,
+          },
+          {
+            x: 38,
+            //x: -20,
+            z: 5 - j * 6,
+          },
+          0.8,
+          "X"
+      );
+    }
+  }  
+}
+
+
+
+
+
+function orthogonal_passing_groups() {
+
+  parameters.scenario = 'orthogonal_passing_groups';
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        addColumnAgentGroup(
+          agentData,
+          1,
+          RADIUS * 1.5,
+          {
+            x: 25 - i * 6,
+            z: -10 + j * 6,
+          },
+          {
+            x: -25 - i * 6,
+            z: -10 + j * 6,
+          },
+          0.8,
+          "X"
+        );
+      }
+    }
+  
+  
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      addColumnAgentGroup(
+        agentData,
+        1,
+        RADIUS * 1.5,
+        {
+          x: 5 - i * 6,
+          z: 25 - j * 6,
+        },
+        {
+          x: 5 - i * 6,
+          z: -20 - j * 6,
+        },
+        0.8,
+        "X"
+      );
+    }
+  }  
+}
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function sampleCirclePointsWithDistance(sampleCount, distanceBetweenPoints, centerX, centerY) {
+  // Calculating the total circumference that would fit the points with the given distance
+  let totalCircumference = distanceBetweenPoints * sampleCount;
+
+  // Updating the radius based on the new circumference
+  let radius = totalCircumference / (2 * Math.PI);
+
+  let points = [];
+  for (let i = 0; i < sampleCount; i++) {
+    // Angle in radians
+    let angle = 2 * Math.PI * i / sampleCount;
+
+    // Calculating x and y coordinates
+    let x = centerX + radius * Math.cos(angle);
+    let y = centerY + radius * Math.sin(angle);
+
+    points.push({ x: x, y: y });
+  }
+  return points;
+}
+
+
+function sampleCirclePoints(radius, sampleCount, centerX, centerY) {
+  let points = [];
+  for (let i = 0; i < sampleCount; i++) {
+    // Angle in radians
+    let angle = 2 * Math.PI * i / sampleCount;
+
+    // Calculating x and y coordinates
+    let x = centerX + radius * Math.cos(angle);
+    let y = centerY + radius * Math.sin(angle);
+
+    points.push({ x: x, y: y });
+  }
+  return points;
+}
+
+
+function circleScenario(){
+
+// Use below values for that scenario.
+/*
+const C_LONG_RANGE_STIFF = 0.25;  
+const MAX_DELTA = 0.03;
+
+const C_LONG_RANGE_STIFF = 0.15;  
+const MAX_DELTA = 0.01;
+
+let angleThresholdBtwnDirectionAndNormalInDeg = 0.30; 
+*/
+
+  let points = sampleCirclePoints(20, 10, 0, 0);
+  // let points = sampleCirclePointsWithDistance(42, 2 * 2* RADIUS + 2, 0, 0);
+  console.log(points);
+  points.forEach(function (point){
+    addColumnAgentGroup(
+        agentData,
+        1,
+        0,
+        {
+          x: point.x,
+          z: point.y,
+        },
+        {
+          x: -point.x * 1.1 ,
+          z: -point.y * 1.1 ,
+        },
+        0.8,
+        "X"
+    );
+  });
+
+}
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   function addColumnAgentGroup(
     agentData,
@@ -1749,14 +2040,22 @@ function suddenStop_Scenario() {
 
 
 
+  //----------------------------------------------------------
+//Scenarios for long-range experiments
 
-
+  // hallway_facing_2_agents_scenario();
+  // Two_agents_Facing_In_Angle();
+  // passing_groups();
+  // circleScenario();
+  orthogonal_passing_groups();
+  // Two_agents_moving_orthogonally();
+  
 //----------------------------------------------------------
 //uncomment any of the scenarios below to test in different scenarios.
 
   // narrow_hallwayOneAgent_Scenario();
   // dense_Scenario_As_Torso_Crowd_Paper_V14();   //close to v10. latest working version.
-  narrow_hallwayTwoAgent_FaceToFace_Scenario();
+  // narrow_hallwayTwoAgent_FaceToFace_Scenario();
   // rectangle_Scenario(); 
   // rectangle_Scenario_V2();
   // swap_Through_Narrow_Exit_Scenario_V2();  

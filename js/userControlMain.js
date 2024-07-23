@@ -1800,9 +1800,9 @@ function tryingScenario_Bilas_1_4_agents_V2()
       },
       0.8,
       "X"
-  );
+    );
 
-  addColumnAgentGroup(
+    addColumnAgentGroup(
       agentData,
       1,
       RADIUS * 1.5,
@@ -1816,7 +1816,7 @@ function tryingScenario_Bilas_1_4_agents_V2()
       },
       0.8,
       "X"
-  );
+    );
 
   }
 
@@ -2075,14 +2075,12 @@ function passing_groups() {
             1,
             RADIUS * 1.5,
             {
-              x: 25 - i * 6,
-              //x: 30,
-              z: -10 + j * 6,
+              x: 25 - i * 6.5,
+              z: -10 + j * 6.5,
             },
             {
               x: -38,
-              //x: -20,
-              z: -10 + j * 6,
+              z: -10 + j * 6.5,
             },
             0.8,
             "X"
@@ -2098,14 +2096,12 @@ function passing_groups() {
           1,
           RADIUS * 1.5,
           {
-            x: -25 + i * 6,
-            //x: 30,
-            z: 5 - j * 6,
+            x: -25 + i * 6.5,
+            z: 5 - j * 6.5,
           },
           {
             x: 38,
-            //x: -20,
-            z: 5 - j * 6,
+            z: 5 - j * 6.5,
           },
           0.8,
           "X"
@@ -2378,6 +2374,23 @@ let angleThresholdBtwnDirectionAndNormalInDeg = 0.30;
   // Two_agents_moving_orthogonally();
   
 //----------------------------------------------------------
+
+//----------------------------------------------------------
+
+  // suddenStop_Scenario();
+  // rectangle_Scenario(); 
+  // swap_Through_Narrow_Exit_Scenario_V2();
+  // narrow_hallwayOneAgent_Scenario();
+  // narrow_hallwayTwoAgent_FaceToFace_Scenario();
+  // bidirectionalScenario();
+//-------------------------------------------------------------------
+
+  // tryingScenario_Bilas_1_4_agents_V2();
+  // oneAgentCrossingGroup();
+  // oneAgentCrossingAGroupInAngle();
+  // hallway_facing_4_agents_scenario();
+  // hallway_facing_2_agents_scenario();
+  //----------------------------------------------------------
 
 
   let agentGeom, agentMaterial, agent;
